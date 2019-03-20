@@ -1,0 +1,85 @@
+{extend name="mobile/base"}
+{block name="title"}订单支付 - {:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8080/wanjia__MOBILE__/css/order_pay.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+{/block}
+{block name="js"}
+
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+{/block}
+
+{block name="main"}
+	<div id="topStyle_2">
+        <a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+        <div id="topStyle_title">订单支付</div>
+    </div>
+    <input type="hidden" id="orderNo" value="{$orderNo}" class='j-ipt'/>
+    <input type="hidden" id="isBatch" value="{$isBatch}" class='j-ipt'/>
+    <div class="cart-box">
+        <input type='hidden' value='3' id='payFrom' class='j-ipt' />
+        <div class="boxLeft">支付方式</div>
+        <div class="boxRight" id="payFromName" onclick="openPayFroms()">钱包支付 ></div>
+    </div>
+    {volist name="$rs['list']" id="order"}
+    <div class="order">
+    	<div class="orderNo_freight">
+    		<div class="orderNo">订单号：{$order['orderNo']}</div>
+    		<div class="freight">运费：￥{$order['deliverMoney']}</div>
+    	</div>
+    	<div class="goods-list">
+    		{volist name="$rs['goods'][$order['orderId']]" id="goods"}
+	        <div class="goods">
+	            <div class="goodsImg"><a href="{:url('home/goods/detail',['id'=>$goods.goodsId])}"><img src="__ROOT__/{$goods.goodsImg}"></a></div>
+	            <a href="{:url('home/orders/detail',['id'=>$order.orderId])}" class="goodsInfo">
+	                <div class="goodsName">{$goods.goodsName}</div>
+	                <div class="goodsSpc">
+	                	{if condition="count($goods['goodsSpecNames']) gt 0"}
+			        		{volist name="$goods['goodsSpecNames']" id="spec"}
+			        			{$spec}&nbsp;
+			        		{/volist}
+				        {/if}
+				    </div>
+	            </a>
+	            <div class="price_num">
+	                <div class="goodsPrice">￥{$goods.goodsPrice}</div>
+	                <div class="goodsNum">x {$goods.goodsNum}</div>
+	            </div>
+	            <div style="clear: both"></div>
+	        </div>
+    		{/volist}
+    	</div>
+    	<div class="orderMoney">
+    		订单金额：￥{$order['needPay']}
+    	</div>
+    </div>
+    {/volist}
+    <div class="totalMoney">
+    	支付总金额：￥<span style="font-size: 35px;color:#cc3333;font-weight: bold;">{$object['totalMoney']}</span>
+    </div>
+    <div id="payNow" onclick="payNow('{$order['orderNo']}');">立即支付</div>
+
+    <div id="payFormNames" class="weui-popup__container">
+        <div class="weui-popup__overlay"></div>
+        <div class="weui-popup__modal">
+            <div class="popup_top">
+                <div class="popup_top_icon" onclick="javascript:$.closePopup();"><i class="fa fa-angle-left"></i></div>
+                <div class="popup_top_title">选择支付方式</div>
+            </div>
+            <div class="payment-list">                
+                <div class="popup-box">
+                    <label class="popup_left" for="payType0">钱包支付</label>
+                    <div class="popup_right"><input onclick="changePayFrom(3)" type="radio" checked="checked" class="mobCheckbox" name="payment" id="payType0"></div>
+                </div>
+                <div class="popup-box">
+                    <label class="popup_left" for="payType1">微信支付</label>
+                    <div class="popup_right"><input onclick="changePayFrom(2)" type="radio" name="payment" class="mobCheckbox" id="payType1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<script type="text/javascript" src="__MOBILE__/js/order_pay.js"></script>
+	
+{/block}

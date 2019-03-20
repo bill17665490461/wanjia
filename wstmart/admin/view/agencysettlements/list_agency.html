@@ -1,0 +1,28 @@
+{extend name="base" /}
+{block name="js"}
+<script src="http://127.0.0.1:8080/wanjia__ADMIN__/agencysettlements/settlements.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<div class="l-loading" style="display: block" id="wst-loading"></div>
+<div class="wst-toolbar">
+区域商所在地：
+<select id="areaId1" class='j-ipt j-areas' level="0" onchange="WST.ITAreas({id:'areaId1',val:this.value,className:'j-areas'});">
+  <option value="">-请选择-</option>
+  {volist name="areaList" id="vo"}
+  <option value="{$vo['areaId']}">{$vo['areaName']}</option>
+  {/volist}
+</select>
+姓名：<input type="text" name="realName"  placeholder='区域商姓名' id="realName" class='j-ipt'/>
+<button class="btn btn-blue" type='button' onclick='javascript:loadAgencyGrid()'>查询</button>
+{if WSTGrant('QYJS_03')}
+<button class="btn btn-blue" type='button' onclick='javascript:generateSettleByAgency()'>生成结算单</button>
+{/if}
+<div style='clear:both'></div>
+</div>
+<div id="maingrid"></div>
+<script>
+$(function(){
+	initGrid();
+})
+</script>
+{/block}

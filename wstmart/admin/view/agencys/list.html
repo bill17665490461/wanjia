@@ -1,0 +1,36 @@
+{extend name="base" /}
+{block name="js"}
+<script src="http://127.0.0.1:8080/wanjia__ADMIN__/agencys/agencys.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<div class="l-loading" style="display: block" id="wst-loading"></div>
+{if WSTGrant('QYGL_01')}
+<div class="wst-toolbar">
+   <button class="btn btn-green f-right" onclick='javascript:toEdit(0)'>新增</button>
+   <div style='clear:both'></div>
+</div>
+{/if}
+<div id="maingrid"></div>
+
+<div id='rechargeBox' style='display:none;line-height: 35px;'>
+    <form id='rechargeForm' autocomplete="off">
+    <table class='wst-form wst-box-top'>
+       	<tr>
+          	<th width='100'>充值账号：</th>
+          	<td>
+            	<input type="hidden" name="agencyId" id="agencyId"> 
+            	<span id="account"></span>
+        	</td>
+       	</tr>
+       	<tr>
+          	<th>充值金额<font color='red'>*</font>：</th>
+          	<td><input type='text' id='money' maxLength='10' onkeyup="javascript:WST.isChinese(this,1)" onkeypress="return WST.isNumberdoteKey(event,true)" onblur='javascript:WST.limitDecimal(this,2)'></td>
+       </tr>
+    </table>
+    </form>
+ </div>
+
+<script>
+$(function(){initGrid();})
+</script>
+{/block}

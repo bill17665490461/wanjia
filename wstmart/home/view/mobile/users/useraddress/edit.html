@@ -1,0 +1,52 @@
+{extend name="mobile/base"}
+{block name="title"}收货地址-买家中心{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__MOBILE__/css/editAddress.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__MOBILE__/users/useraddress/address.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/city-picker.min.js"></script>
+{/block}
+
+{block name="main"}
+	 <div id="topStyle_2">
+        <a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+        <div id="topStyle_title">管理地址</div>
+    </div>
+    <input type="hidden" name="id" id="addressId" class="ipt" value="{$data['addressId']}" />
+    <div class="info">
+    	<div class="infoLeft">收货人</div>
+    	<div class="infoRight"><input class="ipt" type="text" id="userName" name="userName" value="{$data['userName']}"  maxlength="6"></div>
+    </div>
+    <div class="info">
+    	<div class="infoLeft">联系电话</div>
+    	<div class="infoRight"><input class="ipt" type="number" id="userPhone" name="userPhone" value="{$data['userPhone']}"></div>
+    </div>
+    <div class="weui-cells weui-cells_form">
+	    <div class="weui-cell">
+	        <div class="weui-cell__hd"><label for="name" class="weui-label">所在地区</label></div>
+	        <div class="weui-cell__bd">
+	          	<input class="weui-input" id="city-picker" type="text" value="{$area}" data-codes="{$data.areaIdPath}" data-code="{$data.areaId}">
+	        </div>
+	  	</div>
+  	</div>
+  	<div class="detailAds">
+  		<textarea id="userAddress" name="userAddress" placeholder="您的详细地址" maxlength="30">{$data['userAddress']}</textarea>
+  	</div>
+  	<div class="info">
+  		<label for="isDefault" class="infoLeft">设为默认地址</label>
+  		<div class="infoRight" style="text-align: right;"><input type="checkbox" id="isDefault" class="mobCheckbox" {if $data.isDefault==1}checked="checked"{/if}></div>
+  	</div>
+  	<!-- 底部导航 -->
+	<div style="height: 85px;"></div>
+	<a id="save" href="javascript:save()">保存</a>
+	<script>
+	  $("#city-picker").cityPicker({
+	    title: "请选择收货地址"
+	  });
+	</script>
+{/block}

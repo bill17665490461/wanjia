@@ -1,0 +1,437 @@
+{extend name="default/base" /}
+
+
+{block name="title"}用户注册-{:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="css"}
+<style type="text/css">
+    * { -ms-word-wrap: break-word; word-wrap: break-word; }
+    html { -webkit-text-size-adjust: none; text-size-adjust: none; }
+    html, body {height:100%;width:100%; }
+    html, body, h1, h2, h3, h4, h5, h6, div, ul, ol, li, dl, dt, dd, iframe, textarea, input, button, p, strong, b, i, a, span, del, pre, table, tr, th, td, form, fieldset, .pr, .pc { margin: 0; padding: 0; word-wrap: break-word; font-family: verdana,Microsoft YaHei,Tahoma,sans-serif; *font-family: Microsoft YaHei,verdana,Tahoma,sans-serif; }
+    body, ul, ol, li, dl, dd, p, h1, h2, h3, h4, h5, h6, form, fieldset, .pr, .pc, em, del { font-style: normal; font-size: 100%; }
+
+    ._citys { width: 450px; display: inline-block; border: 2px solid #eee; padding: 5px; position: relative; background: #f9fffd
+    }
+    ._citys span { color: #56b4f8; height: 15px; width: 15px; line-height: 15px; text-align: center; border-radius: 3px; position: absolute; right: 10px; top: 10px; border: 1px solid #56b4f8; cursor: pointer; }
+    ._citys0 { width: 100%; height: 34px; display: inline-block; border-bottom: 2px solid #56b4f8; padding: 0; margin: 0; }
+    ._citys0 li { display: inline-block; line-height: 34px; font-size: 15px; color: #888; width: 80px; text-align: center; cursor: pointer; }
+    .citySel { background-color: #56b4f8; color: #fff !important; }
+    ._citys1 { width: 100%; display: inline-block; padding: 10px 0; }
+    ._citys1 a { width: 83px; height: 35px; display: inline-block; background-color: #f5f5f5; color: #666; margin-left: 6px; margin-top: 3px; line-height: 35px; text-align: center; cursor: pointer; font-size: 13px; overflow: hidden; }
+    ._citys1 a:hover { color: #fff; background-color: #56b4f8; }
+    .AreaS { background-color: #56b4f8 !important; color: #fff !important; }
+</style>
+<link href="http://127.0.0.1:8080/wanjia__STATIC__/plugins/validator/jquery.validator.css?v={$v}" rel="stylesheet">
+<link href="http://127.0.0.1:8080/wanjia__STYLE__/css/login.css?v={$v}" rel="stylesheet">
+{/block}
+{block name="nav"}
+{php}$liteTitle = "欢迎注册".WSTConf('CONF.mallName');{/php}
+{include file="default/header_lite" /}
+{/block}
+{block name="main"}
+<div class="wst-regist-b">
+    <div class="wst-container">
+        <div class="wst-regist">
+            <div class="wst-regist-c">
+                <input type="hidden" id="nameType" class="wst_ipt nameType" value='2' autocomplete="off"/>
+                <form id="reg_form" name="form1" action="{:url('shops/shopsRegister')}"  method="post" autocomplete="off">
+                    <div class="wst-regist-head">果园入驻申请</div>
+                    <table class="wst-table">
+                        <tr class="wst-login-tr">
+                            <td class="wst-regist-td"><font color='red'>*</font>果园名称：</td>
+                            <td><input id="loginName"required="" name="shopName" class="wst_ipt wst-regist-input" tabindex="1" maxlength="30" autocomplete="off" onpaste="return false;" style="ime-mode:disabled;" placeholder="果园名称"  type="text" onblur="shopNames(this)"/></td>
+                        </tr>
+                        <tr class="wst-login-tr">
+                            <td class="wst-regist-td"><font color='red'>*</font>果园主姓名：</td>
+                            <td><input id="loginName" name="shopkeeper" class="wst_ipt wst-regist-input" tabindex="1" maxlength="30" autocomplete="off" onpaste="return false;" style="ime-mode:disabled;" placeholder=""  type="text"/></td>
+                        </tr>
+                        <tr class="wst-login-tr">
+                            <td class="wst-regist-td"><font color='red'>*</font>果园地址：</td>
+                            <td>
+                                <input  id="city" name="city" type="text" style="width: 400px;height: 30px;margin-left: 20px;border-radius:6px;"readonly=”readonly”/>
+
+                            </td>
+                        </tr>
+
+                        <tr class="wst-login-tr">
+                            <td class="wst-regist-td"><font color='red'>*</font>详细地址：</td>
+                            <td>
+                                <input id="loginName" name="shopAddress" class="wst_ipt wst-regist-input" tabindex="1" maxlength="30" autocomplete="off" onpaste="return false;" style="ime-mode:disabled;" placeholder="详细地址"  type="text"/>
+
+                            </td>
+                        </tr>
+                        <tr class="wst-login-tr">
+                            <td class="wst-regist-td"><font color='red'>*</font>联系电话：</td>
+                            <td><input id="loginName" name="telephone" class="wst_ipt wst-regist-input" tabindex="1" maxlength="30" autocomplete="off" onpaste="return false;" style="ime-mode:disabled;" placeholder="联系电话"  type="number"/></td>
+                        </tr>
+                        <tr class="wst-login-tr">
+                            <td class="wst-regist-td"><font color='red'>*</font>水果品种：</td>
+                            <td>
+
+                                &nbsp;&nbsp;
+                                <select name="catIds1"  onchange="goodsCatIds(this);" style="margin-left: 5px;height: 40px;border-radius:5px;width: 130px" >
+                                    <option value="">请选择</option>
+                                    {volist name=":WSTSideCategorys()" id="vo" key="k"}
+                                    <option value="{$vo.catId}">{$vo['catName']}</option>
+                                    {/volist}
+                                </select>
+                                <select name="CatIds2" id="catIds2" style="height: 40px;border-radius:5px;width: 130px"   onchange="goodsCatIds1(this);">
+                                    <option value="">请选择</option>
+                                </select>
+                                <select name="CatIds3" id="catIds3" style="height: 40px;border-radius:5px;width: 130px" >
+                                    <option value="">请选择</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="wst-login-tr">
+                            <td class="wst-regist-td"><font color='red'>*</font>果园成立年份：</td>
+                            <td>
+
+                                &nbsp;&nbsp;
+                                <select name="establishtime"style="margin-left: 5px;height: 40px;border-radius:5px;width: 250px" >
+                                    <option value="1998">1998年</option>
+                                    <option value="1999">1999年</option>
+                                    <option value="2000">2000年</option>
+                                    <option value="2001">2001年</option>
+                                    <option value="2002">2002年</option>
+                                    <option value="2003">2003年</option>
+                                    <option value="2004">2004年</option>
+                                    <option value="2005">2005年</option>
+                                    <option value="2006">2006年</option>
+                                    <option value="2007">2007年</option>
+                                    <option value="2008">2008年</option>
+                                    <option value="2009">2009年</option>
+                                    <option value="2010">2010年</option>
+                                    <option value="2011">2011年</option>
+                                    <option value="2012">2012年</option>
+                                    <option value="2013">2013年</option>
+                                    <option value="2014">2014年</option>
+                                    <option value="2015">2015年</option>
+                                    <option value="2016">2016年</option>
+                                    <option value="2017">2017年</option>
+                                    <option value="2018">2018年</option>
+                                    <option value="2019">2019年</option>
+                                    <option value="2020">2020年</option>
+                                    <option value="2021">2021年</option>
+                                    <option value="2022">2022年</option>
+                                    <option value="2023">2023年</option>
+                                    <option value="2024">2024年</option>
+                                    <option value="2025">2025年</option>
+                                    <option value="2026">2026年</option>
+                                    <option value="2027">2027年</option>
+                                    <option value="2028">2028年</option>
+                                    <option value="2029">2029年</option>
+                                    <option value="2030">2030年</option>
+                                    <option value="2031">2031年</option>
+                                    <option value="2032">2032年</option>
+                                    <option value="2033">2033年</option>
+                                    <option value="2034">2034年</option>
+
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="wst-login-tr">
+                            <td class="wst-regist-td"><font color='red'>*</font>果品成熟时间：</td>
+                            <td>&nbsp;&nbsp;
+                                <select name="maturetime"style="margin-left: 5px;height: 40px;border-radius:5px;width: 150px" >
+                                    <option value="1">1月</option>
+                                    <option value="2">2月</option>
+                                    <option value="3">3月</option>
+                                    <option value="4">4月</option>
+                                    <option value="5">5月</option>
+                                    <option value="6">6月</option>
+                                    <option value="7">7月</option>
+                                    <option value="8">8月</option>
+                                    <option value="9">9月</option>
+                                    <option value="10">10月</option>
+                                    <option value="11">11月</option>
+                                    <option value="12">12月</option>
+
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="wst-login-tr">
+                            <td class="wst-regist-td"><font color='red'>*</font>采摘时间：</td>
+                            <td>
+
+                                &nbsp;&nbsp;&nbsp;从
+                                <select name="PickMonthFrom"style="margin-left: 5px;height: 40px;border-radius:5px;width: 87px" >
+                                    <option value="1">1月</option>
+                                    <option value="2">2月</option>
+                                    <option value="3">3月</option>
+                                    <option value="4">4月</option>
+                                    <option value="5">5月</option>
+                                    <option value="6">6月</option>
+                                    <option value="7">7月</option>
+                                    <option value="8">8月</option>
+                                    <option value="9">9月</option>
+                                    <option value="10">10月</option>
+                                    <option value="11">11月</option>
+                                    <option value="12">12月</option>
+
+                                </select><select name="PickDayFrom"style="height: 40px;border-radius:5px;width: 87px" >
+                                    <option value="1">1日</option>
+                                    <option value="2">2日</option>
+                                    <option value="3">3日</option>
+                                    <option value="4">4日</option>
+                                    <option value="5">5日</option>
+                                    <option value="6">6日</option>
+                                    <option value="7">7日</option>
+                                    <option value="8">8日</option>
+                                    <option value="9">9日</option>
+                                    <option value="10">10日</option>
+                                    <option value="11">11日</option>
+                                    <option value="12">12日</option>
+                                    <option value="13">13日</option>
+                                    <option value="14">14日</option>
+                                    <option value="15">15日</option>
+                                    <option value="16">16日</option>
+                                    <option value="17">17日</option>
+                                    <option value="18">18日</option>
+                                    <option value="19">19日</option>
+                                    <option value="20">20日</option>
+                                    <option value="21">21日</option>
+                                    <option value="22">22日</option>
+                                    <option value="23">23日</option>
+                                    <option value="24">24日</option>
+                                    <option value="25">25日</option>
+                                    <option value="26">26日</option>
+                                    <option value="27">27日</option>
+                                    <option value="28">28日</option>
+                                    <option value="29">29日</option>
+                                    <option value="30">30日</option>
+
+                                </select>-至-<select name="PickMonthTo"style="margin-left: 5px;height: 40px;border-radius:5px;width: 85px" >
+                                <option value="1">1月</option>
+                                <option value="2">2月</option>
+                                <option value="3">3月</option>
+                                <option value="4">4月</option>
+                                <option value="5">5月</option>
+                                <option value="6">6月</option>
+                                <option value="7">7月</option>
+                                <option value="8">8月</option>
+                                <option value="9">9月</option>
+                                <option value="10">10月</option>
+                                <option value="11">11月</option>
+                                <option value="12">12月</option>
+
+                            </select><select name="PickDayTo"style="height: 40px;border-radius:5px;width: 85px" >
+                                <option value="1">1日</option>
+                                <option value="2">2日</option>
+                                <option value="3">3日</option>
+                                <option value="4">4日</option>
+                                <option value="5">5日</option>
+                                <option value="6">6日</option>
+                                <option value="7">7日</option>
+                                <option value="8">8日</option>
+                                <option value="9">9日</option>
+                                <option value="10">10日</option>
+                                <option value="11">11日</option>
+                                <option value="12">12日</option>
+                                <option value="13">13日</option>
+                                <option value="14">14日</option>
+                                <option value="15">15日</option>
+                                <option value="16">16日</option>
+                                <option value="17">17日</option>
+                                <option value="18">18日</option>
+                                <option value="19">19日</option>
+                                <option value="20">20日</option>
+                                <option value="21">21日</option>
+                                <option value="22">22日</option>
+                                <option value="23">23日</option>
+                                <option value="24">24日</option>
+                                <option value="25">25日</option>
+                                <option value="26">26日</option>
+                                <option value="27">27日</option>
+                                <option value="28">28日</option>
+                                <option value="29">29日</option>
+                                <option value="30">30日</option>
+
+                            </select>
+                            </td>
+                        </tr>
+                        <tr class="wst-login-tr">
+                            <td class="wst-regist-td"><font color='red'>*</font>预计产量：</td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;KG:<input id="loginName" name="yield" class="wst_ipt wst-regist-input" tabindex="1" maxlength="30" autocomplete="off" onpaste="return false;" style="ime-mode:disabled;width:300px;margin-left: 2px" placeholder="预计产量"  type="number"/></td>
+                        </tr>
+                        <tr class="wst-login-tr">
+                            <td class="wst-regist-td"><font color='red'>*</font>果品品质认证：</td>
+                            <td>    &nbsp;&nbsp;
+
+                                {volist name=":lWSTSideAccreds()" id="vo" key="k"}
+                                {if condition="$k == 5"}
+                                <br />&nbsp;&nbsp;
+                                {/if}
+                                <input type="checkbox" name="quality[]" value="{$vo.accredId}">{$vo.accredName}
+                                {/volist}<br />
+                                &nbsp;&nbsp;&nbsp;<input type="checkbox" name="quality[]" value="0" checked="">其他
+
+                            </td>
+                        </tr>
+                        <tr class="wst-login-tr">
+                            <td class="wst-regist-td"><font color='red'>*</font>果品等级：</td>
+                            <td><input id="loginName" name="Grade" class="wst_ipt wst-regist-input" tabindex="1" maxlength="30" autocomplete="off" onpaste="return false;" style="ime-mode:disabled;" placeholder="果品等级"  type="text"/></td>
+                        </tr>
+                        <tr class="wst-login-tr">
+                            <td class="wst-regist-td"><font color='red'>*</font>包装规格：</td>
+                            <td><input id="loginName" name="loginName" class="wst_ipt wst-regist-input" tabindex="1" maxlength="30" autocomplete="off" onpaste="return false;" style="ime-mode:disabled;" placeholder="包装规格"  type="text"/></td>
+                        </tr>
+                        <tr class="wst-login-tr">
+                            <td class="wst-regist-td"><font color='red'>*</font>提供产品与服务：</td>
+                            <td>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="checkbox" name="service[]" value="1" checked>果品预售
+                                <input type="checkbox" name="service[]" value="2">现采快递
+                                <input type="checkbox" name="service[]" value="3">现场采摘
+                                <input type="checkbox" name="service[]" value="4">用户团购<br /> &nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="checkbox" name="service[]" value="5">用户众包
+                                <input type="checkbox" name="service[]" value="6">果树领养
+                                <input type="checkbox" name="service[]" value="7">果园旅游
+                                <input type="checkbox" name="service[]" value="8">农家乐
+                                <input type="checkbox" name="service[]" value="9">果园视频
+                            </td>
+                        </tr>
+
+
+                        <tr style="height:80px;">
+                            <td colspan="2" style="padding-left:260px;">
+
+                                <input id="reg_butt" class="wst-regist-but" type="button" value="提交" style="width: 180px;height:30px;"onclick="qqqqqqqqqq(this.form);"/>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__STATIC__/plugins/validator/jquery.validator.js?v={$v}"></script>
+<script type="text/javascript" src="__STATIC__/plugins/validator/local/zh-CN.js?v={$v}"></script>
+<script type='text/javascript' src='http://127.0.0.1:8080/wanjia__STYLE__/js/login.js?v={$v}'></script>
+<Script>$(function(){initRegist();})</Script>
+
+<!-- 代码部分begin -->
+
+<script src="__STATIC__/sanji/jquery-1.11.3.min.js"></script>
+<script src="__STATIC__/sanji/Popt.js"></script>
+<script src="__STATIC__/sanji/cityJson.js"></script>
+<script src="__STATIC__/sanji/citySet.js"></script>
+<script type="text/javascript">
+    function goodsCatIds(obj) {
+        var id = $(obj).val();
+
+        $.ajax({
+            url:"listQuery?id="+id,
+            dataType: 'json',
+            success:function(result){
+
+                if(result !== false){
+                    var length = result.length;
+                    var option = '';
+                    for ( var i = 0; i <length; i++){
+                        console.log(result[i]);
+                        var catId = result[i]['catId'];
+
+                        option +="<option value="+catId+">"+result[i]['catName']+"</option>";
+
+                    }
+                    var catIds2 = $("#catIds2");
+                    catIds2.empty();
+                    catIds2.append(option);
+
+                }
+            }});
+    }
+    function goodsCatIds1(obj) {
+        var id = $(obj).val();
+
+        $.ajax({
+            url:"listQuery?id="+id,
+            dataType: 'json',
+            success:function(result){
+
+                if(result !== false){
+                    var length = result.length;
+                    var option = '';
+                    for ( var i = 0; i <length; i++){
+                        console.log(result[i]);
+                        var catId = result[i]['catId'];
+
+                        option +="<option value="+catId+">"+result[i]['catName']+"</option>";
+
+                    }
+                    var catIds3 = $("#catIds3");
+                    catIds3.empty();
+                    catIds3.append(option);
+
+                }
+            }});
+    }
+    //判断果园名称是否存在
+    function shopNames(obj){
+        var val = $(obj).val();
+        if(val){
+            $.post(WST.U('home/shops/isShopName'),{text:val},function(data,textStatus){
+                if(data.status == '1'){
+                    WST.msg("果园名称已存在！",{icon:2});
+                    return false;
+                }
+                if(data.status == '-2'){
+                    WST.msg("果园名称正在等待管理员审核，不能注册！",{icon:2});
+                    return false;
+                }
+            });
+        }
+        return false;
+
+    }
+    function qqqqqqqqqq(form)
+    {
+
+        if (form.shopName.value == ''){
+            WST.msg("果园名称不能为空", {icon: 5});
+            form.shopName.focus();
+            return false;
+        }else if(form.shopkeeper.value == ''){
+
+            WST.msg("果园主姓名称不能为空", {icon: 5});
+            form.shopkeeper.focus();
+            return false;
+        }else if(form.city.value == ''){
+            WST.msg("果园地址不能为空", {icon: 5});
+            form.city.focus();
+            return false;
+        }else if(form.telephone.value == ''){
+
+            WST.msg("联系电话不能为空", {icon: 5});
+            form.telephone.focus();
+            return false;
+        }else if(form.CatIds3.value == ''){
+            WST.msg("水果品种不能为空", {icon: 5});
+            form.catIds1.focus();
+            return false;
+        }else{
+            document.form1.submit();
+        }
+
+    }
+
+    $(function(){
+        $("#city").click(function (e) {
+            SelCity(this,e);
+        });
+
+    })
+
+</script>
+<script type="text/javascript">
+    function goodsCatIds11() {
+        //$("# pageSelect option:select").value;
+        alert(1);
+    }
+
+</script>
+<!-- 代码部分end -->
+{/block}

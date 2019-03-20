@@ -1,0 +1,151 @@
+{extend name="mobile/base"}
+{block name="css"}
+<link rel="stylesheet" href="__MOBILE__/photoClip/style.css?v=2">
+{/block}
+{block name="main"}
+<!--加载资源-->
+
+<div class="lazy_tip" id="lazy_tip"><span>1%</span><br>	载入中......</div>
+<div class="lazy_cover"></div>
+<div class="resource_lazy hide"></div>
+<div class="pic_edit">
+	<div id="photoTop">
+		<a href="javascript:window.history.back();"><i class="fa fa-angle-left"></i></a>
+		<span>修改头像</span>
+	</div>
+	<div style="color:#4eaf7a;font-size: 25px;line-height: 70px;">双指旋转和双指缩放</div>
+	<div id="clipArea"></div>
+	<button id="upload2">选择图片</button>
+    <button id="clipBtn">上传图片</button>
+	<input type="file" id="file" style="opacity: 0;position: fixed;bottom: -100px">
+    <div id="plan" style="display:none">比例剪切后尺寸<canvas id="myCanvas"></canvas><h2 onClick="Close();" style="cursor:pointer; display:inline-block">关闭</h2></div>
+</div>
+<img src="" fileName="" id="hit" style="display:none;z-index: 9">
+
+<div id="cover"></div>
+<script src="__MOBILE__/photoClip/jquery-2.1.0.min.js"></script>
+<script src="__MOBILE__/photoClip/sonic.js"></script>
+<script src="__MOBILE__/photoClip/comm.js"></script>
+<script src="__MOBILE__/photoClip/hammer.js"></script>
+<script src="__MOBILE__/photoClip/iscroll-zoom.js"></script>
+<script src="__MOBILE__/photoClip/jquery.photoClip.js?v=1"></script>
+<script>
+var hammer = '';
+var currentIndex = 0;
+var body_width = $('body').width();
+var body_height = $('body').height();
+
+$("#clipArea").photoClip({
+	width: body_width * 0.85,
+	height: body_width * 0.85,
+	file: "#file",
+	view: "#hit",
+	ok: "#clipBtn",
+	loadStart: function () {
+		//console.log("照片读取中");
+		$('.lazy_tip span').text('');
+		$('.lazy_cover,.lazy_tip').show();
+	},
+	loadComplete: function () {
+		//console.log("照片读取完成");
+		$('.lazy_cover,.lazy_tip').hide();
+	},
+	clipFinish: function (dataURL) {
+		$('#hit').attr('src', dataURL);
+		saveImageInfo();
+	}
+});
+
+//图片上传
+function saveImageInfo() {
+	var filename = $('#hit').attr('fileName');
+	var img_data = $('#hit').attr('src');
+	if(img_data==""){alert('null');}
+	//alert(filename+'|'+img_data);
+   	render(img_data); 
+	
+	$.post("这里填写图片获取的网址", {image: img_data}, function (data) {
+		if (data != '') {
+//			console.info(data);
+			//data 为返回文件名；
+			alert('提交成功');
+		}
+	});
+}
+
+/*获取文件拓展名*/
+function getFileExt(str) {
+	var d = /\.[^\.]+$/.exec(str);
+	return d;
+}
+
+//图片上传结束
+$(function () {
+	$('#upload2').on('touchstart', function () {
+		//图片上传按钮
+		$('#file').click();
+	});
+})
+
+
+function Close(){$('#plan').hide();}
+
+// 渲染 Image 缩放尺寸  
+function render(src){ 
+	var load = layer.open({type: 2,content: '请稍后...'});
+	 var MAX_HEIGHT = 256;  //Image 缩放尺寸 
+    // 创建一个 Image 对象  
+    var image = new Image();  
+	
+    // 绑定 load 事件处理器，加载完成后执行  
+    image.onload = function(){  
+		// 获取 canvas DOM 对象  
+  		var canvas = document.getElementById("myCanvas"); 
+        // 如果高度超标  
+        if(image.height > MAX_HEIGHT) {  
+            // 宽度等比例缩放 *=  
+            image.width *= MAX_HEIGHT / image.height;  
+            image.height = MAX_HEIGHT;  
+        }  
+        // 获取 canvas的 2d 环境对象,  
+        // 可以理解Context是管理员，canvas是房子  
+        var ctx = canvas.getContext("2d");  
+        // canvas清屏  
+        ctx.clearRect(0, 0, canvas.width, canvas.height); 
+        canvas.width = image.width;        // 重置canvas宽高  
+        canvas.height = image.height;  
+        // 将图像绘制到canvas上  
+        ctx.drawImage(image, 0, 0, image.width, image.height);  
+        // !!! 注意，image 没有加入到 dom之中  
+		
+	 	var dataurl = canvas.toDataURL("image/jpeg").split(',')[1]; 
+	 	$.ajax({
+	        url: WST.U('home/index/mobUploadPic'),
+	        type: "POST",
+	        data: {
+	            "uploadPic": dataurl,
+	            "dir":'users'
+	        },
+	        success: function(data) {
+	            if(data.status==1){
+	            	layer.close(load);
+	            	layer.open({style:'width:60%;font-size:25px;',content:data.msg,time:1});
+	            	setTimeout(function(){
+	            		location.href = WST.U('home/users/edit');
+	            	}, 800)
+	            }else{
+	            	layer.close(load);
+	            	layer.open({style:'width:60%;font-size:25px;',content:data.msg,time:1});
+	            }
+	        }
+    	});
+	 // var imagedata =  encodeURIComponent(dataurl);
+	 	// $('#plan').html(dataurl); 
+	  // $('#plan').show();
+    };  
+    // 设置src属性，浏览器会自动加载。  
+    // 记住必须先绑定render()事件，才能设置src属性，否则会出同步问题。  
+    image.src = src;	
+};  
+</script>
+{/block}

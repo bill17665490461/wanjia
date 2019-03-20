@@ -1,0 +1,335 @@
+<link href="http://127.0.0.1:8080/wanjia__STYLE__/css/goodslist.css?v={$v}" rel="stylesheet">
+<div class="wst-header">
+    <div class="wst-nav">
+		<ul class="headlf" style='float:left;width:500px;'>
+		{if condition="session('WST_USER.userId') >0"}
+		   <li class="drop-info">
+			  <div class="drop-infos">
+			  <a href="{:Url('home/users/index')}">欢迎您，{:session('WST_USER.userName')?session('WST_USER.userName'):session('WST_USER.loginName')}</a>
+			  </div>
+			  <div class="wst-tag dorpdown-user">
+			  	<div class="wst-tagt">
+			  	   <div class="userImg" >
+				  	<img class='usersImg' data-original="__ROOT__/{:session('WST_USER.userPhoto')}"/>
+				   </div>	
+				  <div class="wst-tagt-n">
+				    <div>
+					  	<span class="wst-tagt-na">{:session('WST_USER.userName')?session('WST_USER.userName'):session('WST_USER.loginName')}</span>
+					  	{if (int)session('WST_USER.rankId') > 0 }
+					  		<img src="__ROOT__/{:session('WST_USER.userrankImg')}" title="{:{:session('WST_USER.rankName')}"/>
+					  	{/if}
+				  	</div>
+				  	<div class='wst-tags'>
+			  	     <span class="w-lfloat"><a onclick='WST.position(15,0)' href='{:Url("home/users/edit")}'>用户资料</a></span>
+			  	     <span class="w-lfloat" style="margin-left:10px;"><a onclick='WST.position(16,0)' href='{:Url("home/users/security")}'>安全设置</a></span>
+			  	    </div>
+				  </div>
+			  	  <div class="wst-tagb" style='display:none'>
+			  		<a>待处理订单</a>
+			  		<a>我的余额</a>
+			  		<a>我的消息</a>
+			  		<a>我的积分</a>
+			  		<a>我的关注</a>
+			  		<a>咨询回复</a>
+			  	  </div>
+			  	<div class="wst-clear"></div>
+			  	</div>
+			  </div>
+			</li>
+			<li class="spacer">|</li>
+			<li class="drop-info">
+			<a href='{:Url("home/messages/index")}'   onclick='WST.position(49,0)'>消息（<span id='wst-user-messages'>0</span>）</a>
+			</li>
+			<li class="spacer">|</li>
+			<li class="drop-info">
+			  <div><a href="javascript:WST.logout();">退出</a></div>
+			</li>
+			{else /}
+			<li class="drop-info">
+			  <div>欢迎来到{:WSTMSubstr(WSTConf('CONF.mallName'),0,13)}<a href="{:Url('home/users/login')}">&nbsp;&nbsp;请&nbsp;登录</a></div>
+			</li>
+			<li class="spacer">|</li>
+			<li class="drop-info">
+			  <div><a href="{:Url('home/users/regist')}">免费注册</a></div>
+			</li>
+			
+			<li class="spacer">|</li>
+			<li class="drop-info">
+			
+				<div class='city wst-address' style="margin-top: 3px;">
+						<div class='item dorpdown'>
+						 <div class='drop-down'>
+							<a class='link' href='__ROOT__'>
+								{if empty($TabareaInfo['areaName'])}
+								全国地址
+								{else /}
+									{$TabareaInfo['areaName']}
+								{/if}
+							</a>
+							<i class="drop-down-arrow"></i>
+						 </div>
+						 <div class="dorp-down-layer" style="z-index: 999;">
+							<div class="tab-header">
+							 <ul class="tab">
+								<li class="tab-item1 j-tab-selected1" id="tal_1_1" onclick="tagpanelOver(this);" c="1" >
+									{if isset($TabareaInfo)}
+									<a href='javascript:void(0)'>{$TabareaInfo[0]['areaName']}</a>
+									{else /}
+									<a href='javascript:void(0)'>请选择</a>
+									{/if}
+								</li>
+
+								{if isset($TabareaInfo)}
+								<li class="tab-item1" id="tal_1_2"  onclick="tagpanelOver(this);" c="1" >
+									<a href="javascript:void(0)">{$TabareaInfo[1]['areaName']}</a>
+								</li>
+								<li class="tab-item1"  id="fl_1_3" onclick="tagpanelOver(this);" c="1" >
+									<a href="javascript:void(0)">{$TabareaInfo[2]['areaName']}</a>
+								</li>
+								{else /}
+								<li class="tab-item1" id="tal_1_2" style="display:none;" onclick="tagpanelOver(this);" c="1" pid="" >
+									<a href="javascript:void(0)">请选择</a>
+								</li>
+								<li class="tab-item1"  style="display:none;"  id="tal_1_3" onclick="tagpanelOver(this);" c="1" pid="" >
+									<a href="javascript:void(0)">请选择</a>
+								</li>
+								{/if}
+							 </ul>
+							</div>
+							 <ul class="area-box" id="tal_1_1_pl" style="">
+								{volist name="$Tabarea1" id="area1"}
+								<li onclick="tachoiceArea(this,{$area1['areaId']})" search='1'><a href="javascript:void(0)">{$area1['areaName']}</a></li>
+								{/volist}
+							</ul>
+							<ul class="area-box" id="tal_1_2_pl" style="">
+								{volist name="$Tabarea2" id="area2"}
+								<li onclick="tachoiceArea(this,{$area2['areaId']})" search='1'><a href="javascript:void(0)">{$area2['areaName']}</a></li>
+								{/volist}
+							</ul>
+
+							<ul class="area-box" id="tal_1_3_pl">
+								{volist name="$Tabarea3" id="area3"}
+								<li onclick="tachoiceArea(this,{$area3['areaId']})" search='1'><a href="javascript:void(0)">{$area3['areaName']}</a></li>
+								{/volist}
+							</ul>
+
+						</div>
+
+
+						</div>
+				</div>
+				<input type="hidden" id="areaId" class="sipt" value='{$TabareaId}'/>
+			 
+			</li>
+			{/if}
+		</ul>
+		<ul class="headrf" style='float:right;'>
+		    <li class="j-dorpdown">
+				<div class="drop-down" style="padding-left:0px;">
+					<a href="{:Url('home/users/index')}"  >我的订单<i class="di-right"><s>◇</s></i></a>
+				</div>
+				<div class='j-dorpdown-layer order-list'>
+				   <div><a href='{:Url("home/orders/waitPay")}' onclick='WST.position(3,0)'>待付款订单</a></div>
+				   <div><a href='{:Url("home/orders/waitReceive")}' onclick='WST.position(5,0)'>待收货订单</a></div>
+				   <div><a href='{:Url("home/orders/waitAppraise")}' onclick='WST.position(6,0)'>待评价订单</a></div>
+				</div>
+			</li>	
+			
+			<li class="spacer">|</li>
+			<li class="j-dorpdown">
+				<div class="drop-down drop-down2 pdr5"><i class="di-left"></i><a href="#"  >手机商城</a></div>
+				<div class='j-dorpdown-layer sweep-list'>
+				   <div class="qrcodea">
+					   <div id='qrcodea' class="qrcodeal"></div>
+				   </div>
+				</div>
+			</li>
+			<li class="spacer">|</li>
+			<li class="j-dorpdown">
+				<div class="drop-down drop-down4 pdr5"><a href="#"  >我的收藏</a></div>
+				<div class='j-dorpdown-layer foucs-list'>
+				   <div><a href="{:Url('home/favorites/goods')}" onclick='WST.position(41,0)'>商品收藏</a></div>
+				   <div><a href="{:Url('home/favorites/shops')}" onclick='WST.position(46,0)'>店铺收藏</a></div>
+				</div>
+			</li>
+			<li class="spacer">|</li>
+			<li class="j-dorpdown">
+				<div class="drop-down drop-down5 pdr5" ><a href="#"  >客户服务</a></div>
+				<div class='j-dorpdown-layer des-list'>
+				   <div><a href='{:Url("home/helpcenter/view","id=1")}'  >帮助中心</a></div>
+				   <div><a href='{:Url("home/helpcenter/view","id=8")}'  >售后服务</a></div>
+				   <div><a href='{:Url("home/helpcenter/view","id=3")}'  >常见问题</a></div>
+				</div>
+			</li>
+			<li class="spacer">|</li>
+			{if condition="session('WST_USER.userId') gt 0"}
+				{if condition="session('WST_USER.userType') eq 0"}
+				<li class="j-dorpdown">
+				<div class="drop-down pdl5" ><a href="#"  >商家管理<i class="di-right"><s>◇</s></i></a></div>
+				<div class='j-dorpdown-layer foucs-list'>
+				   <div><a href="{:url('home/shops/login')}">商家登录</a></div>
+				   <div><a href="{:url('home/agencys/login')}">区域商登录</a></div>
+				   <!--<div><a href="javascript:shopApply();" rel="nofollow">我要开店</a></div>-->
+					<div><a href="javascript:;" rel="nofollow"  onclick='javascript:Cegister()'>我要开店</a></div>
+				</div>
+				</li>
+				{include file="default/shop_apply" /}
+				{elseif condition="session('WST_USER.userType') eq 1" /}
+				<li class="j-dorpdown">
+				    <div class="drop-down pdl5" >
+				       <a href="{:Url('home/shops/index')}" rel="nofollow"  >卖家中心<i class="di-right"><s>◇</s></i></a>
+				    </div>
+				    <div class='j-dorpdown-layer product-list last-menu'>
+					   <div><a href='{:Url("home/orders/waitdelivery")}' onclick='WST.position(24,1)'>待发货订单</a></div>
+					   <div><a href='{:Url("home/orders/waitdelivery")}' onclick='WST.position(25,1)'>投诉订单</a></div>
+					   <div><a href='{:Url("home/home/goods/sale")}' onclick='WST.position(32,1)'>商品管理</a></div>
+					   <div><a href='{:Url("home/shopcats/index")}' onclick='WST.position(30,1)'>商品分类</a></div>
+					</div>
+				</li>
+				{else /}
+				<li class="j-dorpdown">
+				    <div class="drop-down pdl5" >
+				       <a href="{:Url('home/agencys/index')}" rel="nofollow"  >区域商中心<i class="di-right"><s>◇</s></i></a>
+				    </div>
+				    <div class='j-dorpdown-layer product-list last-menu'>
+					   <div><a href='{:Url("home/agencys/shopList")}' onclick='WST.position(65,1)'>店铺列表</a></div>
+					   <div><a href='{:Url("home/agencysettlements/agencyIndex")}' onclick='WST.position(67,1)'>订单结算</a></div>
+					   <div><a href='{:Url("home/logmoneys/agencymoneys")}' onclick='WST.position(68,1)'>资金流水</a></div>
+					</div>
+				</li>
+				{/if}
+			{else /}
+				<li class="j-dorpdown">
+				<div class="drop-down pdl5" ><a href="#"  >商家管理<i class="di-right"><s>◇</s></i></a></div>
+				<div class='j-dorpdown-layer foucs-list'>
+				   <div><a href="{:url('home/shops/login')}">商家登录</a></div>
+				   <div><a href="{:url('home/agencys/login')}">代理商登录</a></div>
+				   <div>
+					   <!--<a href="javascript:;" rel="nofollow"  onclick='javascript:Cegister()'>我要开店</a>-->
+					   <a href="{:url('home/shops/shopCegister')}" rel="nofollow">我要开店</a>
+				   </div>
+
+				</div>
+				</li>
+				{include file="default/shop_apply" /}
+			{/if}
+			</li>
+		</ul>
+		<div class="wst-clear"></div>
+  </div>
+</div>
+<script>
+
+$(function(){
+	WST.dropDownLayer(".item",".dorp-down-layer");
+	$('.j-tab-selected1').click();
+});
+
+function Cegister(){
+
+    $.post("{:url('home/shops/shopCegister')}",1,function(data){
+        if(data.status==2){
+            alert(1)
+            location.href=WST.U('home/users/index');
+        }else{
+
+            WST.msg(json.msg, {icon: 5});
+
+        }
+    });
+}
+
+/*发货地*/
+function tagpanelOver(obj){
+	var sid = $(obj).attr("id");
+
+	var index = $(obj).attr('c');
+
+	var ids = sid.split("_");
+	var preid = ids[0]+"_"+ids[1];
+	if(ids[2]==1){
+		$("li[id^="+preid+"_]").hide();
+		$("#"+sid).show();
+	}else if(ids[2]==2){
+		$('#tal_1_3').hide();
+	}
+
+	$("li[id^="+preid+"_]").removeClass("j-tab-selected"+index);
+	$("#"+sid).addClass("j-tab-selected"+index);
+	
+	$("ul[id^="+preid+"_]").hide();
+	$("#"+sid+"_pl").show();
+}
+function tachoiceArea(t,pid){
+	var areaName = $(t).find('a').html();
+	var parent = $(t).parent().attr('id');
+	var ids = parent.split("_");
+	var preid = "#"+ids[0]+"_"+ids[1]+"_"+ids[2];
+
+	//alert(pid);return;
+	if(ids[2]==3){
+		$(preid).find('a').html(areaName);
+		// 执行发货地筛选
+		$('#areaId').val(pid);
+		var ipts = WST.getParams('.sipt');
+		var params = [];
+		for(var key in ipts){
+			if(ipts[key]!='')params.push(key+"="+ipts[key]);
+		}
+		
+		var url = ($(t).attr('search')==1)?'home/goods/search':'home/goods/lists';
+		location.href=WST.U(url,params.join('&'));
+	}else{
+		// 替换当前选中地区
+		$(preid).find('a').html(areaName);
+
+		$(preid).removeClass('j-tab-selected'+ids[1]);
+
+
+		var next = parseInt(ids[2])+1;
+		var nextid = "#"+ids[0]+"_"+ids[1]+"_"+next;
+		$(nextid).show();
+		$(nextid).addClass("j-tab-selected"+ids[1]);
+		// 替换下级地图标题
+		$(nextid).html('<a href="javascript:void(0)">请选择</a>');
+
+		// 获取下级地区信息
+		
+		$.post(WST.U('home/areas/listQuery'),{parentId:pid},function(data){
+			// 判断搜索页面
+			var search = $(t).attr('search');
+			if(search==1){search = 'search="1"';}
+			
+			var json = WST.toJson(data);
+			if(json.status==1){
+				var html = '';
+				$(json.data).each(function(k,v){
+
+					html +='<li onclick="tachoiceArea(this,'+v.areaId+')" '+search+' ><a href="javascript:void(0)">'+v.areaName+'</a></li>';
+				});
+				$(nextid+"_pl").html(html);
+			}
+		});
+
+		// 隐藏当前地区,显示下级地区
+		var preid = ids[0]+"_"+ids[1];
+		$("ul[id^="+preid+"_]").hide();
+		$(nextid+"_pl").show();
+	}
+}
+
+
+$(function(){
+	//二维码
+	//参数1表示图像大小，取值范围1-10；参数2表示质量，取值范围'L','M','Q','H'
+	var a = qrcode(8, 'M');
+	var url = window.location.host+window.conf.APP;
+	a.addData(url);
+	a.make();
+	$('#qrcodea').html(a.createImgTag());
+});
+function goShop(id){
+  location.href=WST.U('home/shops/home','shopId='+id);
+}
+</script>
+<script type='text/javascript' src='__STYLE__/js/qrcode.js?v={$v}'></script>

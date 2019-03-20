@@ -1,0 +1,13 @@
+.userInfo{padding:20px;background-color: #fff;margin-top: 20px;height: 100px;}
+.userPhoto{width: 100px;float: left;}
+.userPhoto img{width: 100%;border-radius: 50%;}
+.name_score{width: 300px;padding-left: 20px;float: left;font-size: 25px;line-height: 50px;}
+.detail_title{background-color: #fff;font-size: 25px;line-height: 60px;margin: 2px 0;padding:0 20px;
+	font-weight: bold;}
+
+.scoreDetail{background-color: #fff;padding:0 20px;margin-top: 3px;}
+.dataSrc{font-size: 25px;line-height: 50px;}
+.scoreNum{font-size: 22px;line-height: 40px;color:#888;}
+.remark{font-size: 22px;line-height: 40px;color:#888;}
+
+.dropload-down{font-size: 20px!important}

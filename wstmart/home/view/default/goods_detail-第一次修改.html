@@ -1,0 +1,184 @@
+{extend name="default/base" /}
+{block name="title"}{$goods['goodsName']} - {:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="meta"}
+<meta name="description" content="{$goods['goodsName']}">
+<meta name="Keywords" content="{$goods['goodsSeoKeywords']}">
+{/block}
+{block name="css"}
+<link href="__STYLE__/css/goods.css?v={$v}" rel="stylesheet">
+{/block}
+{block name="nav"}
+	{include file="default/header" /}
+{/block}
+
+{block name="main"}
+    <div class="detail_top">
+        <div class="top_tags">
+            <div class="top_tag tag_checked">果园介绍</div>
+            <div class="top_tag">商品详情</div>
+            <div class="top_tag">现场采摘</div>
+            <div class="top_tag">果树领养</div>
+            <div class="top_tag">果园众包</div>
+            <div class="top_tag">现采预定</div>
+            <div class="top_tag">商品评价</div>            
+        </div>
+    </div>
+    <div>
+        <div class="detail_info">
+            <div class="shopContent">{$shop['shopContent']}</div>
+        </div>
+        <div class="detail_info" style="display: none">
+            <div class="goodsDesc">{$goods['goodsDesc']}</div>
+        </div>
+        <div class="detail_info" style="display: none">
+            <div class="pickDesc">{$goods['pickDesc']}</div>
+        </div>
+        <div class="detail_info" style="display: none">
+            <div class="pickDesc">{$goods['adoptDesc']}</div>
+        </div>
+        <div class="detail_info" style="display: none">
+            <div class="pickDesc">{$goods['crowdDesc']}</div>
+        </div>
+        <div class="detail_info" style="display: none">
+            <div class="pickDesc">{$goods['reserveDesc']}</div>
+        </div>
+        <div class="detail_info" style="display: none">
+            <div class='goods-desc'>
+            <div id='tab' class="wst-tab-box">
+                <ul class="wst-tab-nav">
+                   <li></li>
+                </ul>
+                <div class="wst-tab-content" style='width:99%;margin-bottom: 10px;min-height:1312px;'>
+             <input type="hidden" id="filtertype" value="all" />
+             <script id="tblist" type="text/html">
+              <div class="appr-filter">
+                <ul class="appr-filterbox">
+                  <li><a href="javascript:void(0)" onclick="apprfilter('all')" id='all'>全部评价(<span id="totalNum">0</span>)</a></li>
+                  <li><a href="javascript:void(0)" onclick="apprfilter('pic')" id='pic'>晒图(<span id="picNum">0</span>)</a></li>
+                  <li><a href="javascript:void(0)" onclick="apprfilter('best')" id='best'>好评(<span id="bestNum">0</span>)</a></li>
+                  <li><a href="javascript:void(0)" onclick="apprfilter('good')" id='good'>中评(<span id="goodNum">0</span>)</a></li>
+                  <li><a href="javascript:void(0)" onclick="apprfilter('bad')" id='bad'>差评(<span id="badNum">0</span>)</a></li>
+                </ul>
+              </div>
+               {{# for(var i = 0; i < d.length; i++){ }}
+               <div class="appraises-box">
+               <div class="wst-appraises-right">
+                  <div class="userinfo">
+                    <img data-original="__ROOT__/{{d.userPhoto}}" class="apprimg" />
+                    <div class="appraiser">
+                        {{d[i]['loginName']}}
+                    </div>
+                  </div>
+                  <p>{{d[i].rankName}}</p>
+               </div>
+                <div class="wst-appraises-left">
+                  <div class="appr-starbox">
+                    {{#  for(var j=0;j<d[i].avgScore;++j){ }}
+                      <div class="appr-star"></div>
+                    {{# }  }}
+                    {{#for(var g=0;g<5-d[i].avgScore;++g){ }}
+                        <div class="appr-star-off"></div>
+                    {{# }  }}
+                  </div>
+                  <div class='wst-clear'></div>
+                  <p class="app-content">
+                    {{d[i]['content']}}
+                    <div class="goods-spec-box">
+                        {{d[i]['goodsSpecNames']}}
+                    </div>
+                  </p>
+                  {{#  if(WST.blank(d[i]['images'])!=''){ var img = d[i]['images'].split(','); var length = img.length;  }}
+                  <div id="img-file-{{i}}">
+                  {{#  for(var g=0;g<length;g++){  }}
+                         <img src="__ROOT__/{{img[g].replace('.','_thumb.')}}" layer-src="__ROOT__/{{img[g]}}"  style="width:80px;height:80px;" />
+                  {{#  } }}
+                  </div>
+                  {{# }  }}
+                  <span class="apprtime">{{d[i]['createTime']}}</span>
+                  {{# if(d[i]['shopReply']!='' && d[i]['shopReply']!=null){ }}
+                  <div class="reply-box">
+                     <p class="reply-content"><a href="javascript:void(0)" onclick="goShop({{d[i]['shopId']}})">{{d[i]['shopName']}}</a>：{{d[i]['shopReply']}}</p>
+                     <p class="reply-time">{{d[i]['replyTime']}}</p>
+                 </div>
+                 {{# } }}
+
+               </div>
+             <div class="wst-clear"></div>
+              </div> 
+               {{# } }}
+               </script>
+                   <div class="wst-tab-item" style="position: relative;display:none;">
+                <div class="appraise-head">
+                  <div class="app-head-l">
+                    <div class="app-head-lbox">
+                      <strong class="text">好评度</strong>
+                      <div class='percent'>
+                        <i class="best_percent">0</i><span>%</span>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="app-head-r">
+                    <div class="app-head-rbox">
+                      <div class="app-hr-item">
+                        <div class="app-hr-text">好评(<i class="best_percent">0</i>%)</div>
+                        <div class="percentbox">
+                            <div class="percentbg" id="best_percentbg" style="width:0%"></div>
+                        </div>
+                      </div>
+                      <div class="app-hr-item">
+                        <div class="app-hr-text">中评(<i class="good_percent">0</i>%)</div>
+                        <div class="percentbox">
+                            <div class="percentbg" id="good_percentbg" style="width:0%"></div>
+                        </div>
+                      </div>
+                      <div class="app-hr-item">
+                        <div class="app-hr-text">差评(<i class="bad_percent">0</i>%)</div>
+                        <div class="percentbox">
+                            <div class="percentbg" id="bad_percentbg" style="width:0%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div id='ga-box'>
+
+                </div>
+                <div id='pager' style='text-align:center;'></div>
+             </div>
+            </div>
+        </div>  
+        </div> 
+    </div>
+    {include file="default/right_cart"/}
+{/block}
+
+{block name="js"}
+<script>
+var goodsInfo = {
+	id:{$goods['goodsId']},	
+	isSpec:{$goods['isSpec']},
+	goodsStock:{$goods['goodsStock']},
+	marketPrice:{$goods['marketPrice']},
+	goodsPrice:{$goods['shopPrice']}
+	{if isset($goods['saleSpec'])}
+	,sku:{:json_encode($goods['saleSpec'])}
+	{/if}
+}
+$(".top_tag").on('click',function(){
+    var index = $(this).index();
+    $(this).addClass('tag_checked').siblings().removeClass('tag_checked');
+    $(".detail_info").hide();
+    $(".detail_info").eq(index).show();
+});
+</script>
+<script type='text/javascript' src='__STYLE__/js/cloudzoom.js?v={$v}'></script>
+<script type='text/javascript' src='__STYLE__/js/goods.js?v={$v}'></script>
+<script type='text/javascript' src='__STYLE__/js/qrcode.js?v={$v}'></script>
+<script>
+$(function(){
+  queryByPage();
+});
+</script>
+{/block}

@@ -1,0 +1,105 @@
+{extend name="mobile/base"}
+{block name="main"}
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+<meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta content="telephone=no,email=no" name="format-detection">
+<meta http-equiv="Pragma" &nbsp;content="no-cache">
+<meta http-equiv="Cache-Control" &nbsp;content="no-cache,no-store,must-revalidate,post-check=0,ptr-check=0">
+
+<script type="text/javascript">
+    function jsApiCall()
+    {
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest',
+            <?php echo $jsApiParameters; ?>,
+            function(res){
+               // WeixinJSBridge.log(res.err_msg);
+               //alert(res.err_code+res.err_desc+res.err_msg);
+				if(res.err_msg=='get_brand_wcpay_request:ok'){
+					window.location.href=WST.U('home/Orders/wxOrder','orderNo={$orderNO}');
+                }
+            }
+           
+        );
+    }
+
+    function callpay()
+    {
+		//window.location.href=WST.U('home/Orders/wxOrder','orderNo={$orderNO}');
+		
+		//return false;
+		
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        }else{
+            jsApiCall();
+        }
+    }
+  
+    function editAddress()
+    {
+        WeixinJSBridge.invoke(
+            'editAddress',
+            <?php echo $editAddress; ?>,
+            function(res){
+                var value1 = res.proviceFirstStageName;
+                var value2 = res.addressCitySecondStageName;
+                var value3 = res.addressCountiesThirdStageName;
+                var value4 = res.addressDetailInfo;
+                var tel = res.telNumber;
+               
+               // alert(value1 + value2 + value3 + value4 + ":" + tel);
+            }
+        );
+    }
+    
+    window.onload = function(){
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', editAddress, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', editAddress); 
+                document.attachEvent('onWeixinJSBridgeReady', editAddress);
+            }
+        }else{
+            editAddress();
+        }
+    };
+</script>
+
+<style>
+  body{background:#fff;}
+  #payimg{    
+    height: 300px;
+    text-align: center;
+    margin-top: 60px;}
+  #payimg img{
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;}
+  .paysub{
+    width: 80%;height:50px;margin:auto;margin-top:15px;border-radius:5px;background:#F9526E;color:#fff;
+  }
+
+</style>
+<div class="container" style="">
+  <div id="payimg">
+	<img src="http://127.0.0.1:8080/wanjia__MOBILE__/images/bg_xx.png"  >
+    <p style="margin-top: 20px;">您还没付款哦，点击立即付款</p>
+    <p style="margin-top: 20px;color:#F9526E;font-weight:bold;font-size:24px;">￥{$needPay}</p>
+  </div>
+  <div class="js_jg d_footer" style="border:none;text-align:center;">
+    <input type="button" style="border:none;" class="paysub btn btn-main fr" onclick="callpay()" value="微信支付">
+    <a href="__ROOT__/home/Orders/wxOrder/orderNo/{$orderNO}" style="border:none;" class="paysub btn btn-main fr" value="微信支付">测试支付</a>
+    </div>
+   
+</div>
+{/block}

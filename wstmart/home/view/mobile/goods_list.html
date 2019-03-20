@@ -1,0 +1,80 @@
+{extend name="mobile/base"}
+{block name="title"}商品列表 -{:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="css"}
+<style type="text/css">
+.goods-listh{background-color: #fff}
+.goods-listh a{font-size: 25px;display: inline-block;width: 24%;text-align: center;line-height: 50px;}
+.goods-a{color:#cc3333;border-bottom: 2px solid #cc3333}
+</style>
+{/block}
+{block name="js"}
+{/block}
+
+{block name="main"}
+	{include file="mobile/goodsListTop"}
+	<div style="height: 75px;"></div>
+	<input type="hidden" id="cat" class="sipt" value='{$catId}'/>
+	<input type="hidden" id="orderBy" class="sipt" value='{$orderBy}'/>
+	<input type="hidden" id="order" class="sipt" value='{php}echo ($order=="0")?"1":"0";{/php}' autocomplete="off"/>
+	<div class="goods-listh">
+		<a href="javascript:void(0);" onclick="javascript:goodsOrder(0)" class="{if condition="$orderBy eq 0"}goods-a {/if}">销量 {if condition="$orderBy eq 0 and $order eq 0"}<i class="fa fa-arrow-up"></i>{else/}<i class="fa fa-arrow-down"></i>{/if}</a>
+
+		<a href="javascript:void(0);" onclick="javascript:goodsOrder(1)" class="{$orderBy==1?'goods-a':''}">价格 {if condition="$orderBy eq 1 and $order eq 0"}<i class="fa fa-arrow-up"></i>{else/}<i class="fa fa-arrow-down"></i>{/if}</a>
+
+		<a href="javascript:void(0);" onclick="javascript:goodsOrder(3)" class="{$orderBy==3?'goods-a':''}">人气 {if condition="$orderBy eq 3 and $order eq 0"}<i class="fa fa-arrow-up"></i>{else/}<i class="fa fa-arrow-down"></i>{/if}</a>
+
+		<a href="javascript:void(0);" onclick="javascript:goodsOrder(4)" class="{$orderBy==4?'goods-a':''}">上架时间 {if condition="$orderBy eq 4 and $order eq 0"}<i class="fa fa-arrow-up"></i>{else/}<i class="fa fa-arrow-down"></i>{/if}</a>
+	</div>
+	{volist name="goodsPage" id="goods"}
+	<div class="mobGoods">
+		<div class="mobGoods_img"><a href="{:Url('home/goods/detail','id='.$goods['goodsId'])}"><img title="{$goods['goodsName']}" src="__ROOT__/{$goods['goodsImg']}"/></a></div>
+		<div class="mobGoods_name"><a href="{:Url('home/goods/detail','id='.$goods['goodsId'])}">{:WSTMSubstr($goods['goodsName'],0,22)}</a></div>
+		<div style="padding:10px 0">
+			<div class="mobGoods_price">￥{$goods['shopPrice']}</div>
+			<div class="mobSale_num">成交数：<span style="color: red">{$goods['saleNum']}</span></div>
+		</div>
+	</div>
+	{/volist}
+	<div style="clear: both;"></div>
+	<div style="text-align: center;">{$goodsPage->render()}</div>
+
+	<!-- 向上箭头 -->
+	<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+
+	<!-- 底部导航 -->
+	<div style="height: 105px;"></div>
+	{include file="mobile/bottom"}
+
+<script type="text/javascript">
+	function goodsFilter(obj,vtype){
+		if(vtype==1){
+			$('#brand').val($(obj).attr('v'));
+		}else if(vtype==2){
+			var price = $(obj).attr('v');
+			price = price.split('_');
+			$('#sprice').val(price[0]);
+			$('#eprice').val(price[1]);
+		}else if(vtype==3){
+			$('#v_'+$(obj).attr('d')).val($(obj).attr('v'));
+			var vs = $('#vs').val();
+			vs = (vs!='')?vs.split(','):[];
+			vs.push($(obj).attr('d'));
+			$('#vs').val(vs.join(','));
+		}
+		var ipts = WST.getParams('.sipt');
+		if(vtype==4)ipts['order']='1';
+		var params = [];
+		for(var key in ipts){
+			if(ipts[key]!='')params.push(key+"="+ipts[key]);
+		}
+		location.href=WST.U('home/goods/lists',params.join('&'));
+	}
+	function goodsOrder(orderby){
+		if($('#orderBy').val()!=orderby){
+			$('#order').val(1);
+		}
+		$('#orderBy').val(orderby);
+		goodsFilter(null,0);
+	}
+</script>
+{/block}

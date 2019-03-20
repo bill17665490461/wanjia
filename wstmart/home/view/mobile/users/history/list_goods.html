@@ -1,0 +1,36 @@
+{extend name="mobile/base"}
+{block name="title"}买家中心 - {:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__MOBILE__/css/history.css">
+{/block}
+
+{block name="main"}
+	<div id="topStyle_2">
+		<a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+		<div id="topStyle_title">浏览记录</div>
+	</div>
+	{volist name="data" id="goods"}
+	<div class="goods" onclick="goGoods({$goods.goodsId})">
+		<div class="goodsImg"><img src="__ROOT__/{$goods.goodsImg}"></div>
+		<div class="goodsInfo">
+			<div class="goodsName">{$goods.goodsName}</div>
+			<div class="goodsPrice">￥{$goods.shopPrice}</div>
+			<div class="saleNum">成交量：{$goods.saleNum}</div>
+		</div>
+		<div style="clear: both;"></div>
+	</div>
+	{/volist}
+	<div style="text-align: center;">{$data->render()}</div>
+	<!-- 向上箭头 -->
+	<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+
+	<!-- 底部导航 -->
+	<div style="height: 90px;clear: both;"></div>
+	{include file="mobile/bottom"}
+
+<script type="text/javascript">
+	function goGoods(goodsId){
+		location.href=WST.U('home/goods/detail','id='+goodsId);
+	}
+</script>
+{/block}

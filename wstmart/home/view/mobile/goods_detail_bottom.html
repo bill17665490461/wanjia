@@ -1,0 +1,33 @@
+		<div class="add-one">
+			<div class="add-goodsImg"><img src="http://127.0.0.1:8080/wanjia__ROOT__/{$goods.goodsImg}"></div>
+			<div class="add-name-price">
+				<div class="add-goodsName">{$goods.goodsName}</div>
+				<div class="add-goodsPrice">{if !empty($goods['spec'])}￥{$goods.defaultSpec.specPrice}{else/}￥{$goods['shopPrice']}{/if}</div>
+			</div>
+		</div>
+		{if !empty($goods['spec'])}
+		<div class="add-two">
+			{volist name="$goods['spec']" id='vo'}
+			<div class="spec">
+				<div class="spec_title">{$vo['name']}：</div>
+				<div class="spec_classify">
+					{volist name="$vo['list']" id='vo2'}
+						{if $vo2['itemImg']!=''}
+						<div class="specVal specImg {if in_array($vo2.itemId,$goods.defaultSpec.specIds)}spec-selected{/if}" data-val="{$vo2['itemId']}" onclick="changeSpec(this)"><img src="__ROOT__/{:WSTImg($vo2['itemImg'])}"></div>
+						{else/}
+						<div class="specVal specName {if in_array($vo2.itemId,$goods.defaultSpec.specIds)}spec-selected{/if}" data-val="{$vo2['itemId']}" onclick="changeSpec(this)">{$vo2['itemName']}</div>
+						{/if}
+					{/volist}
+				</div>
+			</div>
+			{/volist}
+		</div>
+		{/if}
+		<div class="add-third">
+			<div class="add-goodsStore"><span style="display: inline-block;width: 120px;text-align:center;">库存：</span><span id="goodsStore">{if !empty($goods['spec'])}{$goods.defaultSpec.specStock}{else/}{$goods.goodsStock}{/if}<span></div>
+			<div class="add-num">
+				<div class="cutNum locked" onclick="javascript:cutNum(this)">—</div>
+				<div class="currentNum" lockNum="{if !empty($goods['spec'])}{$goods.defaultSpec.specStock}{else/}{$goods.goodsStock}{/if}">1</div>
+				<div class="addNum" onclick="javascript:addNum(this)">+</div>
+			</div>
+		</div>

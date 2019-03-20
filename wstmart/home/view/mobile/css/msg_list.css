@@ -1,0 +1,17 @@
+.checkbox{-webkit-appearance: none;width: 23px;height: 23px;border:1px solid #333;border-radius: 50%;
+	}
+.checkbox:checked{background:url('../images/checked.png') no-repeat;border:none;}
+
+.msg{background-color: #fff;padding:0 25px;overflow: hidden;text-overflow:ellipsis;height: 90px;
+	white-space: nowrap;line-height: 90px;}
+.envelope{font-size: 32px;color: #bbb}
+.env_unread{color:#ce5555;}
+.msgContent{font-size: 25px;color:#666;}
+.msg_unread{color:#333;}
+
+#msgBottom{height: 70px;background-color: #fff;position: fixed;left: 0;bottom: 0;width: 100%;z-index: 99;
+	border-top: 2px solid #dedede}
+#checkedAll{margin-top: 20px;margin-left: 40px;}
+.allText{font-size: 25px;line-height: 70px;}
+.btmBtn{width: 150px;font-size: 25px;line-height: 50px;background-color: #cc3333;color:#fff;
+	text-align: center;float: right;margin-right: 20px;margin-top: 10px;border-radius: 10px;}

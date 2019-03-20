@@ -1,0 +1,25 @@
+.userPhoto{background-color: #fff;padding:15px 20px;margin-top: 3px;height: 100px;}
+.photoLeft{font-size: 27px;line-height: 100px;width: 100px;float: left;}
+.photoIcon{width: 40px;font-size: 45px;line-height: 100px;float: right;color:#bbb;text-align: right;}
+.photoRight{width: 100px;float: right;}
+.usersImg{width: 100px;height: 100px;border-radius: 50%;}
+
+.userInfo{background-color: #fff;margin-top: 2px;line-height: 70px;padding:0 20px;font-size: 25px;}
+.infoLeft{width: 150px;float: left;}
+.infoIcon{width: 40px;font-size: 45px;line-height: 70px;float: right;color:#bbb;text-align: right;}
+.infoRight{width: 300px;float: right;text-align: right;color:#666;}
+
+.changeTitle{background-color: #fff;font-size: 30px;line-height: 70px;height: 70px;}
+.changeTitle a{display:block;font-size: 35px;width: 80px;text-align: center;line-height: 70px;float: right;}
+.changeTitle span{display: block;float: right;width: 480px;text-align: center;}
+.ipt{margin-top: 30px;padding:0 50px;}
+.ipt input{width: 500px;font-size: 27px;line-height: 60px;height: 60px;border:1px solid #999;padding:0 20px;
+	border-radius: 15px;}
+.radio{padding:0 20px;background-color: #fff;line-height: 70px;height: 70px;margin-top: 2px;}
+.radioLeft{width: 100px;font-size: 25px;float: left}
+.radioRight{width: 100px;float: right;text-align: right;}
+.submit{width: 600px;background-color: #ff4c00;color:#fff;text-align: center;font-size: 28px;line-height:70px;
+	border-radius: 10px;position: fixed;bottom: 20px;left: 20px;}
+
+.layui-m-layer{z-index: 999!important}
+.date_btn{font-size: 25px!important}

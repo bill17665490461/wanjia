@@ -1,0 +1,23 @@
+.goods_top{background-color: #fff;padding:10px 20px;height: 80px;line-height: 80px;font-size: 23px;
+	margin-top: 15px;}
+.goodsImg{width: 80px;height: 80px;text-align: center;line-height: 80px;float: left}
+.goodsImg img{max-width: 100%;max-height: 100%;}
+.goodsApp{width: 500px;float: left;}
+.star{font-size: 30px;margin-left: 15px;color:#f95203;}
+.starLock{font-size: 30px;margin-left: 15px;color:#f95203;}
+.star-o{color:#666;}
+.appContent{display: block;font-size: 25px;line-height: 40px;height: 160px;margin-top: 3px;padding:0 20px;
+	width: 600px;border:none;}
+
+.removeImg{position: absolute;font-size:45px;top:-25px;right:-30px;color:#ff4c00;width:50px;height:50px;}
+.appPics{background-color: #fff}
+.appPics label{display:block;float: left;width: 120px;height: 120px;border:1px dashed #666;margin-left: 25px;
+	text-align: center;color:#666;margin-top: 15px;}
+.appraise_pic{float: left;width: 120px;height:120px;border:1px solid #fff;margin-left:25px;margin-top:15px;
+	position: relative;}
+.appraise_pic img{width: 100%;height: 100%}
+
+.shopApp{background-color: #fff;margin-top: 3px;}
+.shopClass{padding-left: 20px;font-size: 25px;line-height: 60px;}
+.submit{width:150px;line-height:50px;font-size:25px;background-color:#f95203;color:#fff;text-align:center;
+	margin-left: 430px;border-radius: 10px;}

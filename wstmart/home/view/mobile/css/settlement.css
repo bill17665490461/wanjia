@@ -1,0 +1,47 @@
+#topStyle_icon{line-height: 55px!important}
+
+#address{margin-top: 20px;background-color: #fff;padding:20px;height: 80px;}
+.noAdr_left{width: 560px;font-size: 27px;color: #444;line-height: 80px;float: left;}
+.adrRight{width: 40px;color: #aaa;line-height: 80px;font-size: 50px;float: right;text-align: center;}
+.adr_bottom{height: 10px;background: url('../images/adr-1.jpg') no-repeat;}
+.curAdr_left{font-size: 27px;line-height: 40px;width: 520px;float: left;}
+.defaultAdr{color: #666;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 1;overflow: hidden;}
+
+.allAdr_top{background-color: #fff;padding:0 20px;font-size: 27px;line-height:70px;height:70px;margin-bottom:20px;}
+.allAdr_top_left{width: 300px;float: left;}
+.allAdr_top_right{width: 100px;float: right;text-align: center;}
+.address{padding:20px;background-color: #fff;margin-top: 2px;}
+.address_one{font-size: 27px;line-height: 50px;height: 50px;}
+.address_name{width: 300px;float: left;}
+.address_phone{width: 300px;float: right;text-align: right}
+.address_two{font-size: 23px;line-height: 40px;margin-top: 10px;}
+
+.shop{background-color: #fff;margin-top: 15px;}
+.shopName{font-size: 23px;line-height: 70px;padding:0 20px;}
+.shop .goods{padding:10px 20px;background-color: #f5f5f5}
+.shop .goodsImg{width: 100px;height: 100px;text-align: center;line-height: 100px;float: left}
+.shop .goodsImg img{max-height: 100%;max-width: 100%}
+.shop .goodsInfo{width: 370px;padding-left: 20px;float: left;}
+.shop .goodsName{font-size: 23px;line-height: 30px;height: 60px;display: -webkit-box;-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;overflow: hidden;}
+.shop .goodsSpc{font-size: 19px;color:#888;}
+.shop .price_num{width: 100px;float: left;text-align: right;}
+.shop .goodsPrice{font-size: 25px;color:000;}
+.shop .goodsNum{font-size: 23px;color:#666;}
+.freight,.shopCount{font-size: 23px;line-height: 35px;text-align: right;padding:0 20px;}
+.shop-remark{padding:0 20px;line-height: 70px;font-size: 25px;border-top: 2px solid #f5f5f5}
+.shop-remark input{width: 475px;height: 70px;font-size: 25px;border:none;}
+
+#cart-box3{background-color: #fff;margin-top: 20px;}
+.cart-box{padding:0 20px;line-height: 80px;height: 80px;font-size: 25px;border-top: 2px solid #f5f5f5}
+.boxLeft{width: 150px;float: left;}
+.boxRight{width: 400px;float: right;text-align: right;color: #666}
+
+#invoiceClientDiv{padding:0 20px;line-height: 70px;font-size: 25px;border-top: 2px solid #f5f5f5}
+#invoiceClient{width: 465px;height: 70px;font-size: 25px;border:none;}
+#cost_score{padding:0 20px;border-top: 2px solid #f5f5f5;font-size: 25px;line-height: 60px;text-align: right;}
+
+#settlementBtm{width: 100%;position: fixed;bottom: 0;left: 0;background-color: #fff;border-top: 2px solid #f5f5f5;
+	font-size: 25px;line-height: 80px;height: 80px;}
+#submitOrder{width: 180px;background-color: #cc3333;color: #fff;float: right;text-align: center;}
+#countMoney{width: 250px;text-align: right;padding-right: 20px;float: right;}

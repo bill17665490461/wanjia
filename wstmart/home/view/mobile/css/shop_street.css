@@ -1,0 +1,14 @@
+#shopCat{background-color: #fff;font-size: 23px;line-height: 60px;margin-top: 10px;padding-left: 20px;}
+#currentCat{color:#cc3333;font-size: 20px;}
+#catIcon{width: 70px;float: right;text-align: center;font-size: 40px;}
+.cat{display: inline-block;padding:10px 20px;margin:10px 0 10px 20px;font-size: 22px;background-color:#fff;
+	border-radius: 15px;}
+.js-selected{color: #cc3333}
+
+.shop{margin-top: 10px;background-color: #fff;padding:10px 20px;}
+.shopImg{width:200px;float: left}
+.shopImg img{width: 100%}
+.shopRight{width: 380px;padding-left: 20px;float: left;}
+.shopName{font-size: 25px;line-height: 50px;}
+.shopInfo{font-size: 22px;line-height: 30px;margin-top: 5px;color: #666}
+.shopAcc img{width:25px;margin-top: 10px;margin-right: 5px;}

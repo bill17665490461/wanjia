@@ -1,0 +1,56 @@
+{extend name="mobile/base"}
+{block name="title"}关注的店铺 - 买家中心{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__MOBILE__/css/favShops.css">
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__MOBILE__/users/favorites/favShops.js"></script>
+{/block}
+
+{block name="main"}
+	<div id="topStyle_2">
+		<a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+		<div id="topStyle_title">关注店铺</div>
+	</div>
+	{volist name="data" id="shop"}
+	<div class="favShop">
+		<div class="favShop1">
+			<div class="favShopCkb"><input type="checkbox" class="mobCheckbox" name="favoriteId" value="{$shop.favoriteId}"></div>
+			<div class="favShopImg"><a href="{:url('home/shops/home',['shopId'=>$shop.shopId])}"><img src="__ROOT__/{$shop.shopImg}"></a></div>
+			<a class="into_name" href="{:url('home/shops/home',['shopId'=>$shop.shopId])}">
+				<div class="favShopName">{$shop['shopName']}</div>
+				<div class="intoShop">进入店铺 ></div>
+			</a>
+			<div style="clear: both;"></div>
+		</div>
+		<div class="favShop2">
+			{volist name="shop.goods" id="goods"}
+			<div class="shopGoods">
+				<div class="goodsImg"><a href="{:url('home/goods/detail',['id'=>$goods.goodsId])}"><img src="__ROOT__/{$goods.goodsImg}"></a></div>
+				<div class="goodsPrice">￥{$goods.shopPrice}</div>
+			</div>
+			{/volist}
+		</div>
+	</div>
+	{/volist}
+	<div style="text-align: center;">{$data->render()}</div>
+
+	<!-- 向上箭头 -->
+	<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+
+	<div style="height: 80px;"></div>
+	<div id="favShopsBtm">
+		<input type="checkbox" class="mobCheckbox" id="checkedAll">　
+		<label for="checkedAll" class="allText">全选</label>
+		<div id="delBtn" class="btmBtn" onclick="batchCcl()">取消关注</div>
+	</div>
+<script type="text/javascript">
+	$("#checkedAll").change(function(){
+		if($(this).is(':checked')){
+			$("input[name='favoriteId']").attr('checked',true);
+		}else{
+			$("input[name='favoriteId']").attr('checked',false);
+		}
+	});
+</script>
+{/block}

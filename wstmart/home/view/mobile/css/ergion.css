@@ -1,0 +1,11 @@
+
+#classify_left{width: 150px;font-size: 23px;float: left}
+.cate_one{background-color: #fff;padding:15px 25px;line-height: 40px;margin-bottom: 5px;
+	text-align: right;border-left:5px solid #fff;}
+#classify_right{width: 410px;float: left;margin-left: 20px;background-color: #fff;padding:20px;}
+.classify_right{display: none;}
+.cate_two{display: block;width: 150px;line-height: 40px;font-size: 20px;background-color: #cc3333;
+	color:#fff;text-align: center;margin-top: 20px;}
+.cate_three{line-height: 40px;font-size: 22px;display: inline-block;}
+
+.checked{background-color: #f5f5f5;color:#cc3333;font-weight: bold;border-color: #cc3333}

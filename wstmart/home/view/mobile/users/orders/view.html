@@ -1,0 +1,87 @@
+{extend name="mobile/base"}
+{block name="title"}订单详情 - 买家中心{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__MOBILE__/css/order_detail.css">
+{/block}
+
+{block name="main"}
+	<div id="topStyle_2">
+		<a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+		<div id="topStyle_title">订单详情</div>
+	</div>
+	<div class="no_status">
+		<div class="orderNo">订单号：{$object.orderNo}</div>
+		<div class="orderStatus">{:WSTLangOrderStatus($object.orderStatus)}</div>
+	</div>
+	<div class="receiverInfo">
+		<div class="name_phone">{$object.userName}　　{$object.userPhone}</div>
+		<div class="address"><span><i class="fa fa-map-marker"></i></span> {$object.userAddress}</div>
+	</div>
+	<div class="goodsList">
+		{volist name="object.goods" id="goods"}
+		<div class="goods">
+			<div class="goodsImg"><a href="{:url('home/goods/detail',['id'=>$goods.goodsId])}"><img src="__ROOT__/{$goods.goodsImg}"></a></div>
+			<a href="" class="goodsInfo">
+				<div class="goodsName">{$goods.goodsName}</div>
+				<div class="goodsSpc">{$goods.goodsSpecNames}</div>
+			</a>
+			<div class="price_num">
+				<div class="goodsPrice">￥{$goods.goodsPrice}</div>
+				<div class="goodsNum">x {$goods.goodsNum}</div>
+			</div>
+			<div style="clear: both"></div>
+		</div>
+		{/volist}
+	</div>
+	<div class="detailBtm">
+		<div class="btmLeft">下单时间</div>
+		<div class="btmRight">{$object.createTime}</div>
+	</div>
+	<div class="detailBtm">
+		<div class="btmLeft">获得积分</div>
+		<div class="btmRight">{$object.orderScore}</div>
+	</div>
+	<div class="detailBtm">
+		<div class="btmLeft">支付方式</div>
+		<div class="btmRight" style="color:#666">{:WSTLangPayType($object['payType'])}</div>
+	</div>
+	{if($object['payType']==1 && $object['tradeNo']!='')}
+	<div class="detailBtm">
+		<div class="btmLeft">交易流水</div>
+		<div class="btmRight" style="color:#666">【{:WSTLangPayFrom($object['payFrom'])}】{$object['tradeNo']}</div>
+	</div>
+	{/if}
+	<div class="detailBtm">
+		<div class="btmLeft">配送方式</div>
+		<div class="btmRight" style="color:#666">{:WSTLangDeliverType($object['deliverType'])}</div>
+	</div>
+	{if $object['expressNo']!=''}
+	<div class="detailBtm">
+	    <div class="btmLeft">快递公司：</div>
+	    <div class="btmRight" style="color:#666">{$object['expressName']}</div>
+ 	</div>
+ 	<div class="detailBtm">
+	    <div class="btmLeft">快递号：</div>
+	    <div class="btmRight" style="color:#666">{$object['expressNo']}</div>
+ 	</div>
+	{/if}
+	<div class="detailBtm">
+	    <div class="btmLeft">买家留言</div>
+	    <div class="btmRight" style="color:#666">{$object['orderRemarks']}</div>
+ 	</div>
+ 	{if $object['isInvoice']==1}
+ 	<div class="detailBtm">
+	    <div class="btmLeft">发票抬头</div>
+	    <div class="btmRight" style="color:#666">{$object['invoiceClient']}</div>
+ 	</div>
+ 	{else}
+ 	<div class="detailBtm">
+	    <div class="btmLeft">发票信息</div>
+	    <div class="btmRight" style="color:#666">不需要</div>
+ 	</div>
+ 	{/if}
+ 	<div class="detailBtm">
+	    <div class="btmLeft">商品总额</div>
+	    <div class="btmRight">总金额<span style="color: #ff4c00;font-size: 28px;">￥{$object.realTotalMoney}</span> (已含运费￥{$object.deliverMoney})</div>
+ 	</div>
+{/block}

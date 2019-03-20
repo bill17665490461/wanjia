@@ -1,0 +1,10 @@
+a:hover{color:#ff4c00;}
+.complain{background-color: #fff;padding:0 20px;margin-top: 15px;}
+.no_status{font-size: 23px;color:#666;line-height: 60px;height: 60px;}
+.orderNo{width: 300px;float: left;}
+.status{width: 300px;float: left;text-align: right;color:#ff4c00;}
+.shopName{font-size: 22px;line-height: 60px;text-align: right;color:#666;}
+.comContent{font-size: 25px;line-height: 50px;}
+.btn{background-color: #fff;height: 55px;}
+.view{width:120px;font-size:23px;line-height:45px;float:right;border:1px solid #888;text-align:center;
+	border-radius: 25px;margin-right: 15px;}

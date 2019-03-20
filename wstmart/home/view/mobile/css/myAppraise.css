@@ -1,0 +1,14 @@
+.app_goods{margin-top: 15px;background-color: #fff}
+.goodsInfo{height: 80px;padding:10px 20px;}
+.goodsImg{width: 80px;height: 80px;text-align: center;line-height: 80px;float: left}
+.goodsImg img{max-width: 100%;max-height: 100%}
+.goodsName{width: 500px;padding-left: 20px;float: left;font-size: 25px;line-height: 80px;color: #666}
+.appContent{font-size: 25px;line-height: 50px;padding:0 20px 20px;}
+.appImgs{}
+.appImg{width: 100px;height: 100px;text-align: center;line-height: 100px;float: left;margin-left: 20px;
+	background-color: #fff}
+.appImg img{max-height: 100px;max-width: 100px;}
+.scores{background-color: #fff;padding:10px 20px;font-size: 22px;line-height: 40px;height: 40px;}
+.score{width: 200px;float: left;color:#666;}
+.score i{color:#ff4c00;}
+.weui-photo-browser-modal .photo-container img{width: 100%}

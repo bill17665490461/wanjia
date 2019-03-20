@@ -1,0 +1,67 @@
+{extend name="mobile/base"}
+{block name="title"}提现管理-买家中心{__block__}{/block}
+{block name="css"}
+	<link rel="stylesheet" type="text/css" href="__MOBILE__/css/cashdraws.css">
+	<link rel="stylesheet" type="text/css" href="__MOBILE__/dropload/dist/dropload.css">
+{/block}
+{block name="js"}
+	<script type="text/javascript" src="__MOBILE__/users/cashdraws/cashdraws.js"></script>
+	<script type="text/javascript" src="__MOBILE__/dropload/dist/dropload.min.js"></script>
+{/block}
+
+{block name="main"}
+	<div id="topStyle_2" style="margin-bottom: 20px;">
+        <a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+        <div id="topStyle_title">提现管理</div>
+    </div>
+    <div class="userInfo">
+    	<div class="userPhoto"><img src="__ROOT__/{if session('WST_USER.userPhoto')}{:session('WST_USER.userPhoto')}{else/}{:WSTConf('CONF.userLogo')}{/if}"></div>
+    	<div class="moneys">
+    		<div class="userMoney">可用资金：<font color='red'>{$object['userMoney']}</font></div>
+    		<div class="lockMoney">冻结资金：<font color='red'>{$object['lockMoney']}</font></div>
+    	</div>
+		<div class="apply" onclick="toDrawMoney()">申请提现</div>
+    </div>
+    <div class="money_tags">
+    	<div class="money_tag tag_checked">资金流水</div>
+    	<div class="money_tag">银行卡</div>
+    </div>
+    <div id="dropload">
+		<div id="detail-list"></div>
+    </div>
+    <div id="card-list" style="display: none;">
+    	{volist name="cards" id="card"}
+    	<div class="card">
+    		<div class="card_one">{$card.bankName}　　{$card.areaName}</div>
+    		<div class="card_two">{$card.accUser}　　{$card.accNo}</div>
+    		<div class="card_third">
+    			<div class="cardDel" onclick="delConfig({$card.id})">删除</div>
+    			<div style="clear: both;"></div>
+    		</div>
+    	</div>    	
+    	{/volist}
+    	<a class="addCard" href="{:url('home/cashconfigs/toEdit')}">添加银行卡</a>
+    </div>
+
+	<!-- 向上箭头 -->
+	<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+	<!-- 底部导航 -->
+	<div style="height: 85px;"></div>
+	{include file="mobile/bottom"}
+
+<script type="text/javascript">	
+	$(".money_tag").on('click',function(){
+	    var index = $(this).index();
+	    $(this).addClass('tag_checked').siblings().removeClass('tag_checked');
+	    if(index==0){
+	    	$("#dropload").show();
+	    	$("#card-list").hide();
+	    }else{
+	    	$("#dropload").hide();
+	    	$("#card-list").show();
+	    }
+	});
+	isSetPayPwd = 1;
+	if("{$object['payPwd']}"=='') isSetPayPwd=0;
+</script>
+{/block}

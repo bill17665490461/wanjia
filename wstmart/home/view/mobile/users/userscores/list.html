@@ -1,0 +1,34 @@
+{extend name="mobile/base"}
+{block name="title"}积分管理-买家中心{__block__}{/block}
+{block name="css"}
+	<link rel="stylesheet" type="text/css" href="__MOBILE__/css/userscores.css">
+	<link rel="stylesheet" type="text/css" href="__MOBILE__/dropload/dist/dropload.css">
+{/block}
+{block name="js"}
+	<script type="text/javascript" src="__MOBILE__/users/userscores/userscores.js"></script>
+	<script type="text/javascript" src="__MOBILE__/dropload/dist/dropload.min.js"></script>
+{/block}
+
+{block name="main"}
+	<div id="topStyle_2" style="margin-bottom: 20px;">
+        <a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+        <div id="topStyle_title">积分管理</div>
+    </div>
+    <div class="userInfo">
+    	<div class="userPhoto"><img src="__ROOT__/{if session('WST_USER.userPhoto')}{:session('WST_USER.userPhoto')}{else/}{:WSTConf('CONF.userLogo')}{/if}"></div>
+    	<div class="name_score">
+    		<div class="userName">{:session('WST_USER.loginName')}</div>
+    		<div class="userScore">可用积分：<font color='red'>{$object['userScore']}</font>个</div>
+    	</div>
+    </div>
+    <div class="detail_title">积分明细</div>
+    <div id="dropload">
+		<div id="detail-list"></div>
+    </div>
+	<!-- 向上箭头 -->
+	<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+	<!-- 底部导航 -->
+	<div style="height: 85px;"></div>
+	{include file="mobile/bottom"}
+
+{/block}

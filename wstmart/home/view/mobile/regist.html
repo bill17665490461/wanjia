@@ -1,0 +1,47 @@
+{extend name="mobile/base"}
+{block name="css"}
+<link href="http://127.0.0.1:8080/wanjia__MOBILE__/css/regist.css" rel="stylesheet">
+{/block}
+{block name="js"}
+{/block}
+
+{block name="main"}
+	<div id="content">
+		<div id="logo"><img width="450" src="http://127.0.0.1:8080/wanjia__MOBILE__/images/wanjia.png"></div>
+		<div class="ipt">
+			<span><i class="fa fa-user-circle"></i></span><input class="wst_ipt" id="loginName" name="loginName" placeholder="邮箱/用户名/手机号"  type="text"/>
+			<div style="clear: both;"></div>
+		</div>
+		<div class="ipt">
+			<span><i class="fa fa-key"></i></span><input class="wst_ipt" id="loginPwd" name="loginPwd" type="password" placeholder="密码：6-16位字符"/>
+			<div style="clear: both;"></div>
+		</div>
+		<div class="ipt">
+			<span><i class="fa fa-key"></i></span><input class="wst_ipt" id="reUserPwd" name="reUserPwd" type="password" placeholder="确认密码"/>
+			<div style="clear: both;"></div>
+		</div>
+		<div id="submit" onclick="regist()">注册</div>
+		<div id="forget_reg">
+			<a href="{:url('home/users/login')}" id="login">已有账号？立即登录</a>
+		</div>
+	</div>
+
+<script type="text/javascript">
+	function regist(){
+		var params = WST.getParams('.wst_ipt');
+		var load = layer.open({type:2,content:'正在提交'});
+		$.post(WST.U('home/users/toRegist'),params,function(data,textStatus){
+			layer.close(load);
+			var json = WST.toJson(data);
+    		if(json.status>0){
+    			layer.open({style:'width:60%;font-size:25px;',content:'注册成功，正在跳转登录!',time:1});
+    			setTimeout(function(){
+    				location.href=WST.U('home/users/index');
+    			}, 800);
+    		}else{
+    			layer.open({style:'width:60%;font-size:25px;',content:json.msg,time:1});
+    		}
+		});
+	}
+</script>
+{/block}

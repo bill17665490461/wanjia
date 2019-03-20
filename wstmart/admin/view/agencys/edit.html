@@ -1,0 +1,118 @@
+{extend name="base" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8080/wanjia__STATIC__/plugins/webuploader/webuploader.css?v={$v}" />
+{/block}
+{block name="main"}
+<div class="l-loading" style="display: block" id="wst-loading"></div>
+<form id='editFrom' autocomplete='off'>
+<input type='hidden' id='agencyId' class='ipt' value="{$object['agencyId']}"/>
+<table class='wst-form wst-box-top'>
+  <tr>
+     <td colspan='2' class='head-ititle'>基础信息</td>
+  </tr>
+ {if $object['agencyId']==0 && $object['userId']==0 }
+  <tr>
+     <th width='150'>登录账号<font color='red'>*</font>：</th>
+     <td><input type="text" id='loginName' name='loginName' class='ipt' value="{$object['loginName']}" maxLength='20' data-rule="登录账号: required;length[6~20];remote(post:{:url('admin/users/checkLoginKey')})" onkeyup="javascript:WST.isChinese(this,1)"/></td>
+  </tr>
+  <tr>
+     <th>登录密码<font color='red'>*</font>：</th>
+     <td><input type="password" id='loginPwd' class='ipt' maxLength='20' value='88888888' data-rule="登录密码: required;length[6~20];" data-target="#msg_loginPwd"/>
+     <span class='msg-box' id='msg_loginPwd'>(默认为88888888)</span>
+     </td>
+  </tr>
+ {/if}
+  <tr>
+     <th>真实姓名<font color='red'>*</font>：</th>
+     <td><input type="text" id='realName' class='ipt' value="{$object['realName']}" maxLength='20' data-rule="真实姓名: required;"/></td>
+  </tr>
+  <tr>
+     <th>联系手机<font color='red'>*</font>：</th>
+     <td><input type="text" id='telephone' class='ipt' value="{$object['telephone']}" maxLength='11' data-rule="联系手机: required;mobile" data-rule-mobile="[/^1[3456789]\d{9}$/, '请检查手机号格式']"/></td>
+  </tr>
+  <tr>
+     <th>佣金<font color='red'>*</font>：</th>
+     <td><input type="text" id='commissionRate' class='ipt' value="{$object['commissionRate']}" size="6" data-rule="佣金: required;"/>%</td>
+  </tr>
+  <tr>
+     <th>所属区域<font color='red'>*</font>：</th>
+     <td>
+        <select id="area_0" class='ipt j-areas' level="0" onchange="WST.ITAreas({id:'area_0',val:this.value,isRequire:true,className:'j-areas'});">
+	      	<option value="">-请选择-</option>
+	      	{volist name="areaList" id="vo"}
+	        <option value="{$vo['areaId']}">{$vo['areaName']}</option>
+	        {/volist}
+	     </select>
+     </td>
+  </tr>
+  <tr>
+     <th>详细地址<font color='red'>*</font>：</th>
+     <td><input type="text" id='agencyAddress' class='ipt' style='width:500px;' value="{$object['agencyAddress']}" maxLength='50' data-rule="店铺详细地址: required;"/></td>
+  </tr>
+  <tr>
+     <td colspan='2' class='head-ititle'>结算信息</td>
+  </tr>
+  <tr>
+     <th>所属银行<font color='red'>*</font>：</th>
+     <td>
+       <select class='ipt' id='bankId' data-rule="所属银行: required;">
+          <option value=''>请选择</option>
+          {volist name="bankList" id="vo"}
+          <option value='{$vo["bankId"]}' {if $object['bankId']==$vo['bankId']}selected{/if}>{$vo["bankName"]}</option>
+          {/volist}
+       </select>
+     </td>
+  </tr>
+  <tr>
+    <th>开户地区<font color='red'>*</font>：</th>
+    <td>
+      <select id="barea_0" class='ipt j-bareas' level="0" onchange="WST.ITAreas({id:'barea_0',val:this.value,isRequire:true,className:'j-bareas'});">
+          <option value="">-请选择-</option>
+          {volist name="areaList" id="vo"}
+          <option value="{$vo['areaId']}">{$vo['areaName']}</option>
+          {/volist}
+       </select>
+    </td>
+  </tr>
+  <tr>
+     <th>银行卡账号<font color='red'>*</font>：</th>
+     <td><input type="text" id='bankNo' class='ipt' value="{$object['bankNo']}" maxLength='20'  style='width:300px;' data-rule="银行卡账号: required;"/></td>
+  </tr>
+  <tr>
+     <th>持卡人<font color='red'>*</font>：</th>
+     <td><input type="text" id='bankUserName' class='ipt' value="{$object['bankUserName']}" maxLength='50' data-rule="持卡人: required;"/></td>
+  </tr>
+  <tr>
+     <td colspan='2' class='head-ititle'>审核状态</td>
+  </tr>
+  <tr>
+     <th>状态<font color='red'>*</font>：</th>
+     <td>
+        <label>
+           <input type='radio' class='ipt' name='agencyStatus' id='agencyStatus-1' value='-1' {if $object['agencyStatus']==-1}checked{/if} onclick='javascript:WST.showHide(1,"#trStatusDesc")'>停止
+        </label>
+        <label>
+           <input type='radio' class='ipt' name='agencyStatus' value='1' {if $object['agencyStatus']==1}checked{/if} onclick='javascript:WST.showHide(0,"#trStatusDesc")'>正常
+        </label>
+     </td>
+  </tr>
+  <tr id='trStatusDesc' {if $object['agencyStatus']==1}style='display:none'{/if}>
+     <th>停止原因<font color='red'>*</font>：</th>
+     <td><textarea id='statusDesc' class='ipt' style='width:500px;height:100px;' maxLength='100' data-rule="停止原因:required(#agencyStatus-1:checked);">{$object['statusDesc']}</textarea></td>
+  </tr>
+  <tr>
+     <td colspan='2' align='center'>
+       <input type='button' value='保存' class='btn btn-blue' onclick='javascript:save()'>
+       <input type='button' value='返回' class='btn' onclick='javascript:history.go(-1)'>
+     </td>
+  </tr>
+</table>
+</form>
+<script>
+$(function(){initEdit({areaId:'{$object["areaId"]}',areaIdPath:'{$object["areaIdPath"]}',bankAreaId:'{$object["bankAreaId"]}',bankAreaIdPath:'{$object["bankAreaIdPath"]}'});})
+</script>
+{/block}
+{block name="js"}
+<script type='text/javascript' src='http://127.0.0.1:8080/wanjia__STATIC__/plugins/webuploader/webuploader.js?v={$v}'></script>
+<script src="http://127.0.0.1:8080/wanjia__ADMIN__/agencys/agencys.js?v={$v}" type="text/javascript"></script>
+{/block}

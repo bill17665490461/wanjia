@@ -1,0 +1,19 @@
+
+<div>
+  <div style="font-size: 25px;line-height: 50px;text-align: center;">请选择取消订单申请退款的原因</div>
+  <div>
+    <select id='reason' onchange='javascript:changeRejectType(this.value)' style="font-size: 25px;line-height: 50px;height: 50px;width: 350px;">
+      {volist name=":WSTDatas(4)" id="vo"}
+      <option value='{$vo["dataVal"]}'>{$vo["dataName"]}</option>
+      {/volist}
+    </select>
+  </div>
+  <div id="rejectTr" style="display: none;margin-top: 15px;">
+    <textarea id="content" style="width:100%;font-size:25px;line-height: 40px;height: 120px;" placeholder="请输入申请退款原因"></textarea>
+  </div>
+  <div style="margin-top: 20px;font-size: 25px;line-height: 45px;">
+    <span>退款金额<font color="red">*</font>：</span>
+    <input style="height: 45px;width: 210px;" type="number" id="money" onblur='javascript:WST.limitDecimal(this,2)'><br/>
+    (金额不能超过<font color='red'>¥{$object['realTotalMoney']}</font>)
+  </div>
+</div>

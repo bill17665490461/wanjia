@@ -1,0 +1,19 @@
+{extend name="mobile/base"}
+{block name="title"}首页-买家中心{__block__}{/block}
+{block name="css"}
+<style type="text/css">
+	.msgTime{font-size: 23px;text-align: center;line-height: 40px;}
+	.msgContent{font-size: 25px;padding:0 20px;line-height: 45px;}
+</style>
+{/block}
+
+{block name="main"}
+	<div id="topStyle_2">
+		<a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+		<div id="topStyle_title">消息详情</div>
+	</div>
+	<div class="msg">
+		<div class="msgTime">{$data['createTime']}</div>
+		<div class="msgContent">{$data['msgContent']}</div>
+	</div>
+{/block}

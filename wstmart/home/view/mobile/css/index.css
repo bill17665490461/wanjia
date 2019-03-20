@@ -1,0 +1,18 @@
+.index_nav{width: 25%;float: left;display: block}
+.nav_icon{width: 70px;height: 70px;line-height: 70px;color: #fff;border-radius: 50%;text-align: center;
+	font-size: 35px;margin:15px 45px;}
+.nav-1{background: linear-gradient(#d35813, #dc7f30)}
+.nav-2{background: linear-gradient(#059bcc, #10c6e2)}
+.nav-3{background: linear-gradient(#d3594f, #dd7078)}
+.nav-4{background: linear-gradient(#3bc13c, #55d441)}
+.nav_title{text-align: center;font-size: 25px;color:#333;}
+
+#news{margin-top: 30px;height: 60px;line-height: 60px;font-size: 25px;color: #666;
+	border-top:1px solid #aaa;border-bottom:1px solid #aaa;}
+#news-1{width: 170px;text-align: center;float: left;}
+#news-2{width:320px;padding-left:20px;float: left}
+#news-2 a{color:red;}
+#news-3{width: 100px;text-align: center;float: right;border-left: 1px solid #aaa}
+
+.floor_title{background:url("../images/floor_bg.jpg") no-repeat;height: 65px;text-align: center;
+	line-height: 65px;font-size: 25px;margin-top: 20px;color:#4c00fc;}

@@ -1,0 +1,106 @@
+{extend name="mobile/base" /}
+{block name="title"}{:WSTConf('CONF.mallName')}-{:WSTConf('CONF.mallSlogan')}{__block__}{/block}
+{block name="meta"}
+	<meta name="description" content="{:WSTConf('CONF.seoMallDesc')}">
+	<meta name="Keywords" content="{:WSTConf('CONF.seoMallKeywords')}">
+{/block}
+{block name="css"}	
+	<link href="http://127.0.0.1:8080/wanjia__MOBILE__/css/index.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8080/wanjia__MOBILE__/Swipeslider/css/style.css">
+	<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8080/wanjia__MOBILE__/Swipeslider/dist/swipeslider.css">
+{/block}
+{block name="js"}
+	<script type="text/javascript" src="http://127.0.0.1:8080/wanjia__MOBILE__/Swipeslider/dist/swipeslider.min.js"></script>
+{/block}
+
+{block name="main"}
+{include file="mobile/top"}
+<div style="height: 70px;"></div>
+<article class="container">shopContent
+	<figure id="full_feature" class="swipslider">
+		<ul class="sw-slides">
+			{wst:ads code="mob-index-top-ads" cache='86400'}
+			<li class="sw-slide">
+				<a href="{$vo.adURL}"><img src="http://127.0.0.1:8080/wanjia__ROOT__/{$vo.adFile}"></a>
+			</li>
+			{/wst:ads}
+		</ul>
+	</figure>
+</article>
+<div id="nav-list">
+
+
+{volist name=":WSTNavigations(0)" id='vo' offset="2" length='5' key='k'}
+	{if condition="$vo.id neq 3"}
+	<a class="index_nav" href="{$vo['navUrl']}">
+		<div class="nav_icon nav-{$k}"><i class="fa fa-tags"></i></div>
+		<div class="nav_title">{$vo['navTitle']}</div>
+	</a>
+{/if}
+{/volist}
+	<!--
+	<a class="index_nav" href="{:url('orders/finish')}">
+		<div class="nav_icon nav-2"><i class="fa fa-file-text-o"></i></div>
+		<div class="nav_title">我的订单</div>
+	</a>
+	<a class="index_nav" href="{:url('carts/index')}">
+		<div class="nav_icon nav-3"><i class="fa fa-opencart"></i></div>
+		<div class="nav_title">购物车</div>
+	</a>
+	<a class="index_nav" href="">
+		<div class="nav_icon nav-4"><i class="fa fa-gift"></i></div>
+		<div class="nav_title">优惠活动</div>
+	</a>-->
+	<div style="clear: both"></div>
+</div>
+
+<div id="news">
+	<div id="news-1">最新资讯：</div>
+	<div id="news-2">
+		<marquee direction="left" behavior="alternate">
+			{wst:article cat="new" num='4' cache='86400'}
+			<a href="{:url('home/news/view',['id'=>$vo['articleId']])}"><img src="__MOBILE__/images/icon_zixun.png" alt="喇叭"> {$vo['articleTitle']}</a>　　
+			{/wst:article}
+ 		</marquee>
+	</div>
+	<div id="news-3">更多</div>
+</div>
+
+<div id="floors">
+{volist name="$floors" id="vo" key="l" length="10"}
+	{php}$adsCode = "ads-".$l."-1";{/php}
+	{wst:ads code="$adsCode" num="1" cache='86400' id="tad"}
+	<div class="floor-top-ads" style="margin-top: 20px;">
+		<a href="{$tad['adURL']}"><img style="width: 100%" src="__ROOT__/{$tad['adFile']}"></a>
+	</div>
+	{/wst:ads}
+	<div class="floor_title">{:str_replace('、',' ',$vo['catName'])}</div>
+	{wst:goods type='hot' cat="vo['catId']" cache="86400" num='4' id='cs'}
+	<div class="mobGoods">
+		<div class="mobGoods_img"><a href="{:Url('home/goods/detail','id='.$cs['goodsId'])}"><img title="{$cs['goodsName']}" src="__ROOT__/{$cs['goodsImg']}"/></a></div>
+		<div class="mobGoods_name"><a href="{:Url('home/goods/detail','id='.$cs['goodsId'])}">{:WSTMSubstr($cs['goodsName'],0,22)}</a></div>
+		<div style="padding:10px 0">
+			<div class="mobGoods_price">￥{$cs['shopPrice']}</div>
+			<div class="mobSale_num">成交数：<span style="color: red">{$cs['saleNum']}</span></div>
+		</div>
+	</div>
+	{/wst:goods}
+	<div style="clear: both;"></div>
+{/volist}
+</div>
+<!-- 向上箭头 -->
+<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+
+<!-- 底部导航 -->
+<div style="height: 85px;"></div>
+{include file="mobile/bottom"}
+
+<script type="text/javascript">
+	$(function() {
+      $('#full_feature').swipeslider({
+      	sliderHeight: '400px'
+      });
+      $('.btm_link_1').children().css('color','#cc3333');
+    });
+</script>
+{/block}

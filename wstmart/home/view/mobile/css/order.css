@@ -1,0 +1,22 @@
+.orderMob{margin-top: 15px;}
+.orderMob_title{height: 60px;line-height: 60px;background-color: #fff}
+.orderMob_title .shopName{font-size: 23px;width: 300px;float: left;padding-left: 20px;}
+.orderMob_title .orderStatus{font-size: 22px;width: 250px;text-align: right;float: right;color:#ff4c00;padding-right: 30px;}
+.orderMob .goods{padding:10px 20px;}
+.orderMob .goodsImg{width: 100px;height: 100px;text-align: center;line-height: 100px;float: left}
+.orderMob .goodsImg img{max-height: 100%;max-width: 100%}
+.orderMob .goodsInfo{width: 330px;padding-left: 20px;float: left;}
+.orderMob .goodsName{font-size: 23px;line-height: 30px;height: 60px;display: -webkit-box;-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;overflow: hidden;}
+.orderMob .goodsSpc{font-size: 19px;color:#888;}
+.orderMob .price_num{width: 140px;float: left;text-align: right;}
+.orderMob .goodsPrice{font-size: 25px;color:000;}
+.orderMob .goodsNum{font-size: 23px;color:#666;}
+.orderMob .orderCount{background-color: #fff;line-height: 60px;font-size: 21px;padding:0 20px;
+		text-align: right;}
+.orderMob .orderBtns{background-color: #fff;padding:10px 20px;height: 45px;}
+.orderMob .orderBtn{width: 120px;font-size: 23px;line-height: 45px;float: right;border: 1px solid #888;
+	text-align: center;border-radius: 25px;margin-right: 15px;}
+.orderMob .orderBtnR{color: #ff4c00;border: 1px solid #ff4c00;}
+.orderMob .noBtn{width: 120px;font-size: 23px;line-height: 45px;float: right;text-align: center;
+	margin-right: 15px;}

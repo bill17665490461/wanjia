@@ -1,0 +1,209 @@
+{extend name="mobile/base"}
+{block name="title"}我的购物车 - {:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8080/wanjia__MOBILE__/css/settlement.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+{/block}
+{block name="js"}
+<script type="text/javascript" src="http://127.0.0.1:8080/wanjia__MOBILE__/js/settlement.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+{/block}
+
+{block name="main"}
+	<div id="topStyle_2">
+		<a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+		<div id="topStyle_title">确认订单</div>
+	</div>
+    <input type='hidden' class='j-ipt' id='s_addressId' value='{if isset($userAddress["addressId"]) }{$userAddress["addressId"]}{/if}'/>
+    <input type='hidden' class='j-ipt' id='s_areaId' value='{if isset($userAddress["addressId"]) }{$userAddress["areaId2"]}{/if}'/>
+	<div id="address">
+		{if empty($userAddress)}
+		<div class="noAddress">
+			<div class="noAdr_left" onclick="createAdr()">您还没有收货地址，请先创建。</div>
+			<div class="adrRight" onclick="createAdr()><i class="fa fa-angle-right"></i></div>
+		</div>
+		{else/}
+		<div class="currentAdr">
+			<div class="curAdr_left" onclick="openAdrList()">
+				<div class="name_phone">收货人：{$userAddress['userName']}　　　{$userAddress['userPhone']}</div>
+				<div class="defaultAdr"><i class="fa fa-map-marker" style="color: #cc3333"></i> {$userAddress['areaName']}{$userAddress['userAddress']}</div>
+			</div>
+			<div class="adrRight" onclick="openAdrList()"><i class="fa fa-angle-right"></i></div>
+		</div>
+		{/if}
+	</div>
+	<div class="adr_bottom"></div>
+	<div id="allAdr" class="weui-popup__container">
+	  	<div class="weui-popup__overlay"></div>
+	  	<div class="weui-popup__modal">
+	  		<div class="allAdr_top">
+	  			<div class="allAdr_top_left" onclick="javascript:$.closePopup();"><span style="width: 30px;float: left;font-size: 50px;"><i class="fa fa-angle-left"></i></span> 选择收货地址</div>
+	  			<div class="allAdr_top_right" onclick="createAdr()">管理</div>
+	  		</div>
+	  		{volist name="adrList" id="adr"}
+	    	<div class="address" onclick="changeAddrId({$adr.addressId})">
+	    		<div class="address_one">
+	    			<div class="address_name">{$adr.userName}</div>
+	    			<div class="address_phone">{$adr.userPhone}</div>
+	    		</div>
+	    		<div class="address_two">
+	    			{if $adr.isDefault==1}<span style="color: #cc3333">[默认地址]</span>{/if}{$adr.areaName}{$adr.userAddress}
+	    		</div>
+	    	</div>
+	    	{/volist}
+	  	</div>
+	</div>
+	<!-- 商品清单 -->
+	<div id="cart-box2">
+		{php}$shopFreight = 0;{/php}
+       	{volist name='$carts["carts"]' id='vo'}
+       	{php}
+       	if(!empty($userAddress)){
+           	$freight = WSTOrderFreight($vo['shopId'],$userAddress['areaId2']);
+           	$shopFreight = $shopFreight + $freight;
+       	}else{
+           	$freight = WSTOrderFreight($vo['shopId'],-1);
+           	$shopFreight = $shopFreight + $freight;
+       	}
+       	{/php}
+       	<div class="shop">
+       		<div class="shopName">{$vo['shopName']}</div>
+       		<div class="goods-list">
+       			{volist name='vo["list"]' id='goods'}
+		        <div class="goods">
+		            <div class="goodsImg"><a href="{:url('home/goods/detail',['id'=>$goods.goodsId])}"><img src="__ROOT__/{$goods.goodsImg}"></a></div>
+		            <div class="goodsInfo">
+		                <div class="goodsName">{$goods.goodsName}</div>
+		                <div class="goodsSpc">
+	                	{volist name='goods["specNames"]' id='specs'}
+		                	{$specs['catName']}：{$specs['itemName']}　
+	                	{/volist}
+		                </div>
+		            </div>
+		            <div class="price_num">
+		                <div class="goodsPrice">￥{$goods.shopPrice}</div>
+		                <div class="goodsNum">x {$goods.cartNum}</div>
+		            </div>
+		            <div style="clear: both"></div>
+		        </div>
+       			{/volist}
+       		</div>
+       		<div class="freight">运费：<span id="shopF_{$vo['shopId']}" style='font-weight: bold;color: #E55356;'>￥{$freight}</span></div>
+       		<div class="shopCount">店铺合计(含运费)：<span id="shopC_{$vo['shopId']}" v="{$vo['goodsMoney']}" style='font-weight: bold;color: #E55356;'>￥{$freight+$vo['goodsMoney']}</span></div>
+       		<div class="shop-remark">
+       			订单备注：<input type='text' id="remark_{$vo['shopId']}" class='j-ipt' maxLength='100' placeholder='给卖家留言'/>
+       		</div>
+       	</div>
+       	{/volist}
+	</div>
+
+	<div id="cart-box3">
+		<!-- 支付方式 -->
+		<div class="cart-box">
+			<input type='hidden' value='1' id='payType' class='j-ipt' />
+			<div class="boxLeft">支付方式</div>
+			<div class="boxRight" id="payName" onclick="openPayments()">在线支付 ></div>
+		</div>
+		<!-- 送货方式 -->
+		<div class="cart-box">
+			<input type='hidden' value='0' id='deliverType' class='j-ipt' />
+			<div class="boxLeft">送货方式</div>
+			<div class="boxRight" id="deliverName" onclick="openDelivers()">快递运输 ></div>
+		</div>
+		<!-- 发票信息 -->
+		<div class="cart-box">
+			<input type='hidden' value='0' id='isInvoice' class='j-ipt' />
+			<div class="boxLeft">发票信息</div>
+			<div class="boxRight" id="invoiceName" onclick="openInvoices()">不需要开发票 ></div>
+		</div>
+		<div id='invoiceClientDiv' style="display: none">
+          	发票抬头： <input type='text' class='j-ipt' id='invoiceClient' placeholder='发票抬头信息'/>
+        </div>
+        <div id="cost_score">
+        	<div>运费总计：¥<span id='deliverMoney' style="color: #cc3333">{$shopFreight}</span></div>
+        	<div class='summary2'>应付总金额(含运费)：¥<span style="color: #cc3333" id='totalMoney' v='{$carts["goodsTotalMoney"]}'>
+            {if empty($userAddress)}
+            {$carts["goodsTotalMoney"]}
+            {else}
+            {$carts["goodsTotalMoney"]+$shopFreight}
+            {/if}
+            </span></div>
+            <div {if WSTConf('CONF.isOrderScore')!=1 }style='display:none'{/if}>可获得积分：<span style="color: #cc3333" id='orderScore'>{:round($carts["goodsTotalMoney"],0)}</span>个</div>
+        </div>
+	</div>
+	<div id="payments" class="weui-popup__container">
+	  	<div class="weui-popup__overlay"></div>
+	  	<div class="weui-popup__modal">
+	    	<div class="popup_top">
+	    		<div class="popup_top_icon" onclick="javascript:$.closePopup();"><i class="fa fa-angle-left"></i></div>
+	    		<div class="popup_top_title">选择支付方式</div>
+	    	</div>
+	    	<div class="payment-list">
+	    		{if !empty($payments['0'])} 
+	    		<div class="popup-box">
+	    			<label class="popup_left" for="payType0">货到付款</label>
+	    			<div class="popup_right"><input onclick="changePaytype(0)" type="radio" class="mobCheckbox" name="payment" id="payType0"></div>
+	    		</div>
+	          	{/if}
+	          	{if !empty($payments['1'])} 
+	          	<div class="popup-box">
+	    			<label class="popup_left" for="payType1">在线支付</label>
+	    			<div class="popup_right"><input onclick="changePaytype(1)" type="radio" checked="checked" name="payment" class="mobCheckbox" id="payType1"></div>
+	    		</div>
+	          	{/if}
+	    	</div>
+	  	</div>
+	</div>
+	<div id="deliverTypes" class="weui-popup__container">
+	  	<div class="weui-popup__overlay"></div>
+	  	<div class="weui-popup__modal">
+	    	<div class="popup_top">
+	    		<div class="popup_top_icon" onclick="javascript:$.closePopup();"><i class="fa fa-angle-left"></i></div>
+	    		<div class="popup_top_title">选择送货方式</div>
+	    	</div>
+	    	<div class="deliverType-list">
+	    		<div class="popup-box">
+	    			<label class="popup_left" for="deliverType0">快递运输</label>
+	    			<div class="popup_right"><input onclick="changeDeliverType(0)" type="radio" checked="checked" class="mobCheckbox" name="deliverType" id="deliverType0"></div>
+	    		</div>
+	          	<div class="popup-box">
+	    			<label class="popup_left" for="deliverType1">自提</label>
+	    			<div class="popup_right"><input onclick="changeDeliverType(1)" type="radio" name="deliverType" class="mobCheckbox" id="deliverType1"></div>
+	    		</div>
+	    	</div>
+	  	</div>
+	</div>
+	<div id="invoiceTypes" class="weui-popup__container">
+	  	<div class="weui-popup__overlay"></div>
+	  	<div class="weui-popup__modal">
+	    	<div class="popup_top">
+	    		<div class="popup_top_icon" onclick="javascript:$.closePopup();"><i class="fa fa-angle-left"></i></div>
+	    		<div class="popup_top_title">选择发票信息</div>
+	    	</div>
+	    	<div class="invoice-list">
+	    		<div class="popup-box">
+	    			<label class="popup_left" for="invoiceType0">不需要开发票</label>
+	    			<div class="popup_right"><input onclick="changeInvoiceType(0)" type="radio" checked="checked" class="mobCheckbox" name="invoiceType" id="invoiceType0"></div>
+	    		</div>
+	          	<div class="popup-box">
+	    			<label class="popup_left" for="invoiceType1">需要开发票</label>
+	    			<div class="popup_right"><input onclick="changeInvoiceType(1)" type="radio" name="invoiceType" class="mobCheckbox" id="invoiceType1"></div>
+	    		</div>
+	    	</div>
+	  	</div>
+	</div>
+
+	<div style="height: 120px;"></div>
+	<div id="settlementBtm">
+		<div id="submitOrder" onclick='javascript:submitOrder()'>提交订单</div>
+		<div id="countMoney">合计：￥<span id="submitMoney" style="color: #cc3333">{if empty($userAddress)}
+            {$carts["goodsTotalMoney"]}
+            {else}
+            {$carts["goodsTotalMoney"]+$shopFreight}
+            {/if}</span></div>
+	</div>
+
+	<!-- 向上箭头 -->
+	<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+{/block}

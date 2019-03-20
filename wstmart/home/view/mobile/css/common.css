@@ -1,0 +1,55 @@
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0} 
+body{font:12px"宋体","Arial Narrow",HELVETICA;background:#fff;-webkit-text-size-adjust:100%;} 
+a{color:#2d374b;text-decoration:none} 
+a:hover{color:#cd0200;text-decoration:none} 
+em{font-style:normal} 
+li{list-style:none} 
+img{border:0;vertical-align:middle} 
+table{border-collapse:collapse;border-spacing:0} 
+p{word-wrap:break-word}
+input{outline:medium;}
+
+.layui-m-layerbtn{min-height: 70px!important;line-height: 70px!important;}
+.layui-m-layerbtn span{font-size: 25px!important;}
+
+ .pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px;font-size: 25px;}
+ .pagination>li{display:inline}
+ .pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;margin-left:-1px;line-height:1.42857143;color:#337ab7;text-decoration:none;background-color:#fff;border:1px solid #ddd}
+ .pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-top-left-radius:4px;border-bottom-left-radius:4px}
+ .pagination>li:last-child>a,.pagination>li:last-child>span{border-top-right-radius:4px;border-bottom-right-radius:4px}
+ .pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{color:#23527c;background-color:#eee;border-color:#ddd}
+ .pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:2;color:#fff;cursor:default;background-color:#337ab7;border-color:#337ab7}
+ .pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;cursor:not-allowed;background-color:#fff;border-color:#ddd}
+ .pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px}
+ .pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-top-left-radius:6px;border-bottom-left-radius:6px}
+ .pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-top-right-radius:6px;border-bottom-right-radius:6px}
+ .pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px}
+ .pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-top-left-radius:3px;border-bottom-left-radius:3px}
+ .pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-top-right-radius:3px;border-bottom-right-radius:3px}
+
+#backTop{background-color: #6c6c6c;opacity:0.6;color:#fff;width: 60px;height: 60px;border-radius: 50%;
+	line-height: 60px;text-align: center;position: fixed;bottom: 160px;right:70px;font-size: 42px;display: none}
+body{background-color: #f5f5f5}
+
+#topStyle_2{height: 60px;line-height: 60px;background-color: #fff;border-bottom: 2px solid #ddd}
+#topStyle_icon{font-size: 55px;width: 80px;text-align: center;display: block;float: left;line-height: 60px;}
+#topStyle_title{font-size: 30px;text-align: center;padding-right: 80px;}
+
+.mobGoods{width: 45%;float: left;margin-left:3.3%;margin-top: 15px;border:1px solid #bbb;background-color: #fff}
+.mobGoods_img{height: 277px; line-height: 277px;text-align: center;}
+.mobGoods_img img{max-width: 80%;margin:0 10%;max-height: 100%}
+.mobGoods_name{line-height: 35px;height: 70px;padding:0 5%;}
+.mobGoods_name a{font-size: 22px;color:#333;}
+.mobGoods_price {display: inline-block;width:40%;padding-left: 5%;font-size: 20px;color: red}
+.mobSale_num{display: inline-block;width: 50%;font-size: 20px;color: #666}
+
+.mobCheckbox{-webkit-appearance: none;width: 25px;height: 25px;border:1px solid #333;border-radius: 50%}
+.mobCheckbox:checked{background:url('../images/checked.png') no-repeat;border:none;}
+
+
+.popup_top{background-color: #fff;height: 80px;}
+.popup_top_icon{width: 60px;text-align: center;float: left;font-size: 50px;}
+.popup_top_title{width: 520px;text-align: center;float: left;font-size: 28px;line-height: 80px;}
+.popup-box{padding:0 20px;background-color: 70px;background-color: #fff;font-size: 25px;height: 70px;margin-top:2px;}
+.popup_left{width: 500px;float: left;line-height: 70px;}
+.popup_right{width: 100px;float: left;text-align: right;padding-top: 20px}

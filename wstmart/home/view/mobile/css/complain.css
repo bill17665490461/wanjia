@@ -1,0 +1,27 @@
+.orderNo{margin-top: 10px;background-color: #fff;padding-left: 20px;font-size: 26px;line-height: 60px;}
+.shopName{font-size: 25px;margin-top: 3px;background-color: #fff;padding-left: 20px;line-height: 50px;}
+.goods{padding:10px 20px;}
+.goodsImg{width: 100px;height: 100px;text-align: center;line-height: 100px;float: left}
+.goodsImg img{max-height: 100%;max-width: 100%}
+.goodsInfo{width: 370px;padding-left: 20px;float: left;}
+.goodsName{font-size: 23px;line-height: 30px;height: 60px;display:-webkit-box;-webkit-box-orient:vertical;
+	-webkit-line-clamp: 2;overflow: hidden;}
+.goodsSpc{font-size: 19px;color:#888;}
+.price_num{width: 100px;float: left;text-align: right;}
+.goodsPrice{font-size: 25px;color:000;}
+.goodsNum{font-size: 23px;color:#666;}
+.orderInfo{background-color: #fff;margin-bottom: 3px;height: 60px;line-height: 60px;font-size: 25px;
+	padding:0 20px;}
+.infoLeft{color:#666;width: 120px;float: left}
+.infoRight{width: 470px;text-align: right;float: right;}
+.ipt{font-size: 25px;height: 50px;line-height: 40px;}
+#complainType{font-size: 25px;height: 50px;line-height: 40px;}
+#complainContent{font-size: 25px;line-height: 45px;}
+.removeImg{position: absolute;font-size:45px;top:-25px;right:-30px;color:#ff4c00;width:50px;height:50px;}
+#pics label{display:block;float: left;width: 170px;height: 170px;border:1px dashed #666;margin-left: 25px;
+	text-align: center;color:#666;margin-top: 15px;}
+.complain_pic{float: left;width: 170px;height:170px;border:1px solid #666;margin-left:25px;margin-top:15px;
+	position: relative;}
+.complain_pic img{width: 100%;height: 100%}
+#submit{width: 400px;line-height: 70px;background-color: #ff4c00;color: #fff;font-size: 30px;
+	text-align: center;margin:30px auto 0;border-radius: 15px;}

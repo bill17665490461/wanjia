@@ -1,0 +1,50 @@
+{extend name="mobile/base"}
+{block name="title"}地址管理-买家中心{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__MOBILE__/css/address.css">
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__MOBILE__/users/useraddress/address.js"></script>
+{/block}
+
+{block name="main"}
+	<div id="topStyle_2">
+        <a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+        <div id="topStyle_title">我的地址</div>
+    </div>
+    {volist name="data" id="ads"}
+    <div class="address">
+    	<div class="name_phone">
+    		<div class="name">{$ads.userName}</div>
+    		<div class="phone">{$ads.userPhone}</div>
+    	</div>
+    	<div class="area">{$ads.areaName}-{$ads.userAddress}</div>
+    	<div class="btns">
+    		<div class="dftCheckbox" onclick="changeDefault({$ads.addressId})"><input type="checkbox" class="mobCheckbox" {if $ads.isDefault==1}checked="checked"{/if} id="check{$ads.addressId}"></div>
+			<div class="dftTitle {if $ads.isDefault==1}isDefault{/if}"  onclick="changeDefault({$ads.addressId})">{if $ads.isDefault==1}默认地址{else/}设为默认{/if}</div>
+			<div class="del" onclick="delAddress({$ads.addressId})">
+				<span><i class="fa fa-trash-o"></i></span>
+				<span>删除</span>
+			</div>
+			<div class="edit" onclick="toEdit({$ads.addressId})">
+				<span><i class="fa fa-edit"></i></span>
+				<span>编辑</span>
+			</div>
+			<div style="clear: both"></div>
+    	</div>
+    </div>
+    {/volist}
+
+	<!-- 向上箭头 -->
+	<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+
+	<!-- 底部导航 -->
+	<div style="height: 85px;"></div>
+	<a id="addAddress" href="{:url('home/useraddress/edit')}">添加新地址</a>
+
+	<script type="text/javascript">
+	$(function(){
+		$('.btm_link_5').children().css('color','#cc3333');
+	});
+</script>
+{/block}

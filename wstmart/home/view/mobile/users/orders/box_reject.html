@@ -1,0 +1,21 @@
+<table class='wst-form' style='margin-top:10px;width:90%'>
+   <tr>
+     <td colspan='2' style='text-align: center;font-size: 25px;height: 70px;'>请选择您拒收订单的原因</td>
+   </tr>
+   <tr style="padding-top: 20px;">
+      <th width='150' style="font-size: 22px;line-height: 50px;">取消原因：</th>
+     <td style="text-align: center;">
+        <select id='reason' onchange='javascript:changeRejectType(this.value)' style="font-size: 25px;height: 50px;line-height: 50px;">
+           {volist name=":WSTDatas(2)" id="vo"}
+           <option value='{$vo["dataVal"]}'>{$vo["dataName"]}</option>
+           {/volist}
+        </select>
+     </td>
+   </tr>
+   <tr id='rejectTr' style='display:none'>
+     <th width='150' style="font-size: 22px;line-height: 50px;">原因<font color='red'>*</font>：</th>
+     <td>
+       <textarea id='content' style='width:99%;height:150px;margin-top: 20px;font-size: 25px;' maxLength='200'></textarea>
+     </td>
+   </tr>
+</table>

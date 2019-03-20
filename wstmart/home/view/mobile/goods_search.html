@@ -1,0 +1,51 @@
+{extend name="mobile/base" /}
+{block name="title"}{:WSTConf('CONF.mallName')}-{:WSTConf('CONF.mallSlogan')}{__block__}{/block}
+{block name="meta"}
+<meta name="description" content="{:WSTConf('CONF.seoMallDesc')}">
+<meta name="Keywords" content="{:WSTConf('CONF.seoMallKeywords')}">
+{/block}
+{block name="css"}
+<link href="http://127.0.0.1:8080/wanjia__MOBILE__/css/index.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8080/wanjia__MOBILE__/Swipeslider/css/style.css">
+<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8080/wanjia__MOBILE__/Swipeslider/dist/swipeslider.css">
+{/block}
+{block name="js"}
+<script type="text/javascript" src="http://127.0.0.1:8080/wanjia__MOBILE__/Swipeslider/dist/swipeslider.min.js"></script>
+{/block}
+
+{block name="main"}
+{include file="mobile/top"}
+<div style="height: 70px;"></div>
+{if !empty($goodsPage)}
+{volist name="goodsPage" id="goods"}
+<div class="mobGoods">
+	<div class="mobGoods_img"><a href="{:Url('home/goods/detail','id='.$goods['goodsId'])}"><img title="{$goods['goodsName']}" src="__ROOT__/{$goods['goodsImg']}"/></a></div>
+	<div class="mobGoods_name"><a href="{:Url('home/goods/detail','id='.$goods['goodsId'])}">{:WSTMSubstr($goods['goodsName'],0,22)}</a></div>
+	<div style="padding:10px 0">
+		<div class="mobGoods_price">￥{$goods['shopPrice']}</div>
+		<div class="mobSale_num">成交数：<span style="color: red">{$goods['saleNum']}</span></div>
+	</div>
+</div>
+{/volist}
+<div style="clear: both;"></div>
+<div style="text-align: center;">{$goodsPage->render()}</div>
+{else /}
+<div class="wst-no-goods" style="width: 50%;margin: 10% 0% 0% 40%">很抱歉，空空如也。</div>
+{/if}
+
+<!-- 向上箭头 -->
+<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+
+<!-- 底部导航 -->
+<div style="height: 85px;clear: both;"></div>
+{include file="mobile/bottom"}
+
+<script type="text/javascript">
+    $(function() {
+        $('#full_feature').swipeslider({
+            sliderHeight: '400px'
+        });
+        $('.btm_link_1').children().css('color','#cc3333');
+    });
+</script>
+{/block}

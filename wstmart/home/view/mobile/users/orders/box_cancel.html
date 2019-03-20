@@ -1,0 +1,11 @@
+<div>
+     <div style='font-size: 25px;text-align: center;'>请选择您取消订单的原因.</div>
+
+     <div style="margin-top: 30px;">
+        <select id='reason' style="font-size: 25px;line-height: 50px;height: 50px;">
+           {volist name=":WSTDatas(1)" id="vo"}
+           <option value='{$vo["dataVal"]}'>{$vo["dataName"]}</option>
+           {/volist}
+        </select>
+     </div>
+</div>

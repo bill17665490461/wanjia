@@ -1,0 +1,71 @@
+{extend name="mobile/base"}
+{block name="title"}待收货订单 - 买家中心{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__MOBILE__/css/swipe.css">
+<link rel="stylesheet" type="text/css" href="__MOBILE__/css/order.css">
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__MOBILE__/users/orders/orders.js"></script>
+{/block}
+
+{block name="main"}
+    <div id="topStyle_2">
+        <a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+        <div id="topStyle_title">我的订单</div>
+    </div>
+    {include file="mobile/users/orders/top_nav"}
+
+    {volist name="data.Rows" id="order"}
+    <div class="orderMob">
+        <div class="orderMob_title">
+            <div class="shopName"><a href="{:url('home/shops/home',['shopId'=>$order.shopId])}">{$order.shopName} ></a></div>
+            <div class="orderStatus">{$order.status}</div>
+        </div>
+        {volist name="order.list" id="goods"}
+        <div class="goods">
+            <div class="goodsImg"><a href="{:url('home/goods/detail',['id'=>$goods.goodsId])}"><img src="__ROOT__/{$goods.goodsImg}"></a></div>
+            <a href="{:url('home/orders/detail',['id'=>$order.orderId])}" class="goodsInfo">
+                <div class="goodsName">{$goods.goodsName}</div>
+                <div class="goodsSpc">{$goods.goodsSpecNames}</div>
+            </a>
+            <div class="price_num">
+                <div class="goodsPrice">￥{$goods.goodsPrice}</div>
+                <div class="goodsNum">x {$goods.goodsNum}</div>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+        {/volist}
+        <div class="orderCount">
+            合计：￥<span style="font-size: 27px;">{$order.realTotalMoney}</span> (含运费￥{$order.deliverMoney})
+        </div>
+        <div class="orderBtns">
+            {if $order.orderStatus==1}
+            <a href="javascript:toReceive({$order.orderId})" class="orderBtn orderBtnR">确认收货</a>
+            <a href="javascript:toReject({$order.orderId})" class="orderBtn">拒绝收货</a>
+            {/if}
+            {if $order.orderStatus==0}
+            <a class="orderBtn" href="javascript:cancel({$order.orderId},0)">取消订单</a>
+            {/if}
+            {if $order.isComplain==''}
+            <a href="{:url('home/ordercomplains/complain',['orderId'=>$order.orderId])}" class="orderBtn">订单投诉</a>
+            {/if}
+            <a class="orderBtn" href="{:url('home/orders/detail',['id'=>$order.orderId])}">订单详情</a>
+        </div>
+    </div>
+    {/volist}
+    <div style="text-align: center;">{$pages}</div>
+
+
+    <!-- 向上箭头 -->
+    <a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+    
+    <!-- 底部导航 -->
+    <div style="height: 165px;"></div>
+    {include file="mobile/bottom"}
+
+<script type="text/javascript">
+    $(function(){
+        $('.u_c_items li:eq(1)').addClass('current_nav');
+    });
+</script>
+{/block}

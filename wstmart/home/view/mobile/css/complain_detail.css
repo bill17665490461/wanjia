@@ -1,0 +1,9 @@
+#topStyle_icon{line-height: 57px!important}
+
+.title{font-size: 25px;line-height: 70px;text-align: center;}
+.comInfo{background-color: #fff;padding:0 20px;margin-top: 2px;font-size: 25px;
+	line-height: 60px;}
+.infoLeft{width: 120px;float: left;}
+.infoRight{width: 450px;float: right;text-align: right;color:#666;}
+.comImg{max-height: 100px;max-width: 100px;}
+.weui-photo-browser-modal .photo-container img{width: 100%}

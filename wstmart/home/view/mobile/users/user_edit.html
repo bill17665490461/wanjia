@@ -1,0 +1,122 @@
+{extend name="mobile/base"}
+{block name="title"}首页-买家中心{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__MOBILE__/css/user_edit.css">
+<link rel="stylesheet" type="text/css" href="__MOBILE__/LCalendar/css/LCalendar.css" />
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__MOBILE__/users/user_edit.js"></script>
+<script src="__MOBILE__/LCalendar/js/LCalendar.js" type="text/javascript" charset="utf-8"></script>
+{/block}
+
+{block name="main"}
+	<div id="topStyle_2">
+        <a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+        <div id="topStyle_title">用户资料</div>
+    </div>
+	
+	<div class="userPhoto">
+		<div class="photoLeft">头像</div>
+		<div class="photoIcon" onclick="userPhoto()"><i class="fa fa-angle-right"></i></div>
+		<div class="photoRight" onclick="userPhoto()">
+			{if ($data['userPhoto'])}
+	      	<img  class="usersImg" src="__ROOT__/{$data['userPhoto']}" />
+	      	{else}
+	      	<img class="usersImg" src="__ROOT__/{:WSTConf('CONF.userLogo')}"/>
+	      	{/if}
+		</div>
+        <div style="clear: both;"></div>
+	</div>
+	<div class="userInfo">
+		<div class="infoLeft">登录账号</div>
+		<div class="infoIcon">　</div>
+		<div class="infoRight">{:session('WST_USER.loginName')}</div>
+		<div style="clear: both;"></div>
+	</div>
+	<div class="userInfo">
+		<div class="infoLeft">昵称</div>
+		<div class="infoIcon" onclick="userName()"><i class="fa fa-angle-right"></i></div>
+		<div class="infoRight" onclick="userName()" id="userName">{if $data['userName']==''}　{else/}{$data['userName']}{/if}</div>
+		<div style="clear: both;"></div>
+	</div>
+	<div class="userInfo">
+		<div class="infoLeft">真实姓名</div>
+		<div class="infoIcon" onclick="trueName()"><i class="fa fa-angle-right"></i></div>
+		<div class="infoRight" id="trueName" onclick="trueName()">{if $data['trueName']==''}　{else/}{$data['trueName']}{/if}</div>
+		<div style="clear: both;"></div>
+	</div>
+	<div class="userInfo">
+		<div class="infoLeft">性别</div>
+		<div class="infoIcon" onclick="userSex()"><i class="fa fa-angle-right"></i></div>
+		<div class="infoRight" id="true" onclick="userSex()">
+			{if $data['userSex']==1}男{elseif $data['userSex']==2}女{elseif $data['userSex']==3}保密{/if}
+		</div>
+		<div style="clear: both;"></div>
+	</div>
+	<div class="userInfo">
+		<div class="infoLeft">生日</div>
+		<div class="infoIcon" onclick="brithday('{$data.brithday}')"><i class="fa fa-angle-right"></i></div>
+		<div class="infoRight" onclick="brithday('{$data.brithday}')">{if $data.brithday==''}　{else/}{$data['brithday']}{/if}</div>
+		<div style="clear: both;"></div>
+	</div>
+	<div class="userInfo">
+		<div class="infoLeft">QQ</div>
+		<div class="infoIcon" onclick="userQQ()"><i class="fa fa-angle-right"></i></div>
+		<div class="infoRight" onclick="userQQ()" id="userQQ">{if $data.userQQ==''}　{else/}{$data['userQQ']}{/if}</div>
+		<div style="clear: both;"></div>
+	</div>
+
+
+	<div id="changeUserName" style="display: none">
+		<div class="changeTitle">		
+			<a style="color:#666" href="javascript:closeClassify();"><i class="fa fa-close"></i></a>	
+			<span>修改昵称</span>
+		</div>
+		<div class="ipt"><input type="text" class="userName" placeholder="昵称" value="{$data['userName']}"></div>
+		<div class="submit" onclick="changeUserName()">确定</div>
+	</div>
+	<div id="changeTrueName" style="display: none">
+		<div class="changeTitle">		
+			<a style="color:#666" href="javascript:closeClassify();"><i class="fa fa-close"></i></a>	
+			<span>修改真实姓名</span>
+		</div>
+		<div class="ipt"><input type="text" class="trueName" placeholder="真实姓名" value="{$data['trueName']}"></div>
+		<div class="submit" onclick="changeTrueName()">确定</div>
+	</div>
+	<div id="changeUserSex" style="display: none">
+		<div class="changeTitle">		
+			<a style="color:#666" href="javascript:closeClassify();"><i class="fa fa-close"></i></a>	
+			<span>修改性别</span>
+		</div>
+		<div class="radio">
+			<div class="radioLeft">保密</div>
+			<div class="radioRight"><input class="mobCheckbox" type="radio" name="userSex" value="3" {if $data['userSex']==3}checked="checked"{/if}></div>
+		</div>
+		<div class="radio">
+			<div class="radioLeft">男</div>
+			<div class="radioRight"><input class="mobCheckbox" type="radio" name="userSex" value="1" {if $data['userSex']==1}checked="checked"{/if}></div>
+		</div>
+		<div class="radio">
+			<div class="radioLeft">女</div>
+			<div class="radioRight"><input class="mobCheckbox" type="radio" name="userSex" value="2" {if $data['userSex']==2}checked="checked"{/if}></div>
+		</div>
+		<div class="submit" onclick="changeUserSex()">确定</div>
+	</div>
+	<div id="changeUserQQ" style="display: none">
+		<div class="changeTitle">		
+			<a style="color:#666" href="javascript:closeClassify();"><i class="fa fa-close"></i></a>	
+			<span>修改QQ</span>
+		</div>
+		<div class="ipt"><input type="text" class="userQQ" placeholder="QQ" value="{$data['userQQ']}"></div>
+		<div class="submit" onclick="changeUserQQ()">确定</div>
+	</div>
+
+	<!-- 底部导航 -->
+	<div style="height: 85px;"></div>
+	{include file="mobile/bottom"}
+<script type="text/javascript">
+	$(function(){
+		$('.btm_link_5').children().css('color','#cc3333');
+	});
+</script>
+{/block}

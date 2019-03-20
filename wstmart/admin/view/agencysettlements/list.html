@@ -1,0 +1,24 @@
+{extend name="base" /}
+{block name="js"}
+<script src="http://127.0.0.1:8080/wanjia__ADMIN__/agencysettlements/agencysettlements.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<div class="l-loading" style="display: block" id="wst-loading"></div>
+<div class="wst-toolbar">
+结算单号：<input type="text" name="settlementNo"  placeholder='结算单号' id="settlementNo" class='j-ipt'/>
+店铺：<input type="text" name="realName"  placeholder='真实姓名' id="realName" class='j-ipt'/>
+结算状态：<select id='settlementStatus' class='j-ipt'>
+          <option value='-1'>全部</option>
+          <option value='0'>未结算</option>
+          <option value='1'>已结算</option>
+       </select>
+<button class="btn btn-blue" onclick='javascript:loadGrid(0)'>查询</button>
+<div style='clear:both'></div>
+</div>
+<div id="maingrid"></div>
+<script>
+$(function(){
+	initGrid();
+})
+</script>
+{/block}

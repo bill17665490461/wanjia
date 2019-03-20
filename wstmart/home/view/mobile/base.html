@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{block name="title"}{:WSTConf('CONF.mallTitle')}{/block}</title>
+    <meta name="auther" content="MKT,www.mktsoft.com.cn" />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <meta name="viewport" content="width=640,target-densitydpi=320, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="no"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <meta name="HandheldFriendly" content="True">
+    {block name="meta"}{/block}
+    <link href="http://127.0.0.1:8080/wanjia__MOBILE__/css/common.css" rel="stylesheet">
+    <link href="http://127.0.0.1:8080/wanjia__MOBILE__/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="__MOBILE__/layui/css/layui.css"  media="all"> -->
+    {block name="css"}{/block}
+    <script src="http://127.0.0.1:8080/wanjia__MOBILE__/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://127.0.0.1:8080/wanjia__MOBILE__/layer_mobile/layer.js"></script>
+    <!-- <script src="__MOBILE__/layui/layui.js" charset="utf-8"></script> -->
+    <script type='text/javascript' src='http://127.0.0.1:8080/wanjia__STATIC__/js/common.js?v={$v}'></script>
+    <script type="text/javascript" src="http://127.0.0.1:8080/wanjia__MOBILE__/js/common.js"></script>
+    <script>
+    window.conf = {
+            "ROOT"      : "__ROOT__", 
+            "APP"       : "__APP__", 
+            "STATIC"    : "__STATIC__", 
+            "SUFFIX"    : "{:config('url_html_suffix')}", 
+            "SMS_VERFY" : "{:WSTConf('CONF.smsVerfy')}",
+            "SMS_OPEN"  : "{:WSTConf('CONF.smsOpen')}",
+            "GOODS_LOGO": "{:WSTConf('CONF.goodsLogo')}",
+            "SHOP_LOGO" : "{:WSTConf('CONF.shopLogo')}",
+            "MALL_LOGO" : "{:WSTConf('CONF.mallLogo')}",
+            "USER_LOGO" : "{:WSTConf('CONF.userLogo')}",
+            "IS_LOGIN"  : "{if (int)session('WST_USER.userId')>0 }1{else}0{/if}",
+            "TIME_TASK" : "1"
+        }
+    </script>
+    {block name="js"}{/block}
+</head>
+<body>
+	{block name="main"}{/block}
+</body>
+</html>

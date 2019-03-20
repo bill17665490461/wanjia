@@ -1,0 +1,32 @@
+{extend name='mobile/base'}
+{block name="title"}投诉管理 - 买家中心{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__MOBILE__/css/list_complain.css">
+{/block}
+{block name="js"}
+{/block}
+
+{block name="main"}
+	<div id="topStyle_2">
+        <a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+        <div id="topStyle_title">我的投诉</div>
+    </div>
+    {volist name="data.data.Rows" id="com"}
+    <div class="complain">
+    	<div class="no_status">
+    		<div class="orderNo">订单编号：{$com.orderNo}</div>
+    		<div class="status">{$com.complainStatus}</div>
+    	</div>    	
+    	<div class="comContent">{$com.complainContent}</div>
+    	<div class="shopName">被投诉方：{$com.shopName}</div>
+    	<div class="btn"><a href="{:url('home/ordercomplains/getUserComplainDetail',array('id'=>$com.complainId))}" class="view">查看详情</a></div>
+    </div>
+    {/volist}
+	<div>{$page}</div>
+    <!-- 向上箭头 -->
+    <a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+    
+    <!-- 底部导航 -->
+    <div style="height: 105px;"></div>
+    {include file="mobile/bottom"}
+{/block}

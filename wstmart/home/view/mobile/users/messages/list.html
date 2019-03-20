@@ -1,0 +1,44 @@
+{extend name="mobile/base"}
+{block name="title"}首页-买家中心{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__MOBILE__/css/msg_list.css">
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__MOBILE__/users/messages/message.js"></script>
+{/block}
+
+{block name="main"}
+	<div id="topStyle_2">
+		<a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+		<div id="topStyle_title">我的消息</div>
+	</div>
+	{volist name="data" id="msg"}
+	<div class="msg">
+		<input type="checkbox" class="mobCheckbox" value="{$msg.id}" name="msgId">　
+		<span class="envelope {if $msg['msgStatus']!=1}env_unread{/if}"><i class="fa fa-envelope-o"></i></span>
+		<span class="msgContent {if $msg['msgStatus']!=1}msg_unread{/if}"><a href="{:url('home/messages/showMsg',['msgId'=>$msg.id])}">{:strip_tags($msg['msgContent'])}</a></span>
+	</div>
+	{/volist}
+	<div style="text-align: center;">{$data->render()}</div>
+	<div style="height: 80px;"></div>
+	<div id="msgBottom">
+		<input type="checkbox" class="mobCheckbox" id="checkedAll">　
+		<label for="checkedAll" class="allText">全选</label>
+		<div id="delBtn" class="btmBtn" onclick="batchDel()">删除消息</div>
+		<div id="readBtn" class="btmBtn" onclick="batchRead()">设为已读</div>
+	</div>
+
+	<!-- 向上箭头 -->
+	<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+
+	<script type="text/javascript">
+		$("#checkedAll").change(function(){
+			// console.log($(this).attr('checked'));
+			if($(this).is(':checked')){
+				$("input[name='msgId']").prop('checked',true);
+			}else{
+				$("input[name='msgId']").prop('checked',false);
+			}
+		});
+	</script>
+{/block}

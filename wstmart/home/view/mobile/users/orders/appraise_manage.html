@@ -1,0 +1,82 @@
+{extend name="mobile/base"}
+{block name="title"}我的评价 - 买家中心{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__MOBILE__/css/myAppraise.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+{/block}
+{block name="js"}
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/swiper.min.js"></script>
+{/block}
+
+{block name="main"}
+	<div id="topStyle_2">
+		<a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+		<div id="topStyle_title">我的评价</div>
+	</div>
+	{volist name="data" id="app"}
+	<div class="app_goods">
+		<div class="goodsInfo">
+			<div class="goodsImg"><img src="__ROOT__/{$app.goodsImg}"></div>
+			<div class="goodsName">{$app.goodsName}</div>
+		</div>
+		<div class="appContent">{$app.content}</div>
+		<div class="appImgs">
+			{if $app.image!=''}
+			{volist name="$app.image" id="img"}
+			<div class="appImg"><img src="__ROOT__/{$img}"></div>
+			{/volist}
+			{/if}
+			<div style="clear: both;"></div>
+		</div>
+		<div class="scores">
+			<div class="score">
+				<span>商品</span>
+				{for start="1" end="$app.goodsScore"}
+				<span><i class="fa fa-star"></i></span>
+				{/for}
+			</div>
+			<div class="score">
+				<span>服务</span>
+				{for start="1" end="$app.serviceScore"}
+				<span><i class="fa fa-star"></i></span>
+				{/for}
+			</div>
+			<div class="score">
+				<span>时效</span>
+				{for start="1" end="$app.timeScore"}
+				<span><i class="fa fa-star"></i></span>
+				{/for}
+			</div>
+		</div>
+	</div>
+	{/volist}
+	<div style="text-align: center;">{$data->render()}</div>
+
+	<!-- 向上箭头 -->
+	<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+    
+    <!-- 底部导航 -->
+    <div style="height: 105px;"></div>
+    {include file="mobile/bottom"}
+
+<script type="text/javascript">
+	$(function(){
+		$('.btm_link_5').children().css('color','#cc3333');
+	});
+	$(".appImg").on('click',function(){
+		var arr = new Array();
+		var num = $(this).prevAll('.appImg').length;
+		$(this).parent().children('.appImg').each(function(){
+			arr.push($(this).children('img').attr('src'));
+		});
+      	var pb = $.photoBrowser({
+	        items: arr,
+	        initIndex:num,
+      	});
+      	pb.open();
+	});
+</script>
+{/block}

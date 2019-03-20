@@ -1,0 +1,20 @@
+.no_status{background-color: #fff;font-size: 25px;line-height: 60px;padding:0 15px;margin-top: 10px;
+	height: 60px}
+.orderNo{width: 400px;float: left}
+.orderStatus{width: 200px;color: #ff4c00;text-align: right;float: right;}
+.receiverInfo{margin-top: 3px;font-size: 25px;line-height: 50px;padding:0 15px;background-color: #fff}
+.address{color:#666;}
+.goods{padding:10px 20px;}
+.goodsImg{width: 100px;height: 100px;text-align: center;line-height: 100px;float: left}
+.goodsImg img{max-height: 100%;max-width: 100%}
+.goodsInfo{width: 370px;padding-left: 20px;float: left;}
+.goodsName{font-size: 23px;line-height: 30px;height: 60px;display: -webkit-box;-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;overflow: hidden;}
+.goodsSpc{font-size: 19px;color:#888;}
+.price_num{width: 100px;float: left;text-align: right;}
+.goodsPrice{font-size: 25px;color:000;}
+.goodsNum{font-size: 23px;color:#666;}
+.detailBtm{background-color: #fff;margin-bottom: 2px;font-size: 25px;line-height: 60px;padding:0 15px;
+	min-height: 60px;}
+.btmLeft{width: 100px;float: left;}
+.btmRight{width: 500px;float: right;text-align: right;}

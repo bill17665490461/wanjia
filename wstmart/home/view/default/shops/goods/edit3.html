@@ -1,0 +1,18 @@
+<style>
+.webuploader-pick {background: #e45050 none repeat scroll 0 0;}
+</style>
+<input type='hidden' id='goodsId' class='j-ipt' value='{$object["goodsId"]}'/>
+<table class='wst-form'>
+  <tr>
+     <th>现场采摘描述：</th>
+     <td colspan='2'>
+         <textarea rows="2" cols="60" id='pickDesc' class='j-ipt' name='pickDesc'>{$object['pickDesc']}</textarea>
+     </td>
+  </tr>
+  <tr>
+     <td colspan='3' align='center' style='text-align:center'>
+        <button class="s-btn" onclick='javascript:save()' type='button'>保存</button>
+        <button type="reset" class="s-btn">重置</button>
+     </td>
+  </tr>
+</table>

@@ -1,0 +1,188 @@
+{extend name="mobile/base"}
+{block name="title"}{$goods['goodsName']} - {:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="meta"}
+<meta name="description" content="{$goods['goodsName']}">
+<meta name="Keywords" content="{$goods['goodsSeoKeywords']}">
+{/block}
+{block name="css"}
+<link href="http://127.0.0.1:8080/wanjia__MOBILE__/css/goods_detail.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8080/wanjia__MOBILE__/Swipeslider/css/style.css">
+<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8080/wanjia__MOBILE__/Swipeslider/dist/swipeslider.css">
+<link rel="stylesheet" href="http://127.0.0.1:8080/wanjia__MOBILE__/dropload/dist/dropload.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+{/block}
+{block name="js"}
+<script type="text/javascript" src="http://127.0.0.1:8080/wanjia__MOBILE__/Swipeslider/dist/swipeslider.min.js"></script>
+<script src="http://127.0.0.1:8080/wanjia__MOBILE__/dropload/dist/dropload.min.js"></script>
+<script type="text/javascript" src="http://127.0.0.1:8080/wanjia__MOBILE__/js/goods_detail.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/swiper.min.js"></script>
+{/block}
+
+{block name="main"}
+	<div id="goods_detail_top">
+		<a href="javascript:window.history.back();" id="top_1"><i class="fa fa-angle-left"></i></a>
+		<div id="top_2" class="checked top_label">商品</div>
+		<div id="top_3" class="top_label">详情</div>
+		<div id="top_4" class="top_label">评价</div>
+		<a href="{:url('carts/index')}" id="top_5"><i class="fa fa-opencart"></i></a>
+	</div>
+	<div style="height: 60px;"></div>
+
+	<div id="goods_detail_main">
+		<div id="main_2" class="main_content">
+			<article class="container">
+				<figure id="full_feature" class="swipslider">
+					<ul class="sw-slides">
+						{volist name="$goods['gallery']" id='vo'}
+						<li class="sw-slide">
+							<a href="javascript:"><img width="640" src="__ROOT__/{:WSTImg($vo)}"></a>
+						</li>
+						{/volist}
+					</ul>
+				</figure>      
+			</article>
+			<div id="name_price">
+				<div id="goods_name">{$goods['goodsName']}</div>
+				<div id="goods_price">
+					<span style="color: #cc3333">￥{$goods['shopPrice']}</span>　
+					<span style="font-size: 25px;color: #777;text-decoration:line-through;">￥{$goods['marketPrice']}</span>
+				</div>
+				<div id="saleNum">成交数：{$goods['saleNum']}</div>
+			</div>
+			<div id="shop">
+				<div id="shop_top">
+					<div id="shop_pic"><a href='{:Url("home/shops/home","shopId=".$shop["shopId"])}'><img width="100%" src="__ROOT__/{$shop['shopImg']}"/></a></div>		
+					<div id="shop_name"><a href='{:Url("home/shops/home","shopId=".$shop["shopId"])}'>{$shop['shopName']}</a></div>
+					<div id="shop_icon"><a href='{:Url("home/shops/home","shopId=".$shop["shopId"])}'><i class="fa fa-angle-right"></i></a></div>
+					<div style="clear: both"></div>
+				</div>
+				<div id="shopScore">
+					<div class="itemScore">商品评价：<span style="color: #cc3333">{if ($shop['goodsScore']!=0)}{$shop['goodsScore']}{else /}5{/if}</span></div>
+					<div class="shuXian"></div>
+					<div class="itemScore">服务评分：<span style="color: #cc3333">{if ($shop['serviceScore']!=0)}{$shop['goodsScore']}{else /}5{/if}</span></div>
+					<div class="shuXian"></div>
+					<div class='itemScore'>物流速度：<span style="color: #cc3333">{if ($shop['timeScore']!=0)}{$shop['goodsScore']}{else /}5{/if}</span></div>
+					<div style="clear: both"></div>
+				</div>
+			</div>
+			<div id="guess_like">
+				<div id="like_title">猜你喜欢</div>
+				{wst:goods type='best' cat="$goods['goodsCatId']" num='3'}
+				<div class="like_goods">
+					<div class="lgoods_img"><a href="{:Url('home/goods/detail','id='.$vo['goodsId'])}"><img src="__ROOT__/{:WSTImg($vo['goodsImg'])}" width="100%" /></a></div>
+					<div class="lgoods_name"><a href="{:Url('home/goods/detail','id='.$vo['goodsId'])}">{:WSTMSubstr($vo['goodsName'],0,20)}</a></div>
+					<div class="lgoods_price">￥{$vo['shopPrice']}</div>
+				</div>
+				{/wst:goods}
+				<div style="clear: both"></div>
+			</div>
+			<div id="hot_goods">
+				<div id="hot_title">热销商品</div>
+				{wst:goods type='hot' num='3'}
+				<div class="hot_goods">
+					<div class="hgoods_img"><a href="{:Url('home/goods/detail','id='.$vo['goodsId'])}"><img src="__ROOT__/{:WSTImg($vo['goodsImg'])}" width="100%" /></a></div>
+					<div class="hgoods_name"><a href="{:Url('home/goods/detail','id='.$vo['goodsId'])}">{:WSTMSubstr($vo['goodsName'],0,20)}</a></div>
+					<div class="hgoods_price">￥{$vo['shopPrice']}</div>
+				</div>
+				{/wst:goods}
+				<div style="clear: both"></div>
+			</div>
+		</div>
+		<div id="main_3" class="main_content" style="display: none">
+			{$goods['goodsDesc']}
+		</div>
+		<div id="main_4" class="main_content" style="display: none">
+			<div id="appr_cate_list">
+				<div class="appr_cate cate_checked" >全部 {$apprNum.sum}</div>
+				<div class="appr_cate" >晒图 {$apprNum.pic}</div>
+				<div class="appr_cate" >好评 {$apprNum.best}</div>
+				<div class="appr_cate" >中评 {$apprNum.good}</div>
+				<div class="appr_cate" >差评 {$apprNum.bad}</div>
+				<div style="clear: both"></div>
+			</div>
+			<div id="appr_content">
+				<div class="appr_list" id="all_appr">
+				</div>
+				<div class="appr_list" id="pic_appr"></div>
+				<div class="appr_list" id="best_appr"></div>
+				<div class="appr_list" id="good_appr"></div>
+				<div class="appr_list" id="bad_appr"></div>
+			</div>
+		</div>
+	</div>
+	<div style="height: 100px;"></div>
+	<div id="goods_detail_bottom">
+		<div id="bottom_1">
+			<div class="bottom_icon" style="color: #00a6ff"><i class="fa fa-qq"></i></div>
+			<div class="btm_icon_title">客服</div>
+		</div>
+		<a id="bottom_2" href='{:Url("home/shops/home","shopId=".$shop["shopId"])}'>
+			<div class="bottom_icon"><i class="fa fa-university"></i></div>
+			<div class="btm_icon_title">店铺</div>
+		</a>
+		{if ($goods['favGood']>0)}
+		<div id="bottom_3">
+			<div class="bottom_icon" onclick="WST.cancelFavorite(this,0,{$goods["goodsId"]},{$goods['favGood']})"><i style="color: #cc3333" class="fa fa-heart"></i></div>
+			<div class="btm_icon_title">关注</div>
+		</div>
+		{else/}
+		<div id="bottom_3">
+			<div class="bottom_icon" onclick='WST.addFavorite(this,0,{$goods["goodsId"]},{$goods["goodsId"]})'><i class="fa fa-heart-o"></i></div>
+			<div class="btm_icon_title">关注</div>
+		</div>
+		{/if}
+		{if $goods['read']}
+		<div id="un-buy">商品已下架</div>
+		{else/}
+		<a href="javascript:openAddCart({$goods.goodsId},1)" id="buyNow">立即购买</a>
+		<a href="javascript:openAddCart({$goods.goodsId},0)" id="addCart">加入购物车</a>
+		{/if}
+	</div>
+
+	<!-- 向上箭头 -->
+	<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+
+<script type="text/javascript">
+	var goodsInfo = {
+		id:{$goods['goodsId']},	
+		isSpec:{$goods['isSpec']},
+		goodsStock:{$goods['goodsStock']},
+		marketPrice:{$goods['marketPrice']},
+		goodsPrice:{$goods['shopPrice']}
+		{if isset($goods['saleSpec'])}
+		,sku:{:json_encode($goods['saleSpec'])}
+		{/if}
+	}
+	$(function() {
+		$('#full_feature').swipeslider({
+			sliderHeight: '640px'
+		});
+		$("#main_3 img").each(function(){
+			if(!$(this).attr('src')){
+				var src = $(this).attr('data-original');
+				$(this).attr('src',src);
+			}
+		});	
+	});
+	$('.top_label').on('click',function(){
+		var index = $(this).index();
+		$(this).addClass('checked').siblings('.top_label').removeClass('checked');
+		$('.main_content').eq(index-1).show().siblings('.main_content').hide();		
+	});
+	$(document).on('click','.appImg',function(){
+		var arr = new Array();
+		var num = $(this).prevAll('.appImg').length;
+		$(this).parent().children('.appImg').each(function(){
+			arr.push($(this).children('img').attr('src'));
+		});
+	  	var pb = $.photoBrowser({
+	        items: arr,
+	        initIndex:num,
+	  	});
+	  	pb.open();
+	});
+
+</script>
+{/block}

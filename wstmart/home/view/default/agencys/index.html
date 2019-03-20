@@ -1,0 +1,41 @@
+{extend name="default/agencys/base" /}
+{block name="title"}区域商中心 - {:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="css"}
+<style>
+.wst-content{min-height:185px;}
+</style>
+{/block}
+{block name="content"}
+<div class="wst-shop-info">
+	<span class="wst-shop-img">
+	  	{if ($agency['userPhoto'])}
+      	<img  class="usersImg" width="120" src='__ROOT__/{$agency['userPhoto']}' />
+      	{else}
+      	<img class="usersImg" width="120" src="__ROOT__/{:WSTConf('CONF.userLogo')}" />
+      	{/if}
+	</span>
+	<div class="wst-shop-na">
+		<p><a href="javascript:void(0);">{$agency['realName']}</a></p>
+		<span class="wst-shop-na3">上次登录：{:session('WST_USER.lastTime')}</span>
+		<span class="wst-shop-na3">地址：{:WSTMSubstr($agency['agencyAddress'],0,10)}</span>
+	</div>
+	<div class="wst-shop-eva">
+		<p>店铺数量</p>
+		<div style="text-align: center; line-height: 40px;font-size: 18px;color:#fe6047">{$agency['shopNum']}</div>
+	</div>
+	<div class="wst-shop-eva">
+		<p>待结算订单</p>
+		<div style="text-align: center; line-height: 40px;font-size: 18px;color:#fe6047">{$agency['noSettledOrderNum']}</div>
+	</div>
+	<div class="wst-shop-eva">
+		<p>待结算金额</p>
+		<div style="text-align: center; line-height: 40px;font-size: 18px;color:#fe6047">{$agency['noSettledOrderFee']}</div>
+	</div>
+	<div class="wst-shop-con" style="min-height: 82px;">
+		<p>电话：{$agency['telephone']}</p>
+		<p>佣金比率：{$agency['commissionRate']}%</p>
+	</div>
+	<div class="wst-clear"></div>
+</div>
+{/block}
+{block name="js"}{/block}

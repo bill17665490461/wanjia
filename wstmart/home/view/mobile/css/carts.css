@@ -1,0 +1,27 @@
+.shop{background-color: #fff;padding:20px;margin-top: 15px;}
+.shop_name{font-size: 25px;line-height: 50px;border-bottom:1px solid #ddd}
+
+.chk{width: 50px;float: left;line-height: 120px;}
+.goods_img{width: 100px;float: left}
+.goods_info{width: 440px;float: left;padding-top: 10px;padding-left: 10px;}
+.goods_name{width:300px;font-size: 22px;line-height: 30px;float: left;min-height: 60px;}
+.goods_price{width: 140px;font-size: 25px;text-align: right;float: left;line-height: 30px;}
+.goods_spec{font-size: 20px;color: #999;clear: both}
+
+.goods_num{float: right;width: 200px;}
+.minus_num,.add_num{display: block;width: 45px;height: 45px;line-height: 45px;font-size: 30px;
+	border:1px solid #666;text-align: center;float: left;}
+.minus_num{border-right: none}
+.add_num{border-left: none}
+.locked{color:#aaa;}
+.buy_num{width: 80px;height: 45px;font-size: 23px;border:1px solid #666;text-align: center;
+	line-height: 45px;color: #cc3333;float: left;}
+.carts_del{float: right;width: 120px;font-size: 25px;line-height: 45px;text-align: center;display: block}
+.storeNum{float: right;width:120px;font-size: 19px;color:#888;text-align: right;line-height: 40px;}
+
+#carts_bottom{height: 50px;background-color: #fff;border-top:2px solid #ddd;padding:5px 15px;position: fixed;
+	bottom: 82px;width: 610px}
+#carts_bottom_one{font-size: 30px;color:#888;font-weight: bold;width: 150px;float: left;line-height: 50px;}
+#carts_bottom_two{font-size:30px;color:#888;font-weight: bold;width:250px;float: right;line-height: 50px;}
+#carts_bottom_three{width: 150px;font-size: 30px;line-height: 50px;background-color: #cc3333;color:#fff;
+	text-align: center;float: right;border-radius: 10px;}

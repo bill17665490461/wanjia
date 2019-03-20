@@ -1,0 +1,140 @@
+{extend name="mobile/base"}
+{block name="title"}{$data['shop']['shopName']} - {:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="meta"}
+<meta name="description" content="{$data['shop']['shopDesc']},{:WSTConf('CONF.mallName')}">
+<meta name="Keywords" content="{$data['shop']['shopKeywords']},{:WSTConf('CONF.mallName')}">
+{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8080/wanjia__MOBILE__/css/shop_home.css">
+<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8080/wanjia__MOBILE__/Swipeslider/css/style.css">
+<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8080/wanjia__MOBILE__/Swipeslider/dist/swipeslider.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+{/block}
+{block name="js"}
+	<script type="text/javascript" src="http://127.0.0.1:8080/wanjia__MOBILE__/Swipeslider/dist/swipeslider.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+{/block}
+
+{block name="main"}
+	{include file="mobile/shop_top"}
+	<div style="height: 70px;"></div>
+	<div id="shop_title">
+		<div id="shop_pic" ><a href="{:url('home/shops/home',array('shopId'=>$data['shop']['shopId']))}"><img src="__ROOT__/{$data['shop']['shopImg']}"/></a></div>
+		<div class="name_fav">
+			<div id="shop_name">{$data['shop']['shopName']}</div>
+			{if($data['shop']['favShop']>0)}
+			<div id="shop_fav" onclick='WST.cancelFavorite(this,1,{$data['shop']['shopId']},{$data['shop']['favShop']})'><span><i class="fa fa-heart"></i></span> <span>已关注</span></div>
+			{else}
+			<div id="shop_fav" onclick='WST.addFavorite(this,1,{$data['shop']['shopId']},{$data['shop']['favShop']})'><span><i class="fa fa-heart-o"></i></span> <span>关注店铺</span></div>
+			{/if}
+		</div>
+		<div id="recBtn" onclick="shopContent()">果园介绍</div>
+	</div>
+	{if($data['shop']['shopAds'])}
+	<article class="container" style="margin-top: 15px;">
+		<figure id="full_feature" class="swipslider">
+			<ul class="sw-slides">
+				{volist name="$data['shop']['shopAds']" id="ads"}
+				<li class="sw-slide">
+					<a href="{$ads['adUrl']}"><img width="640" src="__ROOT__/{$ads['adImg']}"></a>
+				</li>
+				{/volist}
+			</ul>
+		</figure>
+	</article>
+	{/if}
+	<div id="keeper_rec">
+		<div class="rec_title">店主推荐</div>
+		<div>
+			{wst:shopgoods type='recom' num='4' id='re' shop="$data['shop']['shopId']"}
+			<div class="rec_goods">
+				<div class="rec_img"><a href="{:url('home/goods/detail',array('id'=>$re['goodsId']))}"><img src="__ROOT__/{$re['goodsImg']}"></a></div>
+				<div class="rec_price">￥{$re['shopPrice']}</div>
+			</div>
+			{/wst:shopgoods}
+			<div style="clear: both;"></div>
+		</div>
+	</div>
+	<div id="hot_rec">
+		<div class="rec_title">热卖商品</div>
+		<div>
+			{wst:shopgoods type='hot' num='4' id='ho' shop="$data['shop']['shopId']"}
+			<div class="rec_goods">
+				<div class="rec_img"><a href="{:url('home/goods/detail',array('id'=>$ho['goodsId']))}"><img src="__ROOT__/{$ho['goodsImg']}"></a></div>
+				<div class="rec_price">￥{$ho['shopPrice']}</div>
+			</div>
+			{/wst:shopgoods}
+			<div style="clear: both;"></div>
+		</div>
+	</div>
+	<div class="shop-list">
+		<input type="hidden" id="ct1" value="{$ct1}" autocomplete="off"/>
+		<input type="hidden" id="ct2" value="{$ct2}" autocomplete="off"/>
+		<input type="hidden" id="msort" value="{$msort}" autocomplete="off"/>
+		<input type="hidden" id="mdesc" value="{$mdesc}" autocomplete="off"/>
+		<input type="hidden" id="shopId" value="{$data['shop']['shopId']}" autocomplete="off"/>
+		<div class="shop-listh">
+			 <a href="javascript:void(0);" class="{if condition="$msort eq 0"}shop-a{/if}" onclick="searchShopsGoods(0);">综合</a>
+			 <a href="javascript:void(0);" class="{if condition='$msort eq 2'}shop-a{/if}" onclick="searchShopsGoods(2);">销量 {if $msort==2 && $mdesc==0}<i class="fa fa-arrow-up"></i>{else/}<i class="fa fa-arrow-down"></i>{/if}</a>
+			 <a href="javascript:void(0);" class="{if condition='$msort eq 3'}shop-a{/if}" onclick="searchShopsGoods(3);">价格 {if $msort==3 && $mdesc==0}<i class="fa fa-arrow-up"></i>{else/}<i class="fa fa-arrow-down"></i>{/if}</a>
+			 <a href="javascript:void(0);" class="{if condition='$msort eq 5'}shop-a{/if}" onclick="searchShopsGoods(5);">上架时间 {if $msort==5 && $mdesc==0}<i class="fa fa-arrow-up"></i>{else/}<i class="fa fa-arrow-down"></i>{/if}</a>
+		</div>
+		<div class="shop-listg">
+			{volist name="shopGoods" id="li"}
+			<div class="mobGoods">
+				<div class="mobGoods_img"><a href="{:Url('home/goods/detail','id='.$li['goodsId'])}"><img title="{$li['goodsName']}" src="__ROOT__/{$li['goodsImg']}"/></a></div>
+				<div class="mobGoods_name"><a href="{:Url('home/goods/detail','id='.$li['goodsId'])}">{:WSTMSubstr($li['goodsName'],0,22)}</a></div>
+				<div style="padding:10px 0">
+					<div class="mobGoods_price">￥{$li['shopPrice']}</div>
+					<div class="mobSale_num">成交数：<span style="color: red">{$li['saleNum']}</span></div>
+				</div>
+			</div>
+			{/volist}
+			<div style="clear: both;"></div>
+		</div>
+		<div style="text-align: center;">{$shopGoods->render()}</div>
+	</div>
+	<div id="shopContent" class="weui-popup__container" style="z-index: 1001!important">
+		<div class="weui-popup__overlay"></div>
+		<div class="weui-popup__modal">
+		    <div class="cla_title">		
+			<a style="color:#666" href="javascript:$.closePopup();"><i class="fa fa-close"></i></a>	
+			<span>果园介绍</span>
+			</div>
+			<div class="contentInfo">{$data['shop']['shopContent']|htmlspecialchars_decode}</div>
+		</div>
+	</div>
+
+	<!-- 向上箭头 -->
+	<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+
+
+<script type="text/javascript">
+	$(function() {
+      $('#full_feature').swipeslider({
+      	sliderHeight: '215px'
+      });
+    });
+	function searchShopsGoods(obj){
+		var mdesc = $('#mdesc').val();
+		if($('#msort').val() != obj)mdesc = 0;
+		var msort = obj;
+		var params = new Array();
+		params.push("shopId/" + $("#shopId").val());
+		params.push("msort/" + obj);
+		params.push("mdesc/" + ((mdesc=="0")?"1":"0"));
+		params.push("ct1/" + $("#ct1").val());
+		params.push("ct2/" + $("#ct2").val());
+		params.push("goodsName/" + $("#goodsName").val());
+		
+		// document.location.href = WST.U('home/shops/home',params.join('&'));
+		// console.log(params);
+		window.location.href = "/wstmart/index.php/home/shops/home/"+params.join('/');
+	}
+
+	function shopContent(){
+		$("#shopContent").popup();
+	}
+</script>
+{/block}

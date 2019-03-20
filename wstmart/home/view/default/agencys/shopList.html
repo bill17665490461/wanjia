@@ -1,0 +1,53 @@
+{extend name="default/agencys/base" /}
+{block name="title"}店铺列表-区域商中心{__block__}{/block}
+{block name="css"}
+<style>
+.wst-content{min-height:600px;}
+</style>
+{/block}
+{block name="content"}
+	<div class="wst-shop-head"><span>店铺列表</span></div>
+	  	<div class="wst-shop-content"> 
+			<table class='wst-list'>
+				<thead>
+				<tr>
+					<th></th>
+					<th>店铺编号</th>
+					<th>店铺名称</th>
+					<th>店主姓名</th>
+					<th>店主电话</th>
+					<th>详细地址</th>
+					<th>营业状态</th>
+				</tr>
+				</thead>
+				<tbody id='list'></tbody>
+				<tfoot>
+				 	<tr><td colspan='10' id='pager' align="center" style='padding:5px 0px 5px 0px'></td></tr>
+				</tfoot>
+				<script id="tblist" type="text/html">
+				{{# for(var i = 0; i < d.length; i++){ }}
+				<tr>
+						<td style="text-align: center;vertical-align:middle;"><img class='j-lazyImg' width='50' data-original='__ROOT__/{{d[i].shopImg}}'/></td>
+				  <td>{{d[i]['shopSn']}}</td>
+				  <td>{{d[i]['shopName']}}</td>
+				  <td>{{d[i]['shopKeeper']}}</td>
+				  <td>{{d[i]['telephone']}}</td>
+				  <td>{{d[i]['shopAddress']}}</td>
+				  <td>{{# if(d[i]['shopStatus']==1){ }}营业中{{# }else{ }}停止{{# }}}</td>
+				</tr>
+				{{# } }}
+				</script>
+				<tr class='empty-row'>
+				    <td colspan='4' id='pager' align="center" style='padding:5px 0px 5px 0px'>&nbsp;</td>
+				</tr>
+			</table>
+		</div>
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__STYLE__/agencys/agency.js?v={$v}'></script>
+<script type="text/javascript">
+	$(function(){
+	  shopList();
+	})
+</script>
+{/block}

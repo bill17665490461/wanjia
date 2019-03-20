@@ -1,0 +1,129 @@
+{extend name="mobile/base" /}
+{block name="title"}待评价订单 - 买家中心{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__MOBILE__/css/appraise.css">
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__MOBILE__/users/orders/orders.js"></script>
+{/block}
+
+{block name="main"}
+    <div id="topStyle_2">
+        <a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+        <div id="topStyle_title">订单评价</div>
+    </div>
+
+    {volist name="$data" id="vo" key='k'}
+    {if (empty($vo['appraise']))}
+        <input type="hidden" id="gid{$k}" value="{$vo['goodsId']}">
+        <input type="hidden" id="oid{$k}" value="{$vo['orderId']}">
+        <input type="hidden" id="gsid{$k}" value="{$vo['goodsSpecId']}">
+        <div class="goods_top">
+            <div class="goodsImg"><img src="__ROOT__/{$vo['goodsImg']}"></div>
+            <div class="goodsApp" id="goodsApp{$k}">
+                <input type="hidden" id="goodsScore{$k}" value="5">
+                <span>　商品评分</span>
+                <span class="star"><i class="fa fa-star"></i></span>
+                <span class="star"><i class="fa fa-star"></i></span>
+                <span class="star"><i class="fa fa-star"></i></span>
+                <span class="star"><i class="fa fa-star"></i></span>
+                <span class="star"><i class="fa fa-star"></i></span>
+                <span class="appDec">　非常满意</span>
+            </div>
+        </div>
+        <textarea id="appContent{$k}" class="appContent" placeholder="商品满足你的期待么？说说它的优点和美中不足的地方吧"></textarea>
+        <div class="appPics" id="appPics{$k}">
+            <input type="file" name="appraisePic{$k}" style="display: none" id="appraisePic{$k}" onchange="appUploadPic(this,{$k})">
+            <label for="appraisePic{$k}"><span style="font-size: 65px;">+</span><br/><span style="font-size: 23px;">添加图片</span></label>
+            <canvas id="appCanvas{$k}" style="display:none;"></canvas>
+            <div style="clear: both"></div>
+        </div>
+        <div class="shopApp">
+            <div class="shopClass" id="timeS{$k}">
+                <input type="hidden" id="timeScore{$k}" name="" value="0">
+                <span>时效评分</span>
+                <span class="star star-o"><i class="fa fa-star-o"></i></span>
+                <span class="star star-o"><i class="fa fa-star-o"></i></span>
+                <span class="star star-o"><i class="fa fa-star-o"></i></span>
+                <span class="star star-o"><i class="fa fa-star-o"></i></span>            
+                <span class="star star-o"><i class="fa fa-star-o"></i></span>
+                <span class="appDec"></span>
+            </div>
+            <div class="shopClass" id="serviceS{$k}">
+                <input type="hidden" id="serviceScore{$k}" name="" value="0">
+                <span>服务评分</span>
+                <span class="star star-o"><i class="fa fa-star-o"></i></span>
+                <span class="star star-o"><i class="fa fa-star-o"></i></span>
+                <span class="star star-o"><i class="fa fa-star-o"></i></span>
+                <span class="star star-o"><i class="fa fa-star-o"></i></span>            
+                <span class="star star-o"><i class="fa fa-star-o"></i></span>
+                <span class="appDec"></span>
+            </div>
+        </div>
+        <div id="submit{$k}" style="background-color: #fff;padding-bottom: 15px;"><div class="submit" onclick="appSubmit({$k})">评价</div></div>
+    {else/}
+        <div class="goods_top">
+            <div class="goodsImg"><img src="__ROOT__/{$vo['goodsImg']}"></div>
+            <div class="goodsApp">　
+                <span>商品评分</span>
+                {for start="0" end="$vo['appraise']['goodsScore']"}
+                <span class="starLock"><i class="fa fa-star"></i></span>
+                {/for}
+            </div>
+        </div>
+        <textarea class="appContent" readonly="readonly" style="background-color: #fff">{$vo['appraise']['content']}  [{:date('Y-m-d',strtotime($vo['appraise']['createTime']))}]</textarea>
+        <div class="appPics">
+            {volist name="$vo['appraise']['images']" id="img"}
+                {if !empty($img)}
+                <div class="appraise_pic"><img src="__ROOT__/{$img}"></div>
+                {/if}
+            {/volist}
+            <div style="clear:both;"></div>
+        </div>
+        <div class="shopApp">
+            <div class="shopClass">
+                <span>时效评分</span>
+                {for start="0" end="$vo['appraise']['timeScore']"}
+                <span class="starLock"><i class="fa fa-star"></i></span>
+                {/for}
+            </div>
+            <div class="shopClass">
+                <span>服务评分</span>
+                {for start="0" end="$vo['appraise']['serviceScore']"}
+                <span class="starLock"><i class="fa fa-star"></i></span>
+                {/for}
+            </div>
+        </div>
+    {/if}
+    {/volist}
+
+    <!-- 向上箭头 -->
+    <a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+    <div style="height: 80px;"></div>
+
+<script type="text/javascript">
+    $(document).on('click','.removeImg',function(){
+        $(this).parent().siblings('label').show();
+        $(this).parent().remove();        
+    });
+    $(".star").on('click',function(){
+        $(this).removeClass('star-o').html('<i class="fa fa-star"></i>');
+        $(this).prevAll('.star').removeClass('star-o').html('<i class="fa fa-star"></i>');
+        $(this).nextAll('.star').addClass('star-o').html('<i class="fa fa-star-o"></i></span>');
+        var length = $(this).siblings('.star-o').length;
+        var score = 5-length;
+        $(this).prevAll('input').val(score);
+        if(length==0){
+            $(this).nextAll('.appDec').html('　非常满意');
+        }else if(length==1){
+            $(this).nextAll('.appDec').html('　满意');
+        }else if(length==2){
+            $(this).nextAll('.appDec').html('　一般');
+        }else if(length==3){
+            $(this).nextAll('.appDec').html('　不满意');
+        }else if(length==4){
+            $(this).nextAll('.appDec').html('　很不满意');
+        }
+    });
+</script>
+{/block}

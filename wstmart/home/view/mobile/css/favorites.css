@@ -1,0 +1,11 @@
+
+
+.goods{background-color: #fff;padding:15px;margin-top: 10px;}
+.goods_img{width: 150px;float: left;height: 150px;line-height: 150px;text-align: center;}
+.goods_img img{max-width: 100%;max-height: 100%;}
+.goods_info{width: 300px;padding-left: 10px;float: left}
+.goods_name{font-size: 24px;line-height: 40px;min-height: 80px;}
+.goods_price{font-size: 22px;line-height: 35px;color: #cc3333}
+.sale_num{font-size: 22px;line-height: 35px;color:#888;}
+.cancel{font-size: 24px;width: 140px;text-align: center;line-height: 150px;float: right;
+	border-left:1px solid #ddd}

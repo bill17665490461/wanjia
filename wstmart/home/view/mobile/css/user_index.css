@@ -1,0 +1,31 @@
+#u_index_1{background:linear-gradient(to right, #ffa600 , #ff5c01);padding:40px 0 40px 20px;}
+#u_pic{width: 100px;height: 100px;border-radius: 50%;border:3px solid #fff;float: left}
+#u_pic img{width: 100%;border-radius: 50%;}
+#rank_name{font-size: 25px;color: #fff;line-height: 40px;width: 250px;float: left;padding-left: 20px;
+	font-family: '华文细黑';padding-top:10px;}
+#u_msg{width: 200px;float: right;line-height: 60px;font-size: 25px;color: #fff;padding-right: 40px;
+	text-align: right;position: relative;background:linear-gradient(to right, #ffb71a , #ff8e14);
+	border-radius: 35px 0 0 35px;display: block;}
+#msg_num{display: block;width: 30px;height: 30px;background-color: #fe5300;text-align: center;
+	line-height: 30px;border-radius: 50%;top: 27px;right: 20px;position: absolute;font-size: 20px;}
+
+#u_index_2{background-color: #fff}
+#fa_goods,#fa_shops,#footprint{width: 32%;display: inline-block;text-align: center;}
+.u_2_num{font-size: 30px;line-height: 60px;}
+.u_2_title{font-size: 20px;line-height: 40px;}
+
+#u_index_3{background-color: #fff;}
+#u_3_top{margin-top: 15px;height: 60px;padding:0 25px;border-bottom: 2px solid #ddd}
+#u_3_title{font-size: 25px;line-height: 60px;width: 150px;float: left;font-family: '黑体'}
+#all_order{font-size: 20px;line-height: 60px;width: 250px;float: right;text-align: right;
+	font-family: '黑体';color: #999}
+.u_3_link{width: 32%;display: inline-block;text-align: center;}
+.u_3_icon{font-size: 45px;line-height: 60px;margin-top: 20px;}
+.u_3_name{font-size: 25px;line-height: 40px;font-family: '黑体';}
+
+#u_index_4{background-color: #fff;margin-top: 15px;}
+#u_4_top{padding:0 25px; font-size: 25px;line-height: 60px;font-family: '黑体';border-bottom: 2px solid #ddd}
+.u_4_link{width: 24%;display: inline-block;text-align: center;}
+.u_4_icon{width: 60px;height: 60px;font-size: 30px;border-radius: 50%;line-height: 60px;color:#fff;
+	margin:20px auto 5px;}
+.u_4_name{font-size: 25px;line-height: 50px;font-family: '黑体';}

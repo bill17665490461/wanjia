@@ -1,0 +1,70 @@
+{extend name="mobile/base"}
+{block name="title"}店铺街 - {:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="meta"}
+<meta name="description" content="{:WSTConf('CONF.seoMallDesc')},店铺街">
+<meta name="Keywords" content="{:WSTConf('CONF.seoMallKeywords')}">
+{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8080/wanjia__MOBILE__/css/shop_street.css">
+{/block}
+{block name="js"}{/block}
+
+{block name="main"}
+{include file='mobile/street_top'}
+
+<div style="height: 70px;"></div>
+<div id="shopCat">
+	<span class="cat_title">经营范围</span>　
+	<span id="currentCat">全部范围</span>
+	<div id="catIcon"><i class="fa fa-angle-down"></i></div>
+</div>
+<div id="cats" style="display: none">
+	<a class="cat {if($selectedId=='')}js-selected{/if}" href="{:url('home/shops/shopstreet')}">全部范围</a>
+	{volist name="goodscats" id="ca" key="k"}
+	<div class="cat {if($selectedId==$ca['catId'])}js-selected{/if}" onclick="javascript:screenCat({$ca['catId']});">{$ca['catName']}</div>
+	{/volist}
+</div>
+{volist name="list['Rows']" id="v1" key="k"}
+<div class="shop" onclick="goShop({$v1.shopId})">
+	<div class="shopImg"><a href="{:url('home/shops/home',array('shopId'=>$v1['shopId']))}"><img src="__ROOT__/{$v1['shopImg']}" title="{$v1['shopName']}"/></a></div>
+	<div class="shopRight">
+		<div class="shopName"><a href="{:url('home/shops/home',array('shopId'=>$v1['shopId']))}">{:WSTMSubstr($v1['shopName'],0,13)}</a></div>
+		<div class="shopInfo">主营：{:WSTMSubstr($v1['catshops'],0,14)}</div>
+		<div class="shopInfo">地址：{$v1['areas']['areaName1']}&nbsp;&nbsp;{$v1['areas']['areaName2']}</div>
+		<div class="shopInfo">电话：{$v1['shopTel']}</div>
+		<div class="shopAcc">
+			{volist name="v1['accreds']" id="v2"}
+			<img style="" src="__ROOT__/{$v2['accredImg']}" title="{$v2['accredName']}"/>
+			{/volist}
+		</div>
+	</div>
+	<div style="clear: both;"></div>
+</div>	
+{/volist}
+<div id="pages" style="text-align: center;">{$pages}</div>
+<!-- 底部导航 -->
+<div style="height: 85px;"></div>
+{include file="mobile/bottom"}
+
+<script type="text/javascript">
+	function screenCat(id){
+		location.href=WST.U('home/shops/shopStreet','id='+id);
+	}
+	$(function(){
+		var curCat = $(".js-selected").html();
+		$("#currentCat").html(curCat);
+		$('.btm_link_1').children().css('color','#cc3333');
+	});
+	$("#catIcon").on('click',function(){
+		$("#cats").slideToggle(400);
+		if($(this).children('i').hasClass('fa-angle-down')){
+			$(this).children('i').removeClass('fa-angle-down').addClass('fa-angle-up');
+		}else{
+			$(this).children('i').removeClass('fa-angle-up').addClass('fa-angle-down');
+		}
+	});
+	function goShop(shopId){
+		window.location.href=WST.U('home/shops/home','shopId='+shopId);
+	}
+</script>
+{/block}

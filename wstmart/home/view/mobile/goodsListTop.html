@@ -1,0 +1,18 @@
+<style type="text/css">
+	#top{height: 70px;position: fixed;top: 0;left:0;background-color: #fff;border-bottom: 2px solid #bbb;
+		z-index: 999}
+	#top-1{line-height: 70px;float:left;font-size: 55px;width: 120px;text-align: center;}
+	#top-2{width: 520px;float:left;padding-top:16px;}
+	#top-2 input{height: 40px;border:1px solid #666;border-right: none;width: 300px;border-radius: 20px 0 0 20px !important;padding-left:20px;font-size: 20px;background-color: #fff}
+	#top-2 button{background-color: #fff;height: 42px;border:1px solid #666;border-left: none;padding:0 35px;background:url("__MOBILE__/images/ico-search.png") no-repeat;border-radius: 0 20px 20px 0;font-size: 20px;}
+</style>
+<div id="top">
+	<div id="top-1">
+		<a style="color:#666" href="javascript:window.history.back()"><i class="fa fa-angle-left"></i></a>
+	</div>
+	<div id="top-2">
+		<form action="{:url('goods/search')}" method="post">
+			<input type="text" name="keyword" placeholder="输入商品名称搜索"><button type="submit">&nbsp;</button>
+		</form>
+	</div>
+</div>

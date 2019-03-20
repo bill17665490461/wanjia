@@ -1,0 +1,17 @@
+<div class="account">
+	<span>提现账号：</span>
+	<select id='accId' class='j-ipt'>
+		<option value=''>请选择</option>
+        {volist name="accs" id="vo"}
+        <option value='{$vo["id"]}'>{$vo["accUser"]}|{$vo["accNo"]}</option>
+        {/volist}
+	</select>
+</div>
+<div class="boxMoney">
+	<span>提现金额：</span>
+	<input type='number' id='money' class='j-ipt boxIpt' onblur="javascript:WST.limitDecimal(this,2)"/>
+</div>
+<div class="boxMoney">
+	<span>支付密码：</span>
+	<input type='password' id='payPwd' class='j-ipt boxIpt'/>
+</div>

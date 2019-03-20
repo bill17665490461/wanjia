@@ -1,0 +1,29 @@
+{extend name="mobile/base"}
+{block name="title"}安全设置 - 买家中心{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__MOBILE__/css/security.css">
+{/block}
+
+{block name="main"}
+	<div id="topStyle_2" style="margin-bottom: 20px;">
+        <a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+        <div id="topStyle_title">安全设置</div>
+    </div>
+    <div class="safety" onclick="location.href=WST.U('home/users/editPass')">
+    	<div class="safety_one">登录密码</div>
+    	<div class="safety_third"><i class="fa fa-angle-right"></i></div>
+    	<div class="safety_two">{if ($data['loginPwd'])}<span style="color:#11cc71"><i class="fa fa-check-circle-o"></i> 已设置</span>{else}<span style="color: #f1730f"><i class="fa fa-warning"></i> 未设置</span>{/if}</div>  	
+    </div>
+    <div class="safety" onclick="location.href=WST.U('home/users/editPayPass')">
+    	<div class="safety_one">支付密码</div>
+    	<div class="safety_third"><i class="fa fa-angle-right"></i></div>
+    	<div class="safety_two">{if ($data['payPwd'])}<span style="color:#11cc71"><i class="fa fa-check-circle-o"></i> 已设置</span>{else}<span style="color: #f1730f"><i class="fa fa-warning"></i> 未设置</span>{/if}</div>  	
+    </div>
+
+
+	<!-- 向上箭头 -->
+	<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+	<!-- 底部导航 -->
+	<div style="height: 85px;"></div>
+	{include file="mobile/bottom"}
+{/block}

@@ -1,0 +1,75 @@
+{extend name="mobile/base" /}
+{block name="title"}投诉订单 - 买家中心{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__MOBILE__/css/complain.css">
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__MOBILE__/users/orders/orders.js"></script>
+{/block}
+
+{block name="main"}
+    <div id="topStyle_2">
+        <a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+        <div id="topStyle_title">订单投诉</div>
+    </div>
+    {if condition="$data['complainStatus'] eq 0"}
+        <input type="hidden" class="ipt" id="orderId" name="" value="{$data['order']['orderId']}">
+        <div class="orderNo">订单号：{$data['order']['orderNo']}</div>
+        <div class="shopName">{$data['order']['shopName']}</div>
+        {volist name="$data['order']['goodsList']" id="goods" key='key2'}
+        <div class="goods">
+            <div class="goodsImg"><a href="{:url('home/goods/detail',['id'=>$goods.goodsId])}"><img src="__ROOT__/{$goods.goodsImg}"></a></div>
+            <a href="{:url('home/goods/detail',['id'=>$goods.goodsId])}" class="goodsInfo">
+                <div class="goodsName">{$goods.goodsName}</div>
+            </a>
+            <div class="price_num">
+                <div class="goodsPrice">￥{$goods.shopPrice}</div>
+                <div class="goodsNum">x {$goods.goodsNum}</div>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+        {/volist}
+        <div class="orderInfo">
+            <div class="infoLeft">下单时间</div>
+            <div class="infoRight">{$data['order']['createTime']}</div>
+        </div>
+        <div class="orderInfo">
+            <div class="infoLeft">订单金额</div>
+            <div class="infoRight" style="color: #ff4c00">{$data['order']['realTotalMoney']}</div>
+        </div>
+        <div class="orderInfo">
+            <div class="infoLeft">运　　费</div>
+            <div class="infoRight" style="color: #ff4c00">{$data['order']['deliverMoney']}</div>
+        </div>
+        <div class="orderInfo">
+            <div class="infoLeft">投诉类型</div>
+            <div class="infoRight">
+                <select name="complainType" id="complainType">
+                    <option value="1">承诺的没有做到</option>
+                    <option value="2">未按约定时间发货</option>
+                    <option value="3">未按成交价格进行交易</option>
+                    <option value="4">恶意骚扰</option>
+                </select>
+            </div>
+        </div>
+        <div style="text-align: center;margin-top: 15px;"><textarea id='complainContent' name="complainContent" autocomplete="off" style='width:90%;height:180px;' placeholder='请输入投诉内容'></textarea></div>
+        <div id="pics">
+            <input type="file" name="complainPic" style="display: none" id="complainPic" onchange="comUploadPic(this)">
+            <label for="complainPic"><span style="font-size: 105px;">+</span><br/><span style="font-size: 23px;">添加图片</span></label>
+            <canvas id="comCanvas" style="display:none;"></canvas>
+            <div style="clear: both"></div>
+        </div>
+        <div id="submit" onclick="complainSubmit();">提交</div>
+    {/if}
+    <!-- 向上箭头 -->
+    <a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+    <div style="height: 80px;"></div>
+
+
+<script type="text/javascript">
+    $(document).on('click','.removeImg',function(){
+        $(this).parent().remove();
+        $("#pics label").show();
+    });
+</script>
+{/block}

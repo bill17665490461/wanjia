@@ -1,0 +1,10 @@
+.safety{font-size: 25px;background-color: #fff;margin-top: 4px;line-height: 70px;height: 70px;padding:0 20px;}
+.safety_one{width: 120px;float: left;}
+.safety_two{width: 150px;float: right;}
+.safety_third{width: 50px;float: right;text-align: center;font-size: 45px;color: #888}
+
+.ipts{padding:0 20px 20px; background-color: #fff;}
+.ipt{font-size: 25px;line-height: 60px;height: 60px;width:580px;border:1px solid #666;border-radius: 10px;
+	padding-left: 15px;margin-top: 20px;}
+.confirm{width: 600px;text-align: center;line-height: 70px;position: fixed;bottom: 20px;left: 20px;
+	background-color: #cc3333;color: #fff;font-size: 28px;border-radius: 10px;}

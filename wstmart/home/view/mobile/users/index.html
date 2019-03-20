@@ -1,0 +1,141 @@
+{extend name="mobile/base"}
+{block name="title"}买家中心 - {:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__MOBILE__/css/user_index.css">
+{/block}
+
+{block name="main"}
+	<div id="u_index_1">
+		<div id="u_pic">
+			{if ($user_data['userPhoto'])}
+			<img src="__ROOT__/{$user_data['userPhoto']}">
+			{else}
+			<img src="__ROOT__/{:WSTConf('CONF.userLogo')}" />
+			{/if}
+		</div>
+		<div id="rank_name">
+			<div>{if $user_data.userName!=''}{$user_data.userName}{else/}{$user_data.loginName}{/if}</div>
+			<div>
+				{if($user_data['ranks'])}
+				<span><span class="wst-lfloat">{$user_data['ranks']['rankName']}</span> <img width="30" src="__ROOT__/{$user_data['ranks']['userrankImg']}"/></span>
+				{/if}
+			</div>
+		</div>
+		<a id="u_msg" href='{:Url("home/messages/index")}'>
+			<span>我的消息</span>
+			<span style="font-size: 35px;"><i class="fa fa-commenting-o"></i></span>
+			{if $msg_num > 0}
+			<span id="msg_num">{$msg_num}</span>
+			{/if}
+		</a>
+		<div style="clear: both"></div>
+	</div>
+	<div id="u_index_2">
+		<a id="fa_goods" href="{:url('favorites/goods')}">
+			<div class="u_2_num">{$fa_goods}</div>
+			<div class="u_2_title">关注商品</div>
+		</a>
+		<a id="fa_shops" href="{:url('favorites/shops')}">
+			<div class="u_2_num">{$fa_shops}</div>
+			<div class="u_2_title">关注店铺</div>
+		</a>
+		<a id="footprint" href="{:url('home/goods/historyByGoodsMob')}">
+			<div class="u_2_num">{$historyNum}</div>
+			<div class="u_2_title">足迹</div>
+		</a>
+	</div>
+	<div id="u_index_3">
+		<div id="u_3_top">
+			<div id="u_3_title">我的订单</div>
+			<!-- <a href="" id="all_order">
+				<span>查看全部订单</span>
+				<span style="font-size: 25px"><i class="fa fa-angle-right"></i></span>
+			</a> -->
+		</div>
+		<div id="u_3_main">
+			<a class="u_3_link" href="{:url('orders/waitPay')}">
+				<div class="u_3_icon" style="color: #ea934c"><i class="fa fa-cny"></i></div>
+				<div class="u_3_name">待付款</div>
+			</a>
+			<a class="u_3_link" href="{:url('orders/waitReceive')}">
+				<div class="u_3_icon" style="color: #1db0f3"><i class="fa fa-truck"></i></div>
+				<div class="u_3_name">待收货</div>
+			</a>
+			<a class="u_3_link" href="{:url('orders/waitAppraise')}">
+				<div class="u_3_icon" style="color: #ff2f3b"><i class="fa fa-clone"></i></div>
+				<div class="u_3_name">待评价</div>
+			</a>
+			<a class="u_3_link" href="{:url('orders/finish')}">
+				<div class="u_3_icon" style="color: #06aa51"><i class="fa fa-handshake-o"></i></div>
+				<div class="u_3_name">已完成</div>
+			</a>
+			<a class="u_3_link" href="{:url('orders/cancel')}">
+				<div class="u_3_icon" style="color: #ea2b8e"><i class="fa fa-recycle"></i></div>
+				<div class="u_3_name">已取消</div>
+			</a>
+			<a class="u_3_link" href="{:url('orders/abnormal')}">
+				<div class="u_3_icon" style="color: #ea934c"><i class="fa fa-file-code-o"></i></div>
+				<div class="u_3_name">已拒收</div>
+			</a>
+		</div>
+	</div>
+	<div id="u_index_4">
+		<div id="u_4_top">必备工具</div>
+		<div id="u_4_main">
+			<a class="u_4_link" href="{:url('users/edit')}">
+				<div class="u_4_icon" style="background-color: #ea934c"><i class="fa fa-drivers-license-o"></i></div>
+				<div class="u_4_name">用户资料</div>
+			</a>
+			<a class="u_4_link" href="{:url('userscores/index')}">
+				<div class="u_4_icon" style="background-color: #ff2f3b"><i class="fa fa-meetup"></i></div>
+				<div class="u_4_name">积分管理</div>
+			</a>
+			<a class="u_4_link" href="{:url('logmoneys/usermoneys')}">
+				<div class="u_4_icon" style="background-color: #1db0f3"><i class="fa fa-exchange"></i></div>
+				<div class="u_4_name">资金流水</div>
+			</a>
+			<a class="u_4_link" href="{:url('home/cashdraws/index')}">
+				<div class="u_4_icon" style="background-color: #ea934c"><i class="fa fa-google-wallet"></i></div>
+				<div class="u_4_name">提现管理</div>
+			</a>
+			<a class="u_4_link" href="{:url('users/security')}">
+				<div class="u_4_icon" style="background-color: #1db0f3"><i class="fa fa-cogs"></i></div>
+				<div class="u_4_name">安全设置</div>
+			</a>
+			<a class="u_4_link" href="{:url('useraddress/index')}">
+				<div class="u_4_icon" style="background-color: #06aa51"><i class="fa fa-area-chart"></i></div>
+				<div class="u_4_name">用户地址</div>
+			</a>
+			<a class="u_4_link" href="{:url('goodsappraises/myAppraise')}">
+				<div class="u_4_icon" style="background-color: #ea2b8e"><i class="fa fa-edit"></i></div>
+				<div class="u_4_name">我的评价</div>
+			</a>
+			<a class="u_4_link" href="{:url('ordercomplains/index')}">
+				<div class="u_4_icon" style="background-color: #ff2f3b"><i class="fa fa-file-word-o"></i></div>
+				<div class="u_4_name">投诉管理</div>
+			</a>
+			<a class="u_4_link" href="javascript:logout();">
+				<div class="u_4_icon" style="background-color: #06aa51"><i class="fa fa-sign-out"></i></div>
+				<div class="u_4_name">退出登录</div>
+			</a>
+		</div>
+	</div>
+
+	<!-- 向上箭头 -->
+	<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+
+	<!-- 底部导航 -->
+	<div style="height: 85px;"></div>
+	{include file="mobile/bottom"}
+
+<script type="text/javascript">
+	$(function(){
+		$('.btm_link_5').children().css('color','#cc3333');
+	});
+	function logout(){
+		$.post(WST.U('home/users/logout'),{},function(data,textStatus){
+			location.href=WST.U('home/index/index');
+		});
+	}
+</script>
+{/block}

@@ -1,0 +1,64 @@
+{extend name="mobile/base" /}
+{block name="title"}关注的商品 - 买家中心{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__MOBILE__/css/favorites.css">
+{/block}
+
+{block name="main"}
+	<div id="topStyle_2">
+		<a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+		<div id="topStyle_title">关注商品</div>
+	</div>
+	{volist name="fa_goods" id="fa"}
+	<div class="goods">
+		<div class="goods_img"><a href="{:url('goods/detail',array('id'=>$fa.targetId))}"><img src="__ROOT__/{$fa.goodsImg}"></a></div>
+		<div class="goods_info">
+			<div class="goods_name">{:WSTMSubstr($fa['goodsName'],0,28)}</div>
+			<div class="goods_price">￥{$fa.shopPrice}</div>
+			<div class="sale_num">销售量：{$fa.saleNum}</div>
+		</div>
+		<div class="cancel" onclick="javascript:cancelFavorite({$fa['favoriteId']},0,this)">取消关注</div>
+		<div style="clear: both;"></div>
+	</div>	
+	{/volist}
+	<div style="text-align: center;">
+		{$fa_goods->render()}
+	</div>
+	
+
+	<!-- 向上箭头 -->
+	<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+
+	<!-- 底部导航 -->
+	<div style="height: 85px;"></div>
+	{include file="mobile/bottom"}
+	
+	<script type="text/javascript">
+		$(function(){
+			$('.btm_link_4').children().css('color','#cc3333');
+		});
+		function cancelFavorite(id,type,obj){
+			layer.open({
+				style: 'font-size:25px;'
+				,content: '您确定要取消关注吗？'
+				,btn: ['确定', '取消']
+				,yes: function(index){
+				  	var load =   layer.open({type: 2,content: '请稍后...'});
+				  	var param = {};
+					param.id = id;
+					param.type = type;
+					$.post(WST.U('home/favorites/cancel'),param,function(data,textStatus){
+						layer.close(load);
+						if(data.status=='1'){
+							layer.open({style:'width:60%;font-size:25px;',content:data.msg,time:1});
+							window.location.href = WST.U('home/favorites/goods');
+							// $(obj).parent().hide();
+						}else{
+							layer.open({style:'width:60%;font-size:25px;',content:data.msg,time:1});
+						}
+					});
+				}
+			});
+		}
+	</script>
+{/block}

@@ -1,0 +1,23 @@
+{extend name="mobile/base" /}
+{block name="title"}安全设置 - 买家中心{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__MOBILE__/css/security.css">
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__MOBILE__/users/security/security.js"></script>
+{/block}
+
+{block name="main"}
+	<div id="topStyle_2" style="margin-bottom: 20px;">
+        <a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+        <div id="topStyle_title">设置登录密码</div>
+    </div>
+	<div class="ipts">
+		{if ($data['loginPwd'])}
+		<input type='password' class="ipt" id='oldPass' name='oldPass' placeholder="原登录密码" maxLength='16'/>
+		{/if}
+		<input type='password' class="ipt" id='newPass' name='newPass' placeholder="新登录密码" maxLength='16'/>
+		<input type='password' class="ipt" id='reNewPass' name='reNewPass' placeholder="确认登录密码" maxLength='16'/>
+	</div>
+	<div class="confirm" onclick="changePwd()">确定</div>
+{/block}

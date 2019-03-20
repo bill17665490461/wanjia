@@ -1,0 +1,54 @@
+{extend name="mobile/base" /}
+{block name="title"}用户登录-{:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="css"}
+<link href="http://127.0.0.1:8080/wanjia__MOBILE__/css/login.css" rel="stylesheet">
+{/block}
+
+{block name="main"}
+	<div id="content">
+		<div id="logo"><img width="450" src="http://127.0.0.1:8080/wanjia__MOBILE__/images/wanjia.png"></div>
+		<div class="ipt">
+			<span><i class="fa fa-user-circle"></i></span><input id="loginName" type="text" name="">
+			<div style="clear: both;"></div>
+		</div>
+		<div class="ipt">
+			<span><i class="fa fa-key"></i></span><input id="loginPwd" type="password" name="">
+			<div style="clear: both;"></div>
+		</div>
+		<div id="submit" onclick="login()">登录</div>
+		<div id="forget_reg">
+			<a href="" id="forget_password">忘记密码</a>
+			<a href="{:url('home/users/regist')}" id="register">立即注册</a>
+		</div>
+	</div>
+<script type="text/javascript">
+	$(function(){
+		var screenH = document.documentElement.clientHeight;
+		$("#content").css('height',screenH);
+	});
+	function login(){
+		var params = {};
+		params.loginName = $("#loginName").val();
+		params.loginPwd = $("#loginPwd").val();
+		params.isMobile = 1;
+		if(params.loginName==''){
+	    	layer.open({style:'width:350px;font-size:30px;height:50px;',content: '请输入账号',skin: 'msg',time: 1});
+	    	return;
+		}
+		if(params.loginPwd==''){
+	    	layer.open({style:'width:350px;font-size:30px;height:50px;',content: '请输入密码',skin: 'msg',time: 1});
+	    	return;
+		}
+		// console.log(params);
+		$.post("{:url('home/users/checkLogin')}",params,function(data){
+			if(data.status==1){
+				location.href=WST.U('home/users/index');
+			}else{
+		    	layer.open({style:'width:350px;font-size:30px;height:50px;',content: data.msg,skin: 'msg',time: 1});
+	    		return;
+			}
+		});
+		return true;
+	}
+</script>
+{/block}

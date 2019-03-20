@@ -1,0 +1,58 @@
+<style type="text/css">
+	#top{height: 70px;position: fixed;top: 0;left:0;background-color: #fff;border-bottom: 2px solid #bbb;
+		z-index: 999}
+	#top-1{font-size: 55px;width: 80px;text-align: center;float: left;line-height: 70px;}
+	#top-2{width: 400px;float:left;padding-top:16px;margin-left: 40px;}
+	#top-2 input{height: 40px;border:1px solid #666;border-right: none;width: 300px;border-radius: 20px 0 0 20px !important;padding-left:20px;font-size: 20px;background-color: #fff}
+	#top-2 button{background-color: #fff;height: 42px;border:1px solid #666;border-left: none;padding:0 35px;background:url("__MOBILE__/images/ico-search.png") no-repeat;border-radius: 0 20px 20px 0;font-size: 20px;}
+	#top-3{line-height: 70px;float:left;font-size: 45px;width: 120px;text-align: center;position: relative;}
+	#top-3 a{color:#666;}
+</style>
+<div id="top">
+	<div id="top-1">
+		<a style="color:#666" href="javascript:window.history.back();"><i class="fa fa-angle-left"></i></a>
+	</div>
+	<div id="top-2">
+		<form action="{:url('shops/home')}" method="get">
+			<input type="hidden" name="shopId" value="{$data['shop']['shopId']}">
+			<input type="text" id="goodsName" name="goodsName" placeholder="搜索店内商品" value="{$goodsName}"><button type="submit">&nbsp;</button>
+		</form>
+	</div>
+	<div id="top-3">
+		<a href="javascript:openClassify();"><i class="fa fa-bars"></i></a>
+	</div>
+</div>
+<div id="classify" style="display: none">
+	<div class="cla_title">		
+		<a style="color:#666" href="javascript:closeClassify();"><i class="fa fa-close"></i></a>	
+		<span>商品分类</span>
+	</div>
+	<div style="height: 10px; background-color: #eee"></div>
+	<div class="classifys">
+		{volist name="$data['shopcats']" id="sc1"}
+			<div class="cla_one">{:WSTMSubstr($sc1['catName'],0,15)}</div>
+			{if($sc1['children'])}
+			<div class="cla_two">
+			{volist name="sc1['children']" id="sc2"}
+				<a href="{:url('home/shops/home',array('shopId'=>$sc1['shopId'],'ct1'=>$sc1['catId'],'ct2'=>$sc2['catId']))}" {if $ct1==$sc1['catId'] && $ct2==$sc2['catId']} class="cla_selected"{/if}><li>{:WSTMSubstr($sc2['catName'],0,15)}</li></a>
+			{/volist}
+				<div style="clear: both;"></div>
+			</div>
+			{/if}
+		{/volist}
+	</div>
+</div>
+<script type="text/javascript">
+	function openClassify(){
+		var html = $("#classify").html();
+		var pageii = layer.open({
+		  type: 1
+		  ,content: html
+		  ,anim: 'up'
+		  ,style: 'position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
+		});
+	}
+	function closeClassify(){
+		layer.closeAll();
+	}
+</script>

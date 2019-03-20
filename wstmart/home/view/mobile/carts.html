@@ -1,0 +1,91 @@
+{extend name="mobile/base" /}
+{block name="title"}我的购物车 - {:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="css"}
+<link href="http://127.0.0.1:8080/wanjia__MOBILE__/css/carts.css" rel="stylesheet">
+{/block}
+{block name="js"}
+<script type="text/javascript" src="http://127.0.0.1:8080/wanjia__MOBILE__/js/carts.js"></script>
+{/block}
+
+{block name="main"}
+	<div id="topStyle_2">
+		<a href="javascript:window.history.back();" id="topStyle_icon"><i class="fa fa-angle-left"></i></a>
+		<div id="topStyle_title">购物车</div>
+	</div>
+
+	<div id="carts_content">
+	{if !empty($carts["carts"])}
+		{volist name='$carts["carts"]' id='vo'}
+		<div class="shop">
+			<div class='shop_name'>
+				<input type='checkbox' class='mobCheckbox' onclick='checkShop(this)'> <a href="{:url('shops/home',array('shopId'=>$vo.shopId))}">{$vo['shopName']}</a>
+			</div>
+			<div class="goods_list">
+				{volist name='vo["list"]' id='vo2'}
+				<div class="item">
+					<div class='chk'><input type='checkbox' {if $vo2["isCheck"]==1}checked{/if} mval="{$vo2['shopPrice']}" value="{$vo2['cartId']}" sval="{$vo2['goodsStock']}" allowbuy="{$vo2['allowBuy']}" class='mobCheckbox goodsChk' onclick='checkGoods(this)'></div>
+					
+					<div class='goods_img'>
+			            <a href='{:Url("home/goods/detail","id=".$vo2["goodsId"])}' target='_blank'>
+			            <img src='__ROOT__/{$vo2["goodsImg"]}' style="width: 100px;margin-top: 10px;" title='{$vo2["goodsName"]}'/>
+			            </a>
+		            </div>
+		            <div class="goods_info">
+		            	<div class='goods_name'>{$vo2["goodsName"]}</div>
+		            	<div class='goods_price'>¥{$vo2['shopPrice']}</div>
+		            	<div class='goods_spec'>
+				            {volist name='vo2["specNames"]' id='specs'}
+				            <div>{$specs['catName']}：{$specs['itemName']}</div>
+				            {/volist}
+			            </div>
+			            <div class="del_num" style="margin-top: 10px;">
+    				        <div class='goods_num'>
+						        <span class="minus_num" id="minus_num_{$vo2['cartId']}" onclick="minusNum(this)">-</span><input type="number" class="buy_num" id="buy_num_{$vo2['cartId']}" max-val="{$vo2['goodsStock']}" value="{$vo2['cartNum']}" onchange="changeNum(this)"><span class="add_num" id="add_num_{$vo2['cartId']}" onclick="addNum(this)">+</span>
+					        </div>
+					        <a class="carts_del" href='javascript:delCart({$vo2["cartId"]})'>删除</a>
+					        <div class="storeNum">库存：{$vo2['goodsStock']}</div>
+					        <div style="clear: both;"></div>
+			            </div>
+		            </div>
+					<div style="clear: both"></div>
+				</div>
+				{/volist}
+			</div>
+		</div>
+		{/volist}
+		<div id="carts_bottom">
+			<div id="carts_bottom_one">
+				<input type="checkbox" class="mobCheckbox" id="checkAll" onchange="checkAll(this)"> 全选
+			</div>
+			<div id="carts_bottom_three" onclick="toSettlement()">结算</div>
+			<div id="carts_bottom_two">
+				合计：<span id='totalMoney' style="color: #cc3333">￥{$carts["goodsTotalMoney"]}</span>
+			</div>
+		</div>
+	{else}
+	{/if}
+	</div>
+
+	<!-- 向上箭头 -->
+	<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+
+	<!-- 底部导航 -->
+	<div style="height: 200px;clear: both;"></div>
+	{include file="mobile/bottom"}
+
+<script type="text/javascript">
+	$(function(){
+		$('.btm_link_3').children().css('color','#cc3333');
+		$(".buy_num").each(function(){
+			var val = parseInt($(this).val());
+			var maxNum = parseInt($(this).attr('max-val'));
+			if(val==1){
+				$(this).prev().addClass('locked');
+			}
+			if(val>=maxNum){
+				$(this).next().addClass('locked');
+			}
+		});
+	});
+</script>
+{/block}

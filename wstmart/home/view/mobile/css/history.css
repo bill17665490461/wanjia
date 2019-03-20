@@ -1,0 +1,8 @@
+.goods{padding:15px;margin-top: 10px;background-color: #fff}
+.goodsImg{width: 150px;height: 150px;text-align: center;line-height: 150px;float: left}
+.goodsImg img{max-width: 100%;max-height: 100%}
+.goodsInfo{width: 400px;float: left;padding-left: 15px;}
+.goodsName{font-size: 26px;line-height: 40px;height: 80px;display: -webkit-box;-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;overflow: hidden;}
+.goodsPrice{font-size: 25px;color:#cc3333;line-height: 40px;}
+.saleNum{font-size: 22px;color:#888;line-height: 30px;}

@@ -1,0 +1,89 @@
+{extend name="mobile/base"/}
+{block name="meta"}
+	<meta name="description" content="{:WSTConf('CONF.seoMallDesc')}">
+	<meta name="Keywords" content="{:WSTConf('CONF.seoMallKeywords')}">
+{/block}
+{block name="css"}
+	<link href="http://127.0.0.1:8080/wanjia__MOBILE__/css/classify.css" rel="stylesheet">
+{/block}
+
+{block name="main"}
+
+
+
+	<div id="classify_left">
+		{volist name=":WSTSideCategorys()" id="vo" key="k"}
+		<div class="cate_one" id="cate_one_{$vo.catId}">{:str_replace('、',' ',$vo.catName)}</div>
+		{/volist}
+	</div>
+	<div id="classify_right">
+		{volist name=":WSTSideCategorys()" id="vo" key="k"}
+		<div id="classify_right_{$vo.catId}" class="classify_right">
+			{if isset($vo['list'])}
+			{volist name="vo['list']" id="vo2"}
+			<a class="cate_two" href="{:Url('home/goods/lists','cat='.$vo2['catId'])}">{$vo2.catName}</a>
+			<div style="margin-top: 10px;border-bottom: 3px solid #f5f5f5">
+				{if isset($vo2['list'])}
+				{volist name="vo2['list']" id="vo3"}
+				<a class="cate_three" href="{:Url('home/goods/lists','cat='.$vo3['catId'])}">{$vo3['catName']}</a>　　
+				{/volist}
+				{/if}
+			</div>
+			{/volist}
+			{/if}
+		</div>
+		{/volist}
+	</div>
+
+
+
+
+
+
+
+	<!-- 向上箭头 -->
+	<a href="javascript:pageScroll()" id="backTop"><i class="fa fa-arrow-up"></i></a>
+
+	<!-- 底部导航 -->
+	<div style="height: 85px;clear: both;"></div>
+	{include file="mobile/bottom"}
+
+<script type="text/javascript">
+
+    function tachoiceArea(t,pid){
+
+        window.location.href = "/home/goods/search.html?areaId="+pid;
+    }
+$(function(){
+		$('.aui-content-main .aui-content-menu').hover(function(){
+
+			$(this).addClass('active').find('s').hide();
+
+			$(this).find('.aui-content-menu-dow').show();
+
+		},function(){
+
+			$(this).removeClass('active').find('s').show();
+
+			$(this).find('.aui-content-menu-dow').hide();
+
+		});
+
+	});
+	$(function(){
+		$('.btm_link_2').children().css('color','#cc3333');
+		$(".cate_one:first").addClass('checked');
+		$(".classify_right:first").css('display','block');
+	});
+	$(".cate_one").on("click",function(){
+		var id = $(this).attr("id");
+        var id_arr = id.split('_');
+        var num = id_arr[2];
+        $('.cate_one').removeClass('checked');
+        $(this).addClass('checked');
+        $('.classify_right').hide();
+        $("#classify_right_"+num).show();
+        document.documentElement.scrollTop = 0;        
+	});
+</script>
+{/block}

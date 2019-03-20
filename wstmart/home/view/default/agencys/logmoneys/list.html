@@ -1,0 +1,107 @@
+{extend name="default/agencys/base" /}
+{block name="title"}资金流水-区域商中心{__block__}{/block}
+{block name="css"}
+<style type="text/css">
+  .wst-form { border-collapse: collapse;}
+  .wst-form tr {height: 30px;line-height: 30px;}
+  .wst-form tr th {color: #707070;text-align: right}
+  .wst-form tr td { text-align: left}
+  .wst-form input,textarea{background-color: white;border: 1px solid #ccc;border-radius: 2px;padding: 5px;
+    box-shadow: 1px 1px 1px #f0f0f0 inset;font-family: inherit;font-size: 100%;margin: 3px;vertical-align: middle;}
+  .wst-sec-but{outline: none;background:#E45050;color: #ffffff;border: 1px solid #d33110;border-radius:3px;  cursor:pointer;}
+  .wst-sec-but:not(.disabled):not(:disabled):active, .wst-sec-but.active{
+    background: #f96a54; background-clip: padding-box; border: 1px solid #f96a54;}
+  /*灰*/
+  .wst-sec-but2{outline: none;background:#ebebeb;color: #9f9696;border: 1px solid #dad7d7;border-radius:3px;
+    cursor:pointer;}
+  .wst-sec-but2:not(.disabled):not(:disabled):active, .wst-sec-but2.active{
+    background: #f1f1f1;background-clip: padding-box;}
+  .u-btn{width:80px;height:30px;font-weight: bold;cursor: pointer;}
+</style>
+{/block}
+{block name="content"}
+<div class='money-head'>
+  <div class='shop-logo'><img height='100' width='100' src='__ROOT__/{if session("WST_USER.userPhoto")}{:session("WST_USER.userPhoto")}{else/}{:WSTConf("CONF.userLogo")}{/if}'></div>
+  <div class='shop-info'>
+     <div class='shopName'>{$object['realName']}</div>
+     <div class='shopMoney wst-lfloat'>可用资金：<font color='red'>¥{$object['agencyMoney']}</font></div>
+     <div class="shopMoney wst-lfloat" style="margin-left: 50px;cursor: pointer;" onclick="toDrawMoney()">申请提现</div>
+     <div class="wst-clear"></div>
+     <div class="money-rows">
+       <div class='shopMoney wst-lfloat'>冻结资金：<font color='red'>¥{$object['lockMoney']}</font></div>
+       <div class='shopMoney wst-lfloat' style='margin-left:50px;'>已申请结算金额：<font color='red'>¥{$object['paymentMoney']}</font></div>
+     </div>
+  </div>
+</div>
+<div class='wst-user-content'>
+   <div id='tab' class="wst-tab-box">
+		<ul class="wst-tab-nav">
+		   <li>资金流水</li>
+       <li>资金收入</li>
+       <li>资金支出</li>
+		</ul>
+	    <table class='wst-list' style="font-size:13px;">
+           <thead>
+             <tr>
+               <th width='80'>来源/用途</th>
+               <th width='100'>金额</th>
+               <th width='130'>日期</th>
+               <th width='130'>外部流水号</th>
+               <th width='*'>备注</th>
+             </tr>
+           </thead>
+           <script id="tblist" type="text/html">
+    			 {{# for(var i = 0; i < d.length; i++){ }}
+              <tr>
+                <td>{{d[i].dataSrc}}</td>
+                <td>
+        				{{# if(d[i].moneyType==1){ }}
+        					<span class="money-add">+ ¥{{ d[i].money }}</span>
+        				{{# }else{ }}
+        					<span class='money-reduce'> - ¥{{ d[i].money }}</span>
+        				{{# } }}
+    				    </td>
+    			      <td>{{ d[i].createTime }}</td>
+                <td>{{ WST.blank(d[i].tradeNo,'-')}}</td>
+                <td style='line-height:23px'>{{ d[i].remark }}</td>
+              </tr>
+    			 {{# } }}
+    			 </script>
+           <tbody id="page-list"></tbody>
+           <tfoot>
+             <tr>
+                <td colspan='5' align="center" style='padding:5px 0px 5px 0px'>
+					<div id="pager"></div>
+				</td>
+             </tr>
+           </tfoot>
+        </table>
+    </div>  
+</div>
+
+<div id="drawBox" style="display: none">
+    <form id='drawForm' autocomplete='off' >
+    <table width='100%' style='margin-top:10px;' class='wst-form' style='dislay:none'>
+      <tr>
+        <th width='120' align='right'>提现账号：</th>
+          <td>{$object.bankUserName} | {$object.bankNo}</td>
+        </tr>
+        <tr> 
+          <th align='right'>提现金额<font color='red'>*</font>：</th>
+          <td>
+            <input type='text' id='money' class='j-ipt' style='width:250px' data-rule="提现金额: required;" onkeypress="return WST.isNumberdoteKey(event)" onblur="javascript:WST.limitDecimal(this,2)" onkeyup="javascript:WST.isChinese(this,1)"/>
+          </td>
+        </tr>
+        <tr>
+              <td colspan='2' style='text-align: center;padding-top:5px;'>
+                  <button type='button' class='wst-sec-but u-btn' onclick="drawMoney()">保存</button>
+                  <button type='button' style='margin-left:10px;' class='wst-user-buta2 u-btn' onclick='layerclose()'>取消</button>
+              </td>
+           </tr>
+        </table>
+        </form>
+</div>
+{/block}  
+{block name="js"}
+<script type='text/javascript' src='__STYLE__/agencys/logmoneys/logmoneys.js?v={$v}'></script>
+{/block}
